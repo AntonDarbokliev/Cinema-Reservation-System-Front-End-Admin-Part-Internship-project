@@ -1,6 +1,8 @@
-import { Button, Form } from "react-bootstrap";
-import { useLogin } from "../hooks/useLogin";
-import { useForm } from "../../common/hooks/useForm";
+import { Form } from "react-bootstrap";
+import { useLogin } from "../../hooks/useLogin";
+import { useForm } from "../../../common/hooks/useForm";
+import ButtonC from '../../../common/components/ButtonC/ButtonC';
+import './LoginForm.scss';
 
 export const LoginForm = () => {
   const { loginHandler } = useLogin();
@@ -24,9 +26,7 @@ export const LoginForm = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control name="password" value={formValues.password} onChange={onChangeHandler} type="password" placeholder="Password" />
             </Form.Group>
-            <Button variant="primary" type="submit">
-                Login
-            </Button>
+            <ButtonC text="Login"/>
         </Form>
     );
 };

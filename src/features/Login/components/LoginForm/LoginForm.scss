@@ -1,0 +1,10 @@
+@use "../../../../scss/vars";
+
+.btn-primary {
+    background: vars.$main-color;
+    color: black;
+    border: none;
+    &:hover {
+      background: vars.$main-color-darkened
+    }
+}

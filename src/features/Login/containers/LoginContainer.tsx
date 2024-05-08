@@ -1,12 +1,10 @@
-import { LoginForm } from "../components/LoginForm";
-import styles from "./LoginContainer.module.scss";
+import Container from "../../common/components/Container/Container";
+import { LoginForm } from "../components/LoginForm/LoginForm";
 
 export const LoginContainer = () => {
-
     return (
-        <div className={styles["login-container"]}>
-            <LoginForm/>
-        </div>
+        <Container>
+            <LoginForm />
+        </Container>
     );
-    ``;
 };

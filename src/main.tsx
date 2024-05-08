@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { LoginContainer } from "./features/Login/containers/LoginContainer.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
+import RegisterContainer from "./features/Register/containers/RegisterContainer.tsx";
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <LoginContainer />,
+    },
+    {
+        path: "/register",
+        element: <RegisterContainer />,
     },
 ]);
 

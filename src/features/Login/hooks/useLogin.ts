@@ -4,12 +4,10 @@ import { login } from "../services/loginService";
 import { useDispatch } from "react-redux";
 import { UserState, setUser } from "../../../store/user/userActions";
 import { jwtDecode } from "jwt-decode";
-// import { IRootState } from "../../../store/store";
 
 export const useLogin = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    // const user = useSelector((state: IRootState) => state.user);
 
     const loginHandler = async (loginData: LoginUser) => {
         const response: { access_token: string } = await login(loginData);
