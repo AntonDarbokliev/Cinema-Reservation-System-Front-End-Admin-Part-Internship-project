@@ -1,4 +1,6 @@
-.btn-primary {
+@use '../../../../scss/vars';
+
+.custom-button {
   background: vars.$main-color;
   color: black;
   border: none;
