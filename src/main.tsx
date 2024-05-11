@@ -10,6 +10,7 @@ import { store } from "./store/store.ts";
 import RegisterContainer from "./features/Register/containers/RegisterContainer.tsx";
 // import { SideNav } from "./features/SideNav/components/SideNav/SideNav.tsx";
 import { RootOverlay } from "./features/common/components/RootOverlay/RootOverlay.tsx";
+import { Logout } from "./features/Logout/Logout.tsx";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <RegisterContainer />,
+            },
+            {
+                path: "/logout",
+                element: <Logout />,
             },
         ],
     },
