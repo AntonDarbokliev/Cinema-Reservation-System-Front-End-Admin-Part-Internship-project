@@ -1,0 +1,6 @@
+@use '../../../../scss/vars';
+
+.card {
+  margin-bottom: 3rem ;
+  box-shadow: vars.$main-box-shadow;
+}
