@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./scss/styles.scss";
 import "bootstrap";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -8,9 +7,11 @@ import { LoginContainer } from "./features/Login/containers/LoginContainer.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import RegisterContainer from "./features/Register/containers/RegisterContainer.tsx";
-// import { SideNav } from "./features/SideNav/components/SideNav/SideNav.tsx";
 import { RootOverlay } from "./features/common/components/RootOverlay/RootOverlay.tsx";
 import { Logout } from "./features/Logout/Logout.tsx";
+import { CinemaListContainer } from "./features/CinemasList/containers/CinemaListContainer.tsx";
+import { CinemaPage } from "./features/CinemaPage/components/CinemaPage/CinemaPage.tsx";
+import { CinemaInfoContainer } from "./features/CinemaInfo/container/CinemaInfoContainer.tsx";
 
 const router = createBrowserRouter([
     {
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <App />,
+                element: <CinemaListContainer />,
             },
             {
                 path: "/login",
@@ -33,6 +34,16 @@ const router = createBrowserRouter([
                 path: "/logout",
                 element: <Logout />,
             },
+            {
+                path: "/cinema/:id",
+                element: <CinemaPage />,
+                children: [
+                    {
+                        path: "/cinema/:id",
+                        element: <CinemaInfoContainer />,
+                    },
+                ],
+            },
         ],
     },
 ]);
@@ -40,7 +51,6 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <Provider store={store}>
-            {/* <SideNav /> */}
             <RouterProvider router={router} />
         </Provider>
     </React.StrictMode>
