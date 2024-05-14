@@ -12,6 +12,7 @@ import { Logout } from "./features/Logout/Logout.tsx";
 import { CinemaListContainer } from "./features/CinemasList/containers/CinemaListContainer.tsx";
 import { CinemaPage } from "./features/CinemaPage/components/CinemaPage/CinemaPage.tsx";
 import { CinemaInfoContainer } from "./features/CinemaInfo/container/CinemaInfoContainer.tsx";
+import { HallsList } from "./features/HallsList/components/HallsList/HallsList.tsx";
 
 const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
                     {
                         path: "/cinema/:id",
                         element: <CinemaInfoContainer />,
+                    },
+                    {
+                        path: "/cinema/:id/halls",
+                        element: <HallsList />,
                     },
                 ],
             },
