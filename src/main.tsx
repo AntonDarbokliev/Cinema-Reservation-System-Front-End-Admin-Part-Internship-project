@@ -13,6 +13,7 @@ import { CinemaListContainer } from "./features/CinemasList/containers/CinemaLis
 import { CinemaPage } from "./features/CinemaPage/components/CinemaPage/CinemaPage.tsx";
 import { CinemaInfoContainer } from "./features/CinemaInfo/container/CinemaInfoContainer.tsx";
 import { HallsList } from "./features/HallsList/components/HallsList/HallsList.tsx";
+import { HallLayout } from "./features/HallLayout/components/HallLayout/HallLayout.tsx";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
                     {
                         path: "/cinema/:id/halls",
                         element: <HallsList />,
+                    },
+                    {
+                        path: "/cinema/:id/halls/:id",
+                        element: <HallLayout />,
                     },
                 ],
             },
