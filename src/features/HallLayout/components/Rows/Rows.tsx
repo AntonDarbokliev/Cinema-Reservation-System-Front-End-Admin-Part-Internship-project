@@ -1,8 +1,6 @@
-import { Col, Row as RowComponent } from "react-bootstrap";
-import { Row, Seat, SeatType } from "../../../HallsList/interfaces/hallInterface";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChair } from "@fortawesome/free-solid-svg-icons";
-import styles from "./Rows.module.scss";
+import { Row as RowComponent } from "react-bootstrap";
+import { Row, Seat as SeatInterface, SeatType } from "../../../HallsList/interfaces/hallInterface";
+import { Seat } from "../Seat/Seat";
 
 interface Props {
     rows: Row[];
@@ -12,7 +10,7 @@ interface Props {
 }
 
 export const Rows: React.FC<Props> = ({ rows, editMode, addSeatType, setRows }) => {
-    const seatOnClickHandler = (seat: Seat, rowIndex: number) => {
+    const seatOnClickHandler = (seat: SeatInterface, rowIndex: number) => {
         if (editMode) {
             if (seat.type == SeatType.SEAT_BLANK) {
                 seat.type = addSeatType;
@@ -38,31 +36,18 @@ export const Rows: React.FC<Props> = ({ rows, editMode, addSeatType, setRows }) 
                         {row.seats.map((seat) => {
                             if (seat.type != SeatType.SEAT_BLANK) {
                                 currentSeatNumber++;
-
-                                return (
-                                    <Col key={seat._id} className={styles["col"]} onClick={() => seatOnClickHandler(seat, rowIndex)}>
-                                        <FontAwesomeIcon className={styles["chair-icon"]} icon={faChair} />
-                                        {!editMode && (
-                                            <>
-                                                <p className={styles["seat-text"]}>
-                                                    {currentSeatNumber} - {seat.type}
-                                                </p>
-                                            </>
-                                        )}
-                                    </Col>
-                                );
-                            } else {
-                                if (editMode) {
-                                    return (
-                                        <Col
-                                            onClick={() => seatOnClickHandler(seat, rowIndex)}
-                                            key={seat._id}
-                                            style={{ border: "none", background: "#cccc" }}
-                                        />
-                                    );
-                                }
-                                return <Col key={seat._id} style={{ border: "none" }} />;
                             }
+
+                            return (
+                                <Seat
+                                    editMode={editMode}
+                                    onClickHandler={seatOnClickHandler}
+                                    rowIndex={rowIndex}
+                                    seat={seat}
+                                    seatNumber={currentSeatNumber}
+                                    key={seat._id}
+                                />
+                            );
                         })}
                     </RowComponent>
                 );
