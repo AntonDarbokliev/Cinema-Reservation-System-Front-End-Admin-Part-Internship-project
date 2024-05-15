@@ -5,10 +5,26 @@ export enum SeatType {
     SEAT_BLANK = "blank",
 }
 
-export type Seat = SeatType.SEAT_COMMON | SeatType.SEAT_VIP | SeatType.SEAT_COUPLES | SeatType.SEAT_BLANK;
+export interface Seat {
+    type: SeatType.SEAT_COMMON | SeatType.SEAT_VIP | SeatType.SEAT_COUPLES | SeatType.SEAT_BLANK;
+    _id: string;
+}
+
+export interface Row {
+    _id: string;
+    seats: Seat[];
+}
+
+export interface CreateRow {
+    seats: Seat[];
+}
+
+export interface CreateSeat {
+    type: SeatType.SEAT_COMMON | SeatType.SEAT_VIP | SeatType.SEAT_COUPLES | SeatType.SEAT_BLANK;
+}
 
 export interface Hall {
-    seatsLayout: Seat[][];
+    seatsLayout: Row[];
     _id: string;
     numberOfSeats: number;
 }
