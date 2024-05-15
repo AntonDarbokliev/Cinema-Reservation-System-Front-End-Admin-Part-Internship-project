@@ -49,7 +49,7 @@ const router = createBrowserRouter([
                         element: <HallsList />,
                     },
                     {
-                        path: "/cinema/:id/halls/:id",
+                        path: "/cinema/:id/halls/:hallId",
                         element: <HallLayout />,
                     },
                 ],

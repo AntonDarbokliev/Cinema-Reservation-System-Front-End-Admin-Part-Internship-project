@@ -6,10 +6,12 @@ import { faChair } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import ButtonC from "../../../common/components/ButtonC/ButtonC";
 import { Row as RowType, Seat, SeatType } from "../../../HallsList/interfaces/hallInterface";
+import { AddRowModal } from "../AddRowModal/AddRowModal";
 export const HallLayout = () => {
     const { hall } = useHall();
     const [editMode, setEditMode] = useState<boolean>(false);
     const [addSeatType, setAddSeatType] = useState<SeatType>(SeatType.SEAT_COMMON);
+    const [addRowModal, setAddRowModal] = useState(false);
     const [rows, setRows] = useState<RowType[]>([]);
     let currentSeatNumber = 0;
     // const rowsCopy = [...hall.seatsLayout];
@@ -42,6 +44,7 @@ export const HallLayout = () => {
     return (
         <>
             <h1 style={{ textAlign: "center", marginBottom: "3rem" }}>Screen</h1>
+            <AddRowModal rowsSetter={setRows} rows={rows} show={addRowModal} modalSetter={setAddRowModal} />
             <Container>
                 {rows.map((row, rowIndex) => {
                     currentSeatNumber = 0;
@@ -81,6 +84,7 @@ export const HallLayout = () => {
                 })}
             </Container>
             <ButtonC onClick={() => setEditMode(!editMode)}>{editMode ? "Save" : "Edit Mode"}</ButtonC>
+            <ButtonC onClick={() => setAddRowModal(true)}>Add Row</ButtonC>
         </>
     );
 };
