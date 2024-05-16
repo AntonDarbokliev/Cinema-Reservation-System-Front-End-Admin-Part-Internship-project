@@ -1,3 +1,5 @@
+import { Hall } from "../../HallsList/interfaces/hallInterface";
+
 export interface Cinema {
     _id: string;
 
@@ -7,7 +9,7 @@ export interface Cinema {
 
     numberOfHalls: string;
 
-    hallPlans: object[];
+    halls: Hall[];
 
     menu: object[];
 
