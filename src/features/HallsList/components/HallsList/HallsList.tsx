@@ -7,7 +7,7 @@ export const HallsList = () => {
     return (
         <Container>
             {halls.map((hall, i) => (
-                <HallCard hall={hall} hallIndex={i} />
+                <HallCard key={hall._id} hall={hall} hallIndex={i} />
             ))}
         </Container>
     );

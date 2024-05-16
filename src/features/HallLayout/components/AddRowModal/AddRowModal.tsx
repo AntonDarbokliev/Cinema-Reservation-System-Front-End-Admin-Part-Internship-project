@@ -21,15 +21,11 @@ export const AddRowModal: React.FC<Props> = ({ modalSetter, show, rowsSetter, ro
     }, [counter]);
 
     const onAdd = async () => {
-        const newArr: Seat[] = new Array(counter)
-        .fill({ type: SeatType.SEAT_BLANK } as Seat);
-        // for(let i = 1; i <= counter; i++) {
-        //   newArr.push({ type: SeatType.SEAT_BLANK, _id: String(Math.random()) })
-        // }
+        const newArr: Seat[] = new Array(counter).fill({ type: SeatType.SEAT_BLANK } as Seat);
+
         const editedHall = await editHallHandler([...rows, { seats: newArr }]);
         if (editedHall) {
             const row = editedHall.seatsLayout[editedHall.seatsLayout.length - 1];
-            console.log("Returned row: ", row);
 
             const newRowId = row.seats[row.seats.length - 1]._id;
 
@@ -43,9 +39,6 @@ export const AddRowModal: React.FC<Props> = ({ modalSetter, show, rowsSetter, ro
 
     return (
         <Modal show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
-            </Modal.Header>
             <Modal.Body>
                 <h4>Add a Row</h4>
                 <ButtonC onClick={() => setCounter((s) => (s += 1))}>+</ButtonC>
