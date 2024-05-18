@@ -1,0 +1,15 @@
+@use '../../../../scss/vars';
+
+.side-nav-button {
+  position: fixed;
+  top: 1%;
+  right: 1%
+}
+
+.nav {
+  font-size: 1.8rem;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
