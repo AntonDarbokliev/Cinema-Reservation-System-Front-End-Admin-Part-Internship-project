@@ -1,7 +1,6 @@
 import { useLogin } from "../../hooks/useLogin";
 import { useForm } from "../../../common/hooks/useForm";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
-import "./LoginForm.scss";
+import Button from "../../../common/components/Button/Button";
 import Form from "react-bootstrap/Form";
 
 export const LoginForm = () => {
@@ -36,7 +35,7 @@ export const LoginForm = () => {
                 />
                 <Form.Control.Feedback type="invalid">Please provide a password (5 chars min).</Form.Control.Feedback>
             </Form.Group>
-            <ButtonC>Login</ButtonC>
+            <Button>Login</Button>
         </Form>
     );
 };

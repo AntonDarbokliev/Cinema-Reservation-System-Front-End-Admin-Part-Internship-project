@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
+import Button from "../../../common/components/Button/Button";
 import styles from "./SideNav.module.scss";
 import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
@@ -24,9 +24,9 @@ export const SideNav = () => {
 
     return (
         <>
-            <ButtonC onClick={handleShow} additionalClasses={`me-2 ${styles["side-nav-button"]}`}>
+            <Button onClick={handleShow} additionalClasses={`me-2 ${styles["side-nav-button"]}`}>
                 Menu
-            </ButtonC>
+            </Button>
             <Offcanvas show={show} onHide={handleClose} placement="end">
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Menu {user.firstName ? `- ${user.firstName} ${user.lastName}` : ''}</Offcanvas.Title>

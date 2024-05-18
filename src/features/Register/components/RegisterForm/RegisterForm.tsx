@@ -1,5 +1,5 @@
 import { Form } from "react-bootstrap";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
+import Button from "../../../common/components/Button/Button";
 import { useForm } from "../../../common/hooks/useForm";
 import { useRegister } from "../../hooks/useRegister";
 
@@ -41,7 +41,7 @@ const RegisterForm = () => {
                 <Form.Control required name="password" value={formValues.password} onChange={onChangeHandler} type="password" placeholder="Password" />
                 <Form.Control.Feedback type="invalid">Please provide a password (5 chars min).</Form.Control.Feedback>
             </Form.Group>
-            <ButtonC>Register</ButtonC>
+            <Button>Register</Button>
         </Form>
     );
 };
