@@ -1,6 +1,7 @@
 import { store } from "../../../store/store";
 import { addToast, removeToast } from "../../../store/toast/toastSlice";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import { router } from "../components/RouteComponent/RouteComponent";
 
 interface RequestProps {
     method: "GET" | "POST" | "DELETE" | "PUT";
@@ -54,12 +55,16 @@ const request = async ({ method, url, data }: RequestProps) => {
         }
 
         setTimeout(() => {
-            store.dispatch(removeToast(id))
-        },5000)
+            store.dispatch(removeToast(id));
+        }, 5000);
     }
 
     if (response.status == 204) {
         return {};
+    }
+
+    if (response.status == 401) {
+        await router.navigate("/login");
     }
 
     return response.json();
