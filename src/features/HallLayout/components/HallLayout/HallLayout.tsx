@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap";
 import { useHall } from "../../hooks/useHall";
 import { useState } from "react";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
+import Button from "../../../common/components/Button/Button";
 import { SeatType, Row } from "../../../HallsList/interfaces/hallInterface";
 import { AddRowModal } from "../AddRowModal/AddRowModal";
 import { useEditHall } from "../../hooks/useEditHall";
@@ -38,8 +38,8 @@ export const HallLayout = () => {
             </Container>
             <div className={styles["util-btn-group"]}>
                 {editMode && <SeatTypeSelect seatTypeSetter={setAddSeatType}></SeatTypeSelect>}
-                <ButtonC onClick={saveOrEditClickHandler}>{editMode ? "Save" : "Edit Mode"}</ButtonC>
-                <ButtonC onClick={() => setAddRowModal(true)}>Add Row</ButtonC>
+                <Button onClick={saveOrEditClickHandler}>{editMode ? "Save" : "Edit Mode"}</Button>
+                <Button onClick={() => setAddRowModal(true)}>Add Row</Button>
             </div>
         </>
     );

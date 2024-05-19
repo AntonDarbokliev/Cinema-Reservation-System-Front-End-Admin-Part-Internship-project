@@ -1,5 +1,5 @@
 import Card from "react-bootstrap/Card";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
+import Button from "../../../common/components/Button/Button";
 import { Cinema } from "../../interfaces/cinemaInterface";
 import { useNavigate } from "react-router-dom";
 import styles from './CinemaCard.module.scss';
@@ -16,7 +16,7 @@ export const CinemaCard: React.FC<Props> = ({ cinema }) => {
             <Card.Body>
                 <Card.Title>{cinema.name}</Card.Title>
                 <Card.Text>{cinema.address}</Card.Text>
-                <ButtonC onClick={() => navigate(`cinema/${cinema._id}`)}>Go to</ButtonC>
+                <Button onClick={() => navigate(`cinema/${cinema._id}`)}>Go to</Button>
             </Card.Body>
         </Card>
     );

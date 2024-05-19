@@ -1,5 +1,5 @@
-import { Button, Modal } from "react-bootstrap";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
+import { Button as BootstrapButton, Modal } from "react-bootstrap";
+import Button from "../../../common/components/Button/Button";
 // import { useDeleteHallRow } from "../../hooks/useDeleteHallRow";
 import { Row } from "../../../HallsList/interfaces/hallInterface";
 
@@ -23,7 +23,7 @@ export const DeleteRowModal: React.FC<Props> = ({ show, modalSetter, row, rowsSe
                 <h4>Delete this Row?</h4>
             </Modal.Body>
             <Modal.Footer>
-                <Button
+                <BootstrapButton
                     variant="danger"
                     onClick={async () => {
                         // await deleteHallRowHandler(row._id);
@@ -32,8 +32,8 @@ export const DeleteRowModal: React.FC<Props> = ({ show, modalSetter, row, rowsSe
                     }}
                 >
                     Delete
-                </Button>
-                <ButtonC onClick={() => modalSetter({ show: false, row: { _id: "", seats: [] } })}>Cancel</ButtonC>
+                </BootstrapButton>
+                <Button onClick={() => modalSetter({ show: false, row: { _id: "", seats: [] } })}>Cancel</Button>
             </Modal.Footer>
         </Modal>
     );

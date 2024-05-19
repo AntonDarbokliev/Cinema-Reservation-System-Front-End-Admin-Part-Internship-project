@@ -1,6 +1,6 @@
 import Card from "react-bootstrap/Card";
 import { Hall } from "../../interfaces/hallInterface";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
+import Button from "../../../common/components/Button/Button";
 import styles from "./HallCard.module.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +16,7 @@ export const HallCard: React.FC<Props> = ({ hall, hallIndex }) => {
             <Card.Header>{hallIndex + 1}</Card.Header>
             <Card.Body>
                 <Card.Title>Number of seats: {hall.numberOfSeats}</Card.Title>
-                <ButtonC onClick={() => navigate(`${hall._id}`)}>Go to</ButtonC>
+                <Button onClick={() => navigate(`${hall._id}`)}>Go to</Button>
             </Card.Body>
         </Card>
     );

@@ -1,5 +1,5 @@
 import { Form, Modal } from "react-bootstrap";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
+import Button from "../../../common/components/Button/Button";
 import { useEffect, useState } from "react";
 import { Row, Seat, SeatType } from "../../../HallsList/interfaces/hallInterface";
 import { useEditHall } from "../../hooks/useEditHall";
@@ -41,14 +41,14 @@ export const AddRowModal: React.FC<Props> = ({ modalSetter, show, rowsSetter, ro
         <Modal show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Body>
                 <h4>Add a Row</h4>
-                <ButtonC onClick={() => setCounter((s) => (s += 1))}>+</ButtonC>
+                <Button onClick={() => setCounter((s) => (s += 1))}>+</Button>
                 <Form.Label>Available spaces</Form.Label>
                 <Form.Control type="number" readOnly={true} value={counter} />
-                <ButtonC onClick={() => setCounter((s) => (s -= 1))}>-</ButtonC>
+                <Button onClick={() => setCounter((s) => (s -= 1))}>-</Button>
             </Modal.Body>
             <Modal.Footer>
-                <ButtonC onClick={onAdd}>Add</ButtonC>
-                <ButtonC onClick={() => modalSetter(false)}>Close</ButtonC>
+                <Button onClick={onAdd}>Add</Button>
+                <Button onClick={() => modalSetter(false)}>Close</Button>
             </Modal.Footer>
         </Modal>
     );
