@@ -13,7 +13,6 @@ export const ToastNotification: React.FC<Props> = ({ text, type }) => {
         return () => {
             setTimeout(() => {
                 setShow(false);
-                console.log("unmounting");
             }, 4900);
         };
         // React-bootstrap doesn't allow for dynamic rendering of notifications (with animation)
