@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { router } from "../components/RouteComponent/RouteComponent";
 
 interface RequestProps {
-    method: "GET" | "POST" | "DELETE" | "PUT";
+    method: "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
     url: string;
     data?: object;
 }
@@ -15,7 +15,7 @@ interface Options {
         Authorization?: string;
     };
     body?: object | string;
-    method: "GET" | "POST" | "DELETE" | "PUT";
+    method: "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
 }
 
 interface ExceptionResponse {
@@ -75,11 +75,13 @@ export const RequestFactory = () => {
     const postRequest = (url: string, data: object) => request({ method: "POST", url, data });
     const deleteRequest = (url: string) => request({ method: "DELETE", url });
     const putRequest = (url: string, data: object) => request({ method: "PUT", url, data });
+    const patchRequest = (url: string, data: object) => request({ method: "PATCH", url, data });
 
     return {
         get: getRequest,
         post: postRequest,
         delete: deleteRequest,
         put: putRequest,
+        patch: patchRequest
     };
 };

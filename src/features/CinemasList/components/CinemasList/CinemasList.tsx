@@ -3,13 +3,15 @@ import { CinemaCard } from "../CinemaCard/CinemaCard";
 import { Cinema } from "../../interfaces/cinemaInterface";
 
 interface Props {
-  cinemas: Cinema[]
+    cinemas: Cinema[];
 }
 
-export const CinemasList: React.FC<Props> = ({cinemas}) => {
+export const CinemasList: React.FC<Props> = ({ cinemas }) => {
     return (
-        <ListGroup draggable={true}>
-            {cinemas.map(c => <CinemaCard key={c._id} cinema={c}/>)}
+        <ListGroup>
+            {cinemas.map((c) => (
+                <CinemaCard key={c._id} cinema={c} />
+            ))}
         </ListGroup>
     );
 };
