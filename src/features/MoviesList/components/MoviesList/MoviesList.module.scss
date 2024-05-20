@@ -1,0 +1,7 @@
+@use '../../../../scss/vars';
+
+.movies-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
