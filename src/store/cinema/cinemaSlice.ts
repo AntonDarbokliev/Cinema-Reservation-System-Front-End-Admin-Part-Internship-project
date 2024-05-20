@@ -4,11 +4,12 @@ import { Cinema } from "../../features/CinemasList/interfaces/cinemaInterface";
 const initialState: Cinema = {
     _id: "",
     address: "",
-    hallPlans: [],
+    halls: [],
     menu: [],
     name: "",
     numberOfHalls: "0",
     projections: [],
+    movies: [],
 };
 
 const cinemaSlice = createSlice({

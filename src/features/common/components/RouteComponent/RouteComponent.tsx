@@ -8,6 +8,8 @@ import { CinemaInfoContainer } from "../../../CinemaInfo/container/CinemaInfoCon
 import { HallsList } from "../../../HallsList/components/HallsList/HallsList";
 import { HallLayout } from "../../../HallLayout/components/HallLayout/HallLayout";
 import { CinemaListContainer } from "../../../CinemasList/containers/CinemaListContainer";
+import { MoviesList } from "../../../MoviesList/components/MoviesList/MoviesList";
+import { MovieDetails } from "../../../MovieDetails/components/MovieDetails/MovieDetails";
 
 export const router = createBrowserRouter([
     {
@@ -37,6 +39,14 @@ export const router = createBrowserRouter([
                     {
                         path: "/cinema/:id",
                         element: <CinemaInfoContainer />,
+                    },
+                    {
+                        path: "/cinema/:id/movies",
+                        element: <MoviesList />,
+                    },
+                    {
+                        path: "/cinema/:id/movies/:movieId",
+                        element: <MovieDetails />,
                     },
                     {
                         path: "/cinema/:id/halls",

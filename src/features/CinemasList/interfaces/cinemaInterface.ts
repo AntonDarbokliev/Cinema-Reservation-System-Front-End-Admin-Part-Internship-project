@@ -1,4 +1,5 @@
 import { Hall } from "../../HallsList/interfaces/hallInterface";
+import { Movie } from "../../MoviesList/interfaces/Movie";
 
 export interface Cinema {
     _id: string;
@@ -14,4 +15,6 @@ export interface Cinema {
     menu: object[];
 
     projections: object[];
+
+    movies: Movie[];
 }
