@@ -1,0 +1,26 @@
+@use "../../../../scss/vars";
+
+.movie-details {
+    padding: 5rem;
+}
+
+.movie-desc-poster {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+
+    .description {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+    }
+}
+
+.movie-poster {
+    width: 100%;
+    margin-left: 5rem;
+    > img {
+        border-radius: vars.$main-border-radius;
+        box-shadow: vars.$main-box-shadow;
+    }
+}
