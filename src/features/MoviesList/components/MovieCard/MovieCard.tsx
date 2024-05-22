@@ -16,7 +16,7 @@ export const MovieCard: React.FC<Props> = ({ movie }) => {
             <Card.Img variant="top" src={movie.poster} />
             <Card.Body>
                 <Card.Title>{movie.name}</Card.Title>
-                <Card.Text>{movie.genres}</Card.Text>
+                <Card.Text>{movie.genres.join(', ')}</Card.Text>
                 <Button onClick={() => navigate(movie._id)}>Go to</Button>
             </Card.Body>
         </Card>

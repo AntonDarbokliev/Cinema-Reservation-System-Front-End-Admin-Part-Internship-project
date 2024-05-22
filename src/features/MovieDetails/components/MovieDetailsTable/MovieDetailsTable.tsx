@@ -23,7 +23,7 @@ export const MovieDetailsTable: React.FC<Props> = ({ movie }) => {
                 </tr>
                 <tr>
                     <td>Actors</td>
-                    <td>{movie.actors}</td>
+                    <td>{movie.actors.join(", ")}</td>
                 </tr>
                 <tr>
                     <td>Age Rating</td>
@@ -35,7 +35,7 @@ export const MovieDetailsTable: React.FC<Props> = ({ movie }) => {
                 </tr>
                 <tr>
                     <td>Subtitles</td>
-                    <td>{movie.subtitles ?? 'No subtitles'}</td>
+                    <td>{movie.subtitles ?? "No subtitles"}</td>
                 </tr>
             </tbody>
         </Table>

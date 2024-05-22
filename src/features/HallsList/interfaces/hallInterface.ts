@@ -27,4 +27,5 @@ export interface Hall {
     seatsLayout: Row[];
     _id: string;
     numberOfSeats: number;
+    name: string;
 }

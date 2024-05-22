@@ -1,17 +1,17 @@
 import { Cinema } from "../../CinemasList/interfaces/cinemaInterface";
 import { Hall } from "../../HallsList/interfaces/hallInterface";
+import { Movie } from "../../MoviesList/interfaces/Movie";
 
 export enum ProjectionType {
-  PROJECTION_2D = '2D',
-  PROJECTION_3D = '3D',
-  PROJECTION_4DX = '4DX',
+    PROJECTION_2D = "2D",
+    PROJECTION_3D = "3D",
+    PROJECTION_4DX = "4DX",
 }
-
 
 export interface Projection {
     startTime: string;
 
-    startDate: Date;
+    startDate: string;
 
     cinema: Cinema;
 
@@ -20,4 +20,8 @@ export interface Projection {
     projectionType: ProjectionType;
 
     baseTicketPrice: number;
+
+    movie: Movie;
+
+    _id: string;
 }

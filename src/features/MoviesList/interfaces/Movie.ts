@@ -13,7 +13,7 @@ export interface Movie {
 
     description: Rating;
 
-    actors: Rating;
+    actors: string[];
 
     language: string;
 
