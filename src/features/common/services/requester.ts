@@ -34,7 +34,9 @@ const request = async ({ method, url, data }: RequestProps) => {
         options.headers["Authorization"] = `Bearer ${token}`;
     }
 
-    if (data) {
+    if (data instanceof FormData) {
+        options.body = data;
+    } else {
         options.body = JSON.stringify(data);
         options.headers["Content-Type"] = "application/json";
     }
