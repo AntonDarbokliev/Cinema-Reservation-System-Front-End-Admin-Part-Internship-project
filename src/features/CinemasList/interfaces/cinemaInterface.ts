@@ -1,4 +1,5 @@
 import { Hall } from "../../HallsList/interfaces/hallInterface";
+import { UnpopulatedProjection } from "../../MovieDetails/interfaces/unpopulatedProjection";
 import { Movie } from "../../MoviesList/interfaces/Movie";
 
 export interface Cinema {
@@ -14,7 +15,7 @@ export interface Cinema {
 
     menu: object[];
 
-    projections: object[];
+    projections: UnpopulatedProjection[];
 
     movies: Movie[];
 }
