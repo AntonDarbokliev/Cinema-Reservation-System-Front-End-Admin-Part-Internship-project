@@ -9,9 +9,9 @@ export interface Movie {
 
     length: string;
 
-    director: Rating;
+    director: string;
 
-    description: Rating;
+    description: string;
 
     actors: string[];
 
@@ -19,13 +19,13 @@ export interface Movie {
 
     poster: string;
 
-    production?: Rating;
+    production: string;
 
-    subtitles?: string;
+    subtitles: string[];
 
-    _id: string;
-
-    rating: string;
+    rating: Rating;
 
     projections: Projection[];
+
+    _id: string;
 }
