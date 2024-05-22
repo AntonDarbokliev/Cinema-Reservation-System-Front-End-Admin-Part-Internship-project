@@ -1,19 +1,23 @@
 import { Card } from "react-bootstrap";
-import { Projection } from "../../interfaces/Projection";
+import { UnpopulatedProjection } from "../../interfaces/unpopulatedProjection";
+import Button from "../../../common/components/Button/Button";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface Props {
-  projection: Projection
+    projection: UnpopulatedProjection;
 }
 
-export const MovieDetailsProjection: React.FC<Props> = () => {
+export const MovieDetailsProjection: React.FC<Props> = ({ projection }) => {
+    const navigate = useNavigate();
+    const params = useParams();
     return (
         <Card style={{ width: "18rem" }}>
             <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-                <Card.Text>Some quick example text to build on the card title and make up the bulk of the card's content.</Card.Text>
-                <Card.Link href="#">Card Link</Card.Link>
-                <Card.Link href="#">Another Link</Card.Link>
+                <Card.Title>{projection.projectionType}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">{projection.startDate}</Card.Subtitle>
+                <Card.Text>{projection.startTime}</Card.Text>
+                <Card.Text>Base price: {projection.baseTicketPrice}$</Card.Text>
+                <Button onClick={() => navigate(`/cinema/${params.id}/projections/${projection._id}`)}>Goto</Button>
             </Card.Body>
         </Card>
     );
