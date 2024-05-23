@@ -9,6 +9,7 @@ import { IRootState } from "../../../../store/store";
 import { showAddMovieModal } from "../../../../store/addMovieModal/addMovieModalSlice";
 import { showAddCinemaModal } from "../../../../store/addCinemaModal/addCinemaModalSlice";
 import { showAddHallModal } from "../../../../store/addHallModal/addHallModalSlice";
+import { showAddFoodAndBeverageModal } from "../../../../store/addFoodBeverageModal/addFoodBeverageModalSlice";
 
 export const SideNav = () => {
     const [show, setShow] = useState(false);
@@ -26,6 +27,7 @@ export const SideNav = () => {
     const location = useLocation();
     const cinemaMoviesPathPattern = /^\/cinema\/[a-f0-9]{24}\/movies$/;
     const cinemaHallsPathPattern = /^\/cinema\/[a-f0-9]{24}\/halls$/;
+    const cinemaFoodAndBeveragesPathPattern = /^\/cinema\/[a-f0-9]{24}\/food-and-beverages$/;
 
     const dispatch = useDispatch();
 
@@ -85,6 +87,7 @@ export const SideNav = () => {
                 </Button>
                 {cinemaMoviesPathPattern.test(location.pathname) && <Button onClick={() => dispatch(showAddMovieModal())}>Add Movie</Button>}
                 {cinemaHallsPathPattern.test(location.pathname) && <Button onClick={() => dispatch(showAddHallModal())}>Add Hall</Button>}
+                {cinemaFoodAndBeveragesPathPattern.test(location.pathname) && <Button onClick={() => dispatch(showAddFoodAndBeverageModal())}>Add Item</Button>}
                 {location.pathname === '/' && <Button onClick={() => dispatch(showAddCinemaModal())}>Add Cinema</Button>}
             </div>
         </>
