@@ -10,7 +10,7 @@ export const CinemaPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         if (cinema) dispatch(addCinema(cinema));
-    });
+    }, [cinema]);
     return (
         <div>
             <CinemaNavigation />

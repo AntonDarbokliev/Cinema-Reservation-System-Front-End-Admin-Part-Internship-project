@@ -12,5 +12,6 @@ export const useHalls = () => {
 
     return {
         halls,
+        setHalls
     };
 };

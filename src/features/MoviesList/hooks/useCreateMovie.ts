@@ -25,16 +25,18 @@ export const useCreateMovie = () => {
 
     const createMovieHandler = async (movieData: MovieData) => {
         if (cinemaId) {
-          // File uploads (poster) need to be sent in FormData
+            // File uploads (poster) need to be sent in FormData
             const formData = new FormData();
 
             for (const key in movieData) {
-              console.log('key: ',key);
-              console.log('value: ',movieData[key]);
-
-                formData.append(key, movieData[key]);
+                const value = movieData[key];
+                if (Array.isArray(value)) {
+                    formData.append(key + "[]", value);
+                }else {
+                    formData.append(key, value);
+                }
             }
-            formData.append('cinemaId', cinemaId);
+            formData.append("cinemaId", cinemaId);
             const movie = await createMovie(formData);
             if (addMovieToCinema) {
                 dispatch(addMovieToCinema(movie));

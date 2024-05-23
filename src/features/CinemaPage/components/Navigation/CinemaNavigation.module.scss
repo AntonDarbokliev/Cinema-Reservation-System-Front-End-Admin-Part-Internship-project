@@ -1,19 +1,19 @@
 @use '../../../../scss/vars';
 
+
+
 .nav-link {
-    color: #fff; /* White text */
+    color: #fff; 
     background-color: #2123;
-    // border: 1px black;
     color: black;
 }
 
 .nav-link:hover,
 .nav-link:focus {
-    background-color: #444; /* Slightly darker grey on hover/focus */
+    background-color: #444;
     color: vars.$main-color;
 }
 
 .nav-item {
     margin-right: 10px;
-    // border: 1px black;
 }
