@@ -1,0 +1,15 @@
+@use "../../../../scss/vars";
+
+.food-and-beverages-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (min-width: vars.$min-width-media) {
+    .food-and-beverages-list {
+        display: flex;
+        flex-direction: row;
+    }
+}
