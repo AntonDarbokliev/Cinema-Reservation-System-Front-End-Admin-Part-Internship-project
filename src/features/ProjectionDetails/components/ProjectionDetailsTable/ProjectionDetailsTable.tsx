@@ -10,7 +10,7 @@ export const ProjectionDetailsTable: React.FC<Props> = ({ projection }) => {
         <Table striped>
             <tbody>
                 <tr>
-                    <td>Base ticket price &#40;2D, no sides&#41;</td>
+                    <td>Base ticket price &#40;common seat, no sides&#41;</td>
                     <td>{projection.baseTicketPrice}$</td>
                 </tr>
                 <tr>
