@@ -27,7 +27,7 @@ export const CinemaNavigation = () => {
             </Nav.Item>
             <Nav.Item className={styles["nav-item"]}>
                 <Nav.Link as={"div"} className={styles["nav-link"]} eventKey="link-4">
-                    <Link to="/">Menu</Link>
+                    <Link to="food-and-beverages">Food & Beverages</Link>
                 </Nav.Link>
             </Nav.Item>
         </Nav>

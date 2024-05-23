@@ -10,6 +10,7 @@ import { MoviesList } from "../../../MoviesList/components/MoviesList/MoviesList
 import { MovieDetails } from "../../../MovieDetails/components/MovieDetails/MovieDetails";
 import { ProjectionDetails } from "../../../ProjectionDetails/components/ProjectionDetails/ProjectionDetails";
 import { CinemasList } from "../../../CinemasList/components/CinemasList/CinemasList";
+import { FoodAndBeveragesList } from "../../../FoodAndBeverages/components/FoodAndBeveragesList/FoodAndBeveragesList";
 
 export const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/cinema/:id/projections/:projectionId",
                         element: <ProjectionDetails />,
+                    },
+                    {
+                        path: "/cinema/:id/food-and-beverages",
+                        element: <FoodAndBeveragesList />,
                     },
                 ],
             },
