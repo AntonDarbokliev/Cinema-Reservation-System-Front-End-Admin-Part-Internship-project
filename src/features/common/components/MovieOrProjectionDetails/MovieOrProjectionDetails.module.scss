@@ -4,7 +4,6 @@
     overflow-y: scroll;
     width: 100%;
     padding: 2rem;
-    // text-align: center;
 }
 
 .desc-poster {
@@ -40,25 +39,17 @@
         width: 18vw;
         right: 5vw;
         top: 20vh;
-        > img {
-            border-radius: vars.$main-border-radius;
-            box-shadow: vars.$main-box-shadow;
-        }
     }
 
     .desc-poster {
         display: flex;
         justify-content: center;
         margin-top: 2rem;
-    
+
         .description {
             width: 70vw;
-            left: 0;
             margin-right: 20vw;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: end;
         }
     }
 }
