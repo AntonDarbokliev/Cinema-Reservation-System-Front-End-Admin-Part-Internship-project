@@ -6,10 +6,10 @@ import { Logout } from "../../../Logout/Logout";
 import { CinemaPage } from "../../../CinemaPage/components/CinemaPage/CinemaPage";
 import { HallsList } from "../../../HallsList/components/HallsList/HallsList";
 import { HallLayout } from "../../../HallLayout/components/HallLayout/HallLayout";
-import { CinemaListContainer } from "../../../CinemasList/containers/CinemaListContainer";
 import { MoviesList } from "../../../MoviesList/components/MoviesList/MoviesList";
 import { MovieDetails } from "../../../MovieDetails/components/MovieDetails/MovieDetails";
 import { ProjectionDetails } from "../../../ProjectionDetails/components/ProjectionDetails/ProjectionDetails";
+import { CinemasList } from "../../../CinemasList/components/CinemasList/CinemasList";
 
 export const router = createBrowserRouter([
     {
@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <CinemaListContainer />,
+                element: <CinemasList />,
             },
             {
                 path: "/login",
