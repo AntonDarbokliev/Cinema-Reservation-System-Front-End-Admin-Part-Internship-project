@@ -4,6 +4,7 @@ import { Genre } from "../interfaces/Genre";
 import { Rating } from "../interfaces/Rating";
 import { useDispatch } from "react-redux";
 import { addMovieToCinema } from "../../../store/cinema/cinemaSlice";
+import { makeFormData } from "../../common/utils/makeFormData";
 
 interface MovieData {
     language: string;
@@ -26,16 +27,8 @@ export const useCreateMovie = () => {
     const createMovieHandler = async (movieData: MovieData) => {
         if (cinemaId) {
             // File uploads (poster) need to be sent in FormData
-            const formData = new FormData();
+            const formData = makeFormData(movieData);
 
-            for (const key in movieData) {
-                const value = movieData[key];
-                if (Array.isArray(value)) {
-                    formData.append(key + "[]", value);
-                }else {
-                    formData.append(key, value);
-                }
-            }
             formData.append("cinemaId", cinemaId);
             const movie = await createMovie(formData);
             if (addMovieToCinema) {

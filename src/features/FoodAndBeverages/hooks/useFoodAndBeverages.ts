@@ -9,5 +9,5 @@ export const useFoodAndBeverages = () => {
     useEffect(() => {
         if (cinemaId) getAllFoodAndBeverages(cinemaId).then((data) => setFoodBeverages(data));
     }, []);
-    return { foodBeverages };
+    return { foodBeverages, setFoodBeverages };
 };

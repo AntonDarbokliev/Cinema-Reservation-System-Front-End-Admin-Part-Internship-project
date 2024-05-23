@@ -196,10 +196,18 @@ export const AddMovieModal: React.FC<Props> = ({ show }) => {
                                         placeholder="Actor Name"
                                     />
                                 </Col>
-                                <Col sm="2">{index > 0 && <Button type='button' onClick={() => handleRemove("actor", index, setActors)}>Remove</Button>}</Col>
+                                <Col sm="2">
+                                    {index > 0 && (
+                                        <Button type="button" onClick={() => handleRemove("actor", index, setActors)}>
+                                            Remove
+                                        </Button>
+                                    )}
+                                </Col>
                             </Row>
                         ))}
-                        <Button type='button' onClick={() => handleAdd("actor")}>Add Actor</Button>
+                        <Button type="button" onClick={() => handleAdd("actor")}>
+                            Add Actor
+                        </Button>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Genres</Form.Label>
@@ -218,10 +226,18 @@ export const AddMovieModal: React.FC<Props> = ({ show }) => {
                                         ))}
                                     </Form.Select>
                                 </Col>
-                                <Col sm="2">{index > 0 && <Button type='button' onClick={() => handleRemove("genre", index, setGenres)}>Remove</Button>}</Col>
+                                <Col sm="2">
+                                    {index > 0 && (
+                                        <Button type="button" onClick={() => handleRemove("genre", index, setGenres)}>
+                                            Remove
+                                        </Button>
+                                    )}
+                                </Col>
                             </Row>
                         ))}
-                        <Button type='button' onClick={() => handleAdd("genre")}>Add Genre</Button>
+                        <Button type="button" onClick={() => handleAdd("genre")}>
+                            Add Genre
+                        </Button>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
@@ -237,17 +253,26 @@ export const AddMovieModal: React.FC<Props> = ({ show }) => {
                                     />
                                 </Col>
                                 <Col sm="2">
-                                    {index > 0 && <Button type='button' onClick={() => handleRemove("subtitle", index, setSubtitles)}>Remove</Button>}
+                                    {index > 0 && (
+                                        <Button type="button" onClick={() => handleRemove("subtitle", index, setSubtitles)}>
+                                            Remove
+                                        </Button>
+                                    )}
                                 </Col>
                             </Row>
                         ))}
-                        <Button type='button' onClick={() => handleAdd("subtitle")}>Add Subtitle</Button>
+                        <Button type="button" onClick={() => handleAdd("subtitle")}>
+                            Add Subtitle
+                        </Button>
                     </Form.Group>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button type='button' onClick={() => dispatch(hideAddMovieModal())}>Close</Button>
-                <Button type='button'
+                <Button type="button" onClick={() => dispatch(hideAddMovieModal())}>
+                    Close
+                </Button>
+                <Button
+                    type="button"
                     onClick={async () => {
                         await addMovieHandler();
                         dispatch(hideAddMovieModal());
