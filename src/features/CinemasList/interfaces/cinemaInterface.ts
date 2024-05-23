@@ -19,3 +19,9 @@ export interface Cinema {
 
     movies: Movie[];
 }
+
+export interface CreateCinema {
+    address: string;
+
+    name: string;
+}
