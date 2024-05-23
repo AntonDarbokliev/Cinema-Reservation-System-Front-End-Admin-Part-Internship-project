@@ -7,6 +7,8 @@ import { Nav } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../../store/store";
 import { showAddMovieModal } from "../../../../store/addMovieModal/addMovieModalSlice";
+import { showAddCinemaModal } from "../../../../store/addCinemaModal/addCinemaModalSlice";
+import { showAddHallModal } from "../../../../store/addHallModal/addHallModalSlice";
 
 export const SideNav = () => {
     const [show, setShow] = useState(false);
@@ -23,6 +25,7 @@ export const SideNav = () => {
 
     const location = useLocation();
     const cinemaMoviesPathPattern = /^\/cinema\/[a-f0-9]{24}\/movies$/;
+    const cinemaHallsPathPattern = /^\/cinema\/[a-f0-9]{24}\/halls$/;
 
     const dispatch = useDispatch();
 
@@ -81,6 +84,8 @@ export const SideNav = () => {
                     Menu
                 </Button>
                 {cinemaMoviesPathPattern.test(location.pathname) && <Button onClick={() => dispatch(showAddMovieModal())}>Add Movie</Button>}
+                {cinemaHallsPathPattern.test(location.pathname) && <Button onClick={() => dispatch(showAddHallModal())}>Add Hall</Button>}
+                {location.pathname === '/' && <Button onClick={() => dispatch(showAddCinemaModal())}>Add Cinema</Button>}
             </div>
         </>
     );
