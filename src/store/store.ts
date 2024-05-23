@@ -5,6 +5,7 @@ import cinemaSlice from "./cinema/cinemaSlice";
 import addMovieModalSlice from "./addMovieModal/addMovieModalSlice";
 import addCinemaModalSlice from "./addCinemaModal/addCinemaModalSlice";
 import addHallModalSlice from "./addHallModal/addHallModalSlice";
+import addFoodAndBeverageModalSlice from "./addFoodBeverageModal/addFoodBeverageModalSlice";
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         addMovieModal: addMovieModalSlice,
         addCinemaModal: addCinemaModalSlice,
         addHallModal: addHallModalSlice,
+        addFoodAndBeverageModal: addFoodAndBeverageModalSlice,
     },
 });
 
