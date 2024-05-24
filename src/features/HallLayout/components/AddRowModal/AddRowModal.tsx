@@ -1,17 +1,17 @@
 import { Form, Modal } from "react-bootstrap";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
 import { useEffect, useState } from "react";
 import { Row, Seat, SeatType } from "../../../HallsList/interfaces/hallInterface";
 import { useEditHall } from "../../hooks/useEditHall";
+import Button from "../../../common/components/Button/Button";
 
 interface Props {
-    modalSetter: React.Dispatch<React.SetStateAction<boolean>>;
+    openModalSetter: React.Dispatch<React.SetStateAction<boolean>>;
     show: boolean;
     rowsSetter: React.Dispatch<React.SetStateAction<Row[]>>;
     rows: Row[];
 }
 
-export const AddRowModal: React.FC<Props> = ({ modalSetter, show, rowsSetter, rows }) => {
+export const AddRowModal: React.FC<Props> = ({ openModalSetter, show, rowsSetter, rows }) => {
     const [counter, setCounter] = useState(0);
     const { editHallHandler } = useEditHall();
     useEffect(() => {
@@ -33,7 +33,7 @@ export const AddRowModal: React.FC<Props> = ({ modalSetter, show, rowsSetter, ro
                 return [...s, { seats: row.seats, _id: newRowId }];
             });
 
-            modalSetter(false);
+            openModalSetter(false);
         }
     };
 
@@ -41,14 +41,24 @@ export const AddRowModal: React.FC<Props> = ({ modalSetter, show, rowsSetter, ro
         <Modal show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Body>
                 <h4>Add a Row</h4>
-                <ButtonC onClick={() => setCounter((s) => (s += 1))}>+</ButtonC>
+                <Button onClick={() => setCounter((s) => (s += 1))}>+</Button>
                 <Form.Label>Available spaces</Form.Label>
-                <Form.Control type="number" readOnly={true} value={counter} />
-                <ButtonC onClick={() => setCounter((s) => (s -= 1))}>-</ButtonC>
+                <Form.Control min={0} type="number" readOnly={true} value={counter} />
+                <Button
+                    onClick={() =>
+                        setCounter((s) => {
+                            const newValue = s - 1;
+                            if (newValue >= 0) return newValue;
+                            else return s;
+                        })
+                    }
+                >
+                    -
+                </Button>
             </Modal.Body>
             <Modal.Footer>
-                <ButtonC onClick={onAdd}>Add</ButtonC>
-                <ButtonC onClick={() => modalSetter(false)}>Close</ButtonC>
+                <Button onClick={onAdd}>Add</Button>
+                <Button onClick={() => openModalSetter(false)}>Close</Button>
             </Modal.Footer>
         </Modal>
     );
