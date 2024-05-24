@@ -59,11 +59,11 @@ const request = async ({ method, url, data }: RequestProps) => {
         }, 5000);
     }
 
-    if (response.status == 204) {
+    if (response.status === 204) {
         return {};
     }
 
-    if (response.status == 401) {
+    if (response.status === 401) {
         await router.navigate("/login");
     }
 

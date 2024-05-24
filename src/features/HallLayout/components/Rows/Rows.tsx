@@ -19,14 +19,14 @@ interface Props {
 export const Rows: React.FC<Props> = ({ rows, editMode, addSeatType, setRows, deleteModalSetter }) => {
     const seatOnClickHandler = (seat: SeatInterface, rowIndex: number) => {
         if (editMode) {
-            if (seat.type == SeatType.SEAT_BLANK) {
+            if (seat.type === SeatType.SEAT_BLANK) {
                 seat.type = addSeatType;
             } else {
                 seat.type = SeatType.SEAT_BLANK;
             }
             const rowsCopy = [...rows];
             const seatsCopy = rowsCopy[rowIndex].seats;
-            const seatIndex = seatsCopy.findIndex((currentSeat) => currentSeat._id == seat._id);
+            const seatIndex = seatsCopy.findIndex((currentSeat) => currentSeat._id === seat._id);
             seatsCopy[seatIndex] = seat;
             rowsCopy[rowIndex].seats = seatsCopy;
             setRows(rowsCopy);

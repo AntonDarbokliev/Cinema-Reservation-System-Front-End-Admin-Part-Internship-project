@@ -28,11 +28,11 @@ export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode
                 </Col>
             )}
 
-            {seat.type == SeatType.SEAT_BLANK && editMode && (
+            {seat.type === SeatType.SEAT_BLANK && editMode && (
                 <Col className={styles["col"]} onClick={() => onClickHandler(seat, rowIndex)} key={seat._id} style={{ border: "none", background: "#cccc" }} />
             )}
 
-            {seat.type == SeatType.SEAT_BLANK && !editMode && <Col className={styles["col"]} key={seat._id} style={{ border: "none" }} />}
+            {seat.type === SeatType.SEAT_BLANK && !editMode && <Col className={styles["col"]} key={seat._id} style={{ border: "none" }} />}
         </>
     );
 };
