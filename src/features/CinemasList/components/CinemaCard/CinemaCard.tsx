@@ -1,8 +1,9 @@
 import Card from "react-bootstrap/Card";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
 import { Cinema } from "../../interfaces/cinemaInterface";
 import { useNavigate } from "react-router-dom";
 import styles from './CinemaCard.module.scss';
+import Button from "../../../common/components/Button/Button";
+
 
 interface Props {
     cinema: Cinema;
@@ -16,7 +17,7 @@ export const CinemaCard: React.FC<Props> = ({ cinema }) => {
             <Card.Body>
                 <Card.Title>{cinema.name}</Card.Title>
                 <Card.Text>{cinema.address}</Card.Text>
-                <ButtonC onClick={() => navigate(`cinema/${cinema._id}`)}>Go to</ButtonC>
+                <Button onClick={() => navigate(`cinema/${cinema._id}`)}>Go to</Button>
             </Card.Body>
         </Card>
     );

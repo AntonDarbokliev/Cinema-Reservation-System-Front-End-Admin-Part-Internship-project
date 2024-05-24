@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap";
 import { useHall } from "../../hooks/useHall";
 import { useState } from "react";
-import ButtonC from "../../../common/components/ButtonC/ButtonC";
+import Button from "../../../common/components/Button/Button";
 import { SeatType, Row } from "../../../HallsList/interfaces/hallInterface";
 import { AddRowModal } from "../AddRowModal/AddRowModal";
 import { useEditHall } from "../../hooks/useEditHall";
@@ -31,15 +31,15 @@ export const HallLayout = () => {
     return (
         <>
             <h1 style={{ textAlign: "center", marginBottom: "3rem" }}>Screen</h1>
-            <AddRowModal rowsSetter={setRows} rows={rows} show={addRowModal} modalSetter={setAddRowModal} />
+            <AddRowModal rowsSetter={setRows} rows={rows} show={addRowModal} openModalSetter={setAddRowModal} />
             <DeleteRowModal rowsSetter={setRows} modalSetter={setDeleteRowModal} show={deleteRowModal.show} row={deleteRowModal.row} />
             <Container>
                 <Rows deleteModalSetter={setDeleteRowModal} addSeatType={addSeatType} editMode={editMode} rows={rows} setRows={setRows}></Rows>
             </Container>
             <div className={styles["util-btn-group"]}>
                 {editMode && <SeatTypeSelect seatTypeSetter={setAddSeatType}></SeatTypeSelect>}
-                <ButtonC onClick={saveOrEditClickHandler}>{editMode ? "Save" : "Edit Mode"}</ButtonC>
-                <ButtonC onClick={() => setAddRowModal(true)}>Add Row</ButtonC>
+                <Button onClick={saveOrEditClickHandler}>{editMode ? "Save" : "Edit Mode"}</Button>
+                <Button onClick={() => setAddRowModal(true)}>Add Row</Button>
             </div>
         </>
     );
