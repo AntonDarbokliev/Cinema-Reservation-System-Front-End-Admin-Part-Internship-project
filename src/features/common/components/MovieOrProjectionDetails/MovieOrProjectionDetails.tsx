@@ -8,6 +8,7 @@ import { Movie } from "../../../MoviesList/interfaces/Movie";
 import { MovieDetailsTable } from "../../../MovieDetails/components/MovieDetailsTable/MovieDetailsTable";
 import { MovieDetailsProjections } from "../../../MovieDetails/components/MovieDetailsProjections/MovieDetailsProjections";
 import { ProjectionDetailsTable } from "../../../ProjectionDetails/components/ProjectionDetailsTable/ProjectionDetailsTable";
+import Button from "../Button/Button";
 
 interface Props {
     movie: Movie;
@@ -38,6 +39,7 @@ export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection })
                         </div>
                     </div>
                     {!projection && <MovieDetailsProjections />}
+                    {projection && <Button>Reserve a Seat</Button>}
                 </div>
             )}
         </Container>
