@@ -31,7 +31,7 @@ export const HallLayout = () => {
     return (
         <>
             <h1 style={{ textAlign: "center", marginBottom: "3rem" }}>Screen</h1>
-            <AddRowModal rowsSetter={setRows} rows={rows} show={addRowModal} modalSetter={setAddRowModal} />
+            <AddRowModal rowsSetter={setRows} rows={rows} show={addRowModal} openModalSetter={setAddRowModal} />
             <DeleteRowModal rowsSetter={setRows} modalSetter={setDeleteRowModal} show={deleteRowModal.show} row={deleteRowModal.row} />
             <Container>
                 <Rows deleteModalSetter={setDeleteRowModal} addSeatType={addSeatType} editMode={editMode} rows={rows} setRows={setRows}></Rows>
