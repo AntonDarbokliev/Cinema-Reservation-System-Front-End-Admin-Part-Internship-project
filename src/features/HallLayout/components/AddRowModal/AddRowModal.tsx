@@ -3,7 +3,6 @@ import Button from "../../../common/components/Button/Button";
 import { useEffect, useState } from "react";
 import { Row, Seat, SeatType } from "../../../HallsList/interfaces/hallInterface";
 import { useEditHall } from "../../hooks/useEditHall";
-import Button from "../../../common/components/Button/Button";
 
 interface Props {
     openModalSetter: React.Dispatch<React.SetStateAction<boolean>>;
