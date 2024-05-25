@@ -8,11 +8,10 @@ export const useHall = () => {
     const [hall, setHall] = useState<Hall>({ _id: "", numberOfSeats: 0, seatsLayout: [] });
 
     useEffect(() => {
-      if(params.hallId)
-      getHall(params.hallId).then(data => setHall(data));
-    },[])
+        if (params.hallId) getHall(params.hallId).then((data) => setHall(data));
+    }, []);
 
     return {
-      hall
-    }
+        hall,
+    };
 };
