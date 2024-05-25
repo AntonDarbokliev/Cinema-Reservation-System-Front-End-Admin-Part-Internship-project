@@ -1,6 +1,5 @@
 import { Button as BootstrapButton, Modal } from "react-bootstrap";
 import Button from "../../../common/components/Button/Button";
-// import { useDeleteHallRow } from "../../hooks/useDeleteHallRow";
 import { Row } from "../../../HallsList/interfaces/hallInterface";
 
 interface Props {
@@ -16,7 +15,6 @@ interface Props {
 }
 
 export const DeleteRowModal: React.FC<Props> = ({ show, modalSetter, row, rowsSetter }) => {
-    // const { deleteHallRowHandler } = useDeleteHallRow();
     return (
         <Modal show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Body>
@@ -26,7 +24,6 @@ export const DeleteRowModal: React.FC<Props> = ({ show, modalSetter, row, rowsSe
                 <BootstrapButton
                     variant="danger"
                     onClick={async () => {
-                        // await deleteHallRowHandler(row._id);
                         modalSetter({ show: false, row: { _id: "", seats: [] } });
                         rowsSetter((state) => state.filter((currentRow) => currentRow._id != row._id));
                     }}
