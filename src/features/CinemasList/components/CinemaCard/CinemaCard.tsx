@@ -3,7 +3,6 @@ import Button from "../../../common/components/Button/Button";
 import { Cinema } from "../../interfaces/cinemaInterface";
 import { useNavigate } from "react-router-dom";
 import styles from './CinemaCard.module.scss';
-import Button from "../../../common/components/Button/Button";
 
 
 interface Props {
