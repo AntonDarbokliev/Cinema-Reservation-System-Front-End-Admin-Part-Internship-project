@@ -11,6 +11,7 @@ import { MovieDetails } from "../../../MovieDetails/components/MovieDetails/Movi
 import { ProjectionDetails } from "../../../ProjectionDetails/components/ProjectionDetails/ProjectionDetails";
 import { CinemasList } from "../../../CinemasList/components/CinemasList/CinemasList";
 import { FoodAndBeveragesList } from "../../../FoodAndBeverages/components/FoodAndBeveragesList/FoodAndBeveragesList";
+import { ProjectionHallLayout } from "../../../ProjectionDetails/components/ProjectionHallLayout/ProjectionHallLayout";
 
 export const router = createBrowserRouter([
     {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/cinema/:id/projections/:projectionId",
                         element: <ProjectionDetails />,
+                    },
+                    {
+                        path: "/cinema/:id/projections/:projectionId/hall",
+                        element: <ProjectionHallLayout />,
                     },
                     {
                         path: "/cinema/:id/food-and-beverages",
