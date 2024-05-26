@@ -9,6 +9,7 @@ import { MovieDetailsTable } from "../../../MovieDetails/components/MovieDetails
 import { MovieDetailsProjections } from "../../../MovieDetails/components/MovieDetailsProjections/MovieDetailsProjections";
 import { ProjectionDetailsTable } from "../../../ProjectionDetails/components/ProjectionDetailsTable/ProjectionDetailsTable";
 import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     movie: Movie;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection }) => {
+    const navigate = useNavigate();
     return (
         <Container>
             {movie && (
@@ -39,7 +41,11 @@ export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection })
                         </div>
                     </div>
                     {!projection && <MovieDetailsProjections />}
-                    {projection && <Button>Reserve a Seat</Button>}
+                    {projection && (
+                        <>
+                            <Button onClick={() => navigate("hall")}>Reserve a Seat</Button>
+                        </>
+                    )}
                 </div>
             )}
         </Container>

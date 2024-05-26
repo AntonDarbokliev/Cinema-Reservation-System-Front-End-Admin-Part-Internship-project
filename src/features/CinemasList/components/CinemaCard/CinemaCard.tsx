@@ -17,7 +17,7 @@ export const CinemaCard: React.FC<Props> = ({ cinema }) => {
             <Card.Body>
                 <Card.Title>{cinema.name}</Card.Title>
                 <Card.Text>{cinema.address}</Card.Text>
-                <Button onClick={() => navigate(`cinema/${cinema._id}`)}>Go to</Button>
+                <Button onClick={() => navigate(`cinema/${cinema._id}/halls`)}>Go to</Button>
             </Card.Body>
         </Card>
     );
