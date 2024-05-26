@@ -1,3 +1,3 @@
 export interface Reservation { 
-  seatId: string;
+  seat: string;
 }
