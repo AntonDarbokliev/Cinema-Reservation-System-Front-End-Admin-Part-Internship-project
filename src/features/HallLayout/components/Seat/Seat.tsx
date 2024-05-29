@@ -1,10 +1,11 @@
 import { Col } from "react-bootstrap";
-import { Seat as SeatInterface, SeatType } from "../../../HallsList/interfaces/hallInterface";
+import { Seat as SeatInterface } from "../../../HallsList/interfaces/hallInterface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChair } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Seat.module.scss";
 import { SeatStatus } from "../../interfaces/SeatStatus";
 import { useEffect, useState } from "react";
+import { SeatType } from "../../../HallsList/interfaces/SeatType";
 
 interface Props {
     seat: SeatInterface;
@@ -14,9 +15,10 @@ interface Props {
     seatNumber: number;
     seatStatus?: SeatStatus | null;
     isSelected: boolean;
+    blankSeatType: SeatType;
 }
 
-export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode, seatNumber, seatStatus, isSelected }) => {
+export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode, seatNumber, seatStatus, isSelected, blankSeatType }) => {
     const [color, setColor] = useState("#5e829f");
     useEffect(() => {
         console.log("loading seat");
@@ -31,22 +33,23 @@ export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode
             setColor("green");
         }
     }, [isSelected]);
+
     return (
         <>
-            {seat.type != SeatType.SEAT_BLANK && (
+            {seat.type.name != blankSeatType.name && (
                 <Col key={seat._id} className={styles["col"]} onClick={() => onClickHandler(seat, rowIndex, seatNumber)}>
                     <FontAwesomeIcon color={color} className={styles["chair-icon"]} icon={faChair} />
                     {!editMode && (
                         <>
                             <p className={styles["seat-text"]}>
-                                {seatNumber} - {seat.type}
+                                {seatNumber} - {seat.type.name}
                             </p>
                         </>
                     )}
                 </Col>
             )}
 
-            {seat.type === SeatType.SEAT_BLANK && editMode && (
+            {seat.type.name === blankSeatType.name && editMode && (
                 <Col
                     className={styles["col"]}
                     onClick={() => onClickHandler(seat, rowIndex, seatNumber)}
@@ -55,7 +58,7 @@ export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode
                 />
             )}
 
-            {seat.type === SeatType.SEAT_BLANK && !editMode && <Col className={styles["col"]} key={seat._id} style={{ border: "none" }} />}
+            {seat.type.name === blankSeatType.name && !editMode && <Col className={styles["col"]} key={seat._id} style={{ border: "none" }} />}
         </>
     );
 };

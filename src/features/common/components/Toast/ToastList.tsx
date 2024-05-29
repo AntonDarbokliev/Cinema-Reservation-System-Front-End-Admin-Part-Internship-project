@@ -9,7 +9,7 @@ export const ToastList = () => {
     return (
         <ToastContainer className={`position-absolute ${styles['toast-container']}`}>
             {toasts.map((notfication) => (
-                <ToastNotification text={notfication.text} type={notfication.type} />
+                <ToastNotification key={notfication.id} text={notfication.text} type={notfication.type} />
             ))}
         </ToastContainer>
     );

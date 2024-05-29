@@ -44,6 +44,7 @@ export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection })
                     {projection && (
                         <>
                             <Button onClick={() => navigate("hall")}>Reserve a Seat</Button>
+                            <Button onClick={() => navigate("hall")}>Buy a ticket</Button>
                         </>
                     )}
                 </div>
