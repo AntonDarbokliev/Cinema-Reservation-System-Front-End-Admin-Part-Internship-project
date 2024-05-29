@@ -4,4 +4,5 @@ export interface SelectedSeat {
   seat: Seat;
   seatRow: number;
   seatNumber: number;
+  reserved?: boolean;
 }
