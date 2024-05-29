@@ -1,10 +1,12 @@
 import { Button, Row as RowComponent } from "react-bootstrap";
-import { Row, Seat as SeatInterface, SeatType } from "../../../HallsList/interfaces/hallInterface";
+import { Row, Seat as SeatInterface, SeatTypeName } from "../../../HallsList/interfaces/hallInterface";
 import { Seat } from "../Seat/Seat";
 import styles from "./Rows.module.scss";
 import { Reservation } from "../../../MovieDetails/interfaces/Reservation";
 import { SeatStatus } from "../../interfaces/SeatStatus";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
+import { SeatType } from "../../../HallsList/interfaces/SeatType";
+import { useEffect } from "react";
 
 interface Props {
     rows: Row[];
@@ -16,34 +18,42 @@ interface Props {
         }>
     >;
     editMode: boolean;
-    addSeatType: SeatType;
-    reserveMode?: boolean;
+    addSeatType: SeatType | undefined;
+    projectionMode?: boolean;
     reservations?: Reservation[];
-    setSelectedReserveSeat?: React.Dispatch<React.SetStateAction<SelectedSeat | null>>;
-    selectedReserveSeat?: SelectedSeat | null;
+    setSelectedSeat?: React.Dispatch<React.SetStateAction<SelectedSeat | null>>;
+    selectedSeat?: SelectedSeat | null;
+    blankSeatType: SeatType;
 }
 
 export const Rows: React.FC<Props> = ({
     rows,
     editMode,
     addSeatType,
+    blankSeatType,
     setRows,
     deleteModalSetter,
-    reserveMode,
+    projectionMode,
     reservations,
-    setSelectedReserveSeat,
-    selectedReserveSeat,
+    setSelectedSeat,
+    selectedSeat,
 }) => {
+    useEffect(() => {
+        console.log("Blank Seat Type: ", blankSeatType);
+    }, [blankSeatType]);
+
     const seatOnClickHandler = (seat: SeatInterface, rowIndex: number, seatNumber: number) => {
-        if (reserveMode && reservations && setSelectedReserveSeat) {
-            if (!reservations.some((reservation) => reservation.seat === seat._id)) {
-                setSelectedReserveSeat({ seat, seatRow: rowIndex + 1, seatNumber });
+        if (projectionMode && reservations && setSelectedSeat) {
+            if (reservations.some((reservation) => reservation.seat === seat._id)) {
+                setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber, reserved: true });
+            } else {
+                setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber });
             }
         } else if (editMode) {
-            if (seat.type === SeatType.SEAT_BLANK) {
+            if (seat.type.name === SeatTypeName.SEAT_BLANK && addSeatType) {
                 seat.type = addSeatType;
             } else {
-                seat.type = SeatType.SEAT_BLANK;
+                seat.type = blankSeatType;
             }
             const rowsCopy = [...rows];
             const seatsCopy = rowsCopy[rowIndex].seats;
@@ -73,19 +83,20 @@ export const Rows: React.FC<Props> = ({
                             if (reservations) {
                                 if (reservations?.some((reservation) => reservation.seat === seat._id)) {
                                     seatStatus = SeatStatus.SEAT_RESERVERED;
-                                } else if (selectedReserveSeat?.seat._id === seat._id) {
+                                } else if (selectedSeat?.seat._id === seat._id) {
                                     seatStatus = SeatStatus.SEAT_SELECTED;
                                 } else {
                                     seatStatus = SeatStatus.SEAT_FREE;
                                 }
                             }
 
-                            if (seat.type != SeatType.SEAT_BLANK) {
+                            if (seat.type.name !== blankSeatType.name) {
                                 currentSeatNumber++;
                             }
 
                             return (
                                 <Seat
+                                    blankSeatType={blankSeatType}
                                     editMode={editMode}
                                     onClickHandler={seatOnClickHandler}
                                     rowIndex={rowIndex}
@@ -93,7 +104,7 @@ export const Rows: React.FC<Props> = ({
                                     seatNumber={currentSeatNumber}
                                     key={seat._id}
                                     seatStatus={seatStatus}
-                                    isSelected={selectedReserveSeat?.seat._id === seat._id}
+                                    isSelected={selectedSeat?.seat._id === seat._id}
                                 />
                             );
                         })}
