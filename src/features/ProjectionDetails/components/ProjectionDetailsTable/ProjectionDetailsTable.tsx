@@ -13,10 +13,7 @@ export const ProjectionDetailsTable: React.FC<Props> = ({ projection }) => {
                     <td>Base ticket price &#40;common seat, no sides&#41;</td>
                     <td>{projection.baseTicketPrice}$</td>
                 </tr>
-                <tr>
-                    <td>Cinema</td>
-                    <td>{projection.cinema.name}</td>
-                </tr>
+
                 <tr>
                     <td>Hall</td>
                     <td>{projection.hall.name}</td>

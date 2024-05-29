@@ -6,7 +6,6 @@ import { Reservation } from "../../../MovieDetails/interfaces/Reservation";
 import { SeatStatus } from "../../interfaces/SeatStatus";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
 import { SeatType } from "../../../HallsList/interfaces/SeatType";
-import { useEffect } from "react";
 
 interface Props {
     rows: Row[];
@@ -38,10 +37,6 @@ export const Rows: React.FC<Props> = ({
     setSelectedSeat,
     selectedSeat,
 }) => {
-    useEffect(() => {
-        console.log("Blank Seat Type: ", blankSeatType);
-    }, [blankSeatType]);
-
     const seatOnClickHandler = (seat: SeatInterface, rowIndex: number, seatNumber: number) => {
         if (projectionMode && reservations && setSelectedSeat) {
             if (reservations.some((reservation) => reservation.seat === seat._id)) {
