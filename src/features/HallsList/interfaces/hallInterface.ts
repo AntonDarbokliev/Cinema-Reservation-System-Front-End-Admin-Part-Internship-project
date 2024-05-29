@@ -1,4 +1,6 @@
-export enum SeatType {
+import { SeatType } from "./SeatType";
+
+export enum SeatTypeName {
     SEAT_COMMON = "Common",
     SEAT_VIP = "VIP",
     SEAT_COUPLES = "Couples",
@@ -6,7 +8,7 @@ export enum SeatType {
 }
 
 export interface Seat {
-    type: SeatType.SEAT_COMMON | SeatType.SEAT_VIP | SeatType.SEAT_COUPLES | SeatType.SEAT_BLANK;
+    type: SeatType;
     _id: string;
 }
 
@@ -20,7 +22,7 @@ export interface CreateRow {
 }
 
 export interface CreateSeat {
-    type: SeatType.SEAT_COMMON | SeatType.SEAT_VIP | SeatType.SEAT_COUPLES | SeatType.SEAT_BLANK;
+    type: SeatTypeName.SEAT_COMMON | SeatTypeName.SEAT_VIP | SeatTypeName.SEAT_COUPLES | SeatTypeName.SEAT_BLANK;
 }
 
 export interface Hall {
