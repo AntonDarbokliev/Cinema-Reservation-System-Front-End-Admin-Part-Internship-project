@@ -1,6 +1,7 @@
 import { Cinema } from "../../CinemasList/interfaces/cinemaInterface";
 import { Hall } from "../../HallsList/interfaces/hallInterface";
 import { Movie } from "../../MoviesList/interfaces/Movie";
+import { ProjectionStatus } from "./ProjectionStatus";
 import { Reservation } from "./Reservation";
 
 export enum ProjectionType {
@@ -27,4 +28,6 @@ export interface Projection {
     _id: string;
 
     reservations: Reservation[];
+
+    status: ProjectionStatus;
 }

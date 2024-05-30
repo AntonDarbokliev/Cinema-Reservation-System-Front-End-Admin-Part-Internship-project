@@ -1,4 +1,5 @@
 import { ProjectionType } from "./Projection";
+import { ProjectionStatus } from "./ProjectionStatus";
 
 export interface UnpopulatedProjection {
     startTime: string;
@@ -16,4 +17,6 @@ export interface UnpopulatedProjection {
     movie: string;
 
     _id: string;
+
+    status: ProjectionStatus;
 }
