@@ -6,16 +6,15 @@ import { useHalls } from "../../../HallsList/hooks/useHalls";
 import { useParams } from "react-router-dom";
 import { useForm } from "../../../common/hooks/useForm";
 import { useCreateProjection } from "../../../ProjectionDetails/hooks/useCreateProjection";
-import { ProjectionType } from "../../interfaces/Projection";
-import { useDispatch } from "react-redux";
-import { addProjectionToCinema } from "../../../../store/cinema/cinemaSlice";
+import { Projection, ProjectionType } from "../../interfaces/Projection";
 
 interface Props {
     show: boolean;
     showAddProjectionModal: React.Dispatch<React.SetStateAction<boolean>>;
+    setProjections: React.Dispatch<React.SetStateAction<Projection[]>>;
 }
 
-export const AddProjectionModal: React.FC<Props> = ({ show, showAddProjectionModal }) => {
+export const AddProjectionModal: React.FC<Props> = ({ show, showAddProjectionModal, setProjections }) => {
     const { projectionTypes } = useProjectionTypes();
     const { halls } = useHalls();
     const cinemaId = useParams().id;
@@ -31,11 +30,9 @@ export const AddProjectionModal: React.FC<Props> = ({ show, showAddProjectionMod
     });
     const { createProjectionHandler } = useCreateProjection();
 
-    const dispatch = useDispatch();
-
     const createProjectionOnClick = async () => {
         const projection = await createProjectionHandler(formValues);
-        dispatch(addProjectionToCinema(projection));
+        setProjections((state) => [...state, projection]);
         showAddProjectionModal(false);
     };
 
