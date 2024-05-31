@@ -10,19 +10,29 @@ import { MovieDetailsProjections } from "../../../MovieDetails/components/MovieD
 import { ProjectionDetailsTable } from "../../../ProjectionDetails/components/ProjectionDetailsTable/ProjectionDetailsTable";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
+import { AddEditMovieModal } from "../../../MoviesList/components/AddEditMovieModal/AddEditMovieModal";
+import { IRootState } from "../../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { showAddEditMovieModal } from "../../../../store/addEditMovieModal/addEditMovieModalSlice";
 
 interface Props {
     movie: Movie;
+    setMovie: React.Dispatch<React.SetStateAction<Movie>>;
     projection?: Projection;
 }
 
-export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection }) => {
+export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection, setMovie }) => {
     const navigate = useNavigate();
+    const modalState = useSelector((state: IRootState) => state.addEditMovieModal.show);
+    const dispatch = useDispatch();
+
     return (
         <Container>
+            <AddEditMovieModal setMovie={setMovie} movie={movie} show={modalState} />
             {movie && (
                 <div className={styles["details"]}>
                     <h1>{movie.name}</h1>
+                    <Button onClick={() => dispatch(showAddEditMovieModal())}>Edit</Button>
                     <div className={styles["desc-poster"]}>
                         <div className={styles["description"]}>
                             {!projection && (
@@ -43,8 +53,7 @@ export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection })
                     {!projection && <MovieDetailsProjections />}
                     {projection && (
                         <>
-                            <Button onClick={() => navigate("hall")}>Reserve a Seat</Button>
-                            <Button onClick={() => navigate("hall")}>Buy a ticket</Button>
+                            <Button onClick={() => navigate("hall")}>Reserve/Buy a Seat</Button>
                         </>
                     )}
                 </div>
