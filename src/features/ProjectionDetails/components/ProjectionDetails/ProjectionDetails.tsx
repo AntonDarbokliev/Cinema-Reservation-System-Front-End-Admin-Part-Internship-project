@@ -2,6 +2,6 @@ import { MovieOrProjectionDetails } from "../../../common/components/MovieOrProj
 import { useProjection } from "../../hooks/useProjection";
 
 export const ProjectionDetails = () => {
-    const { projection } = useProjection();
-    return <>{projection && <MovieOrProjectionDetails movie={projection?.movie} projection={projection}></MovieOrProjectionDetails>}</>;
+    const { projection, setProjection } = useProjection();
+    return <>{projection && <MovieOrProjectionDetails movie={projection?.movie} setProjection={setProjection} projection={projection}></MovieOrProjectionDetails>}</>;
 };

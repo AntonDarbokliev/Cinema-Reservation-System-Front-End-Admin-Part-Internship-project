@@ -2,7 +2,7 @@ import { MovieDetailsProjection } from "../MovieDetailsProjection/MovieDetailsPr
 import Button from "../../../common/components/Button/Button";
 import styles from "./MovieDetailsProjections.module.scss";
 import { useState } from "react";
-import { AddProjectionModal } from "../AddProjectionModal/AddProjectionModal";
+import { AddEditProjectionModal } from "../AddEditProjectionModal/AddEditProjectionModal";
 import { useProjections } from "../../hooks/useProjections";
 
 export const MovieDetailsProjections = () => {
@@ -13,7 +13,7 @@ export const MovieDetailsProjections = () => {
             <h1>
                 Projections <Button onClick={() => setShowAddProjectionModal(true)}>Add a Projection</Button>
             </h1>
-            <AddProjectionModal setProjections={setProjections} show={showAddProjection} showAddProjectionModal={setShowAddProjectionModal}></AddProjectionModal>
+            <AddEditProjectionModal setProjections={setProjections} show={showAddProjection} showAddProjectionModal={setShowAddProjectionModal}></AddEditProjectionModal>
             <div className={styles["projections-list"]}>
                 {projections && projections.length > 0 && projections.map((prj) => <MovieDetailsProjection key={prj._id} projection={prj} />)}
             </div>
