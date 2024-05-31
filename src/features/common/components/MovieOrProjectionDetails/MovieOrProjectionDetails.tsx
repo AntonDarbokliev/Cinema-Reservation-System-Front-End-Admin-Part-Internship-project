@@ -14,25 +14,45 @@ import { AddEditMovieModal } from "../../../MoviesList/components/AddEditMovieMo
 import { IRootState } from "../../../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { showAddEditMovieModal } from "../../../../store/addEditMovieModal/addEditMovieModalSlice";
+import { AddEditProjectionModal } from "../../../MovieDetails/components/AddEditProjectionModal/AddEditProjectionModal";
+import { useState } from "react";
 
 interface Props {
-    movie: Movie;
-    setMovie: React.Dispatch<React.SetStateAction<Movie>>;
+    movie?: Movie;
+    setMovie?: React.Dispatch<React.SetStateAction<Movie>>;
     projection?: Projection;
+    setProjection?: React.Dispatch<React.SetStateAction<Projection>>;
 }
 
-export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection, setMovie }) => {
+export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection, setMovie, setProjection }) => {
     const navigate = useNavigate();
-    const modalState = useSelector((state: IRootState) => state.addEditMovieModal.show);
+    const movieModalState = useSelector((state: IRootState) => state.addEditMovieModal.show);
     const dispatch = useDispatch();
+    const [projectionModalState, setProjectionModalState] = useState(false);
 
     return (
         <Container>
-            <AddEditMovieModal setMovie={setMovie} movie={movie} show={modalState} />
+            <AddEditMovieModal setMovie={setMovie} movie={movie} show={movieModalState} />
+            <AddEditProjectionModal
+                show={projectionModalState}
+                showAddProjectionModal={setProjectionModalState}
+                projection={projection}
+                setProjection={setProjection}
+            />
             {movie && (
                 <div className={styles["details"]}>
                     <h1>{movie.name}</h1>
-                    <Button onClick={() => dispatch(showAddEditMovieModal())}>Edit</Button>
+                    <Button
+                        onClick={() => {
+                            if (projection) {
+                                setProjectionModalState(true);
+                            } else if (movie) {
+                                dispatch(showAddEditMovieModal());
+                            }
+                        }}
+                    >
+                        Edit
+                    </Button>
                     <div className={styles["desc-poster"]}>
                         <div className={styles["description"]}>
                             {!projection && (
