@@ -4,12 +4,18 @@ import { Projection } from "../../../MovieDetails/interfaces/Projection";
 import { Reservation } from "../../../MovieDetails/interfaces/Reservation";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
 import Button from "../../../common/components/Button/Button";
-import Form from "react-bootstrap/Form";
 import { useFoodAndBeverages } from "../../hooks/useFoodAndBeverages";
 import { FoodAndBeverage } from "../../../FoodAndBeverages/interfaces/FoodAndBeverage";
 import { useState } from "react";
-import Card from "react-bootstrap/Card";
+import { Dropdown, DropdownButton, Form, InputGroup } from "react-bootstrap";
 import { BuyTicketModalCheckoutStage } from "./BuyTicketModalCheckoutStage";
+import { useBuyTicket } from "../../hooks/useBuyTicket";
+Form;
+
+export interface SelectedItem {
+    item: FoodAndBeverage;
+    quantity: number;
+}
 
 interface Props {
     showBuyTicketModal: boolean;
@@ -18,6 +24,7 @@ interface Props {
     reservation?: Reservation;
     selectedSeat: SelectedSeat | null;
     setSelectedSeat: React.Dispatch<React.SetStateAction<SelectedSeat | null>>;
+    setProjection: React.Dispatch<React.SetStateAction<Projection>>;
 }
 
 export const BuyTicketModal: React.FC<Props> = ({
@@ -27,63 +34,53 @@ export const BuyTicketModal: React.FC<Props> = ({
     selectedSeat,
     setShowBuyTicketModal,
     setSelectedSeat,
+    setProjection,
 }) => {
     const { foodAndBeverages } = useFoodAndBeverages();
 
-    const [selectedFoodAndBeverage, setSelectedFoodAndBeverage] = useState<string>("");
-    const [foodAndBeverageQuantity, setFoodAndBeverageQuantity] = useState<{
-        [key: string]: { quantity: number; foodAndBeverage: FoodAndBeverage };
-    }>({});
-
-    const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedFoodAndBeverage(e.target.value);
-    };
-
     const [modalStage, setModalStage] = useState(0);
+    const [selectedItems, setSelectedItems] = useState<{ [key: string]: SelectedItem }>({});
+    const [price, setPrice] = useState(0);
 
-    const onAdd = () => {
-        if (selectedFoodAndBeverage !== "") {
-            const item = foodAndBeverageQuantity[selectedFoodAndBeverage];
-
-            if (item) {
-                item.quantity += 1;
-                setFoodAndBeverageQuantity((state) => {
-                    return { ...state, [selectedFoodAndBeverage]: item };
-                });
-            } else {
-                setFoodAndBeverageQuantity((state) => {
-                    return {
-                        ...state,
-                        [selectedFoodAndBeverage]: {
-                            quantity: 1,
-                            foodAndBeverage: foodAndBeverages.find((f) => f.name === selectedFoodAndBeverage)!,
-                        },
-                    };
-                });
-            }
-        }
+    const handleSelect = (item: FoodAndBeverage) => {
+        setSelectedItems((prevSelectedItems) => ({
+            ...prevSelectedItems,
+            [item._id]: {
+                item,
+                quantity: prevSelectedItems[item._id] ? prevSelectedItems[item._id].quantity : 1,
+            },
+        }));
     };
 
-    // const onRemoveItem = (name: string) => {
-    //     setFoodAndBeverageQuantity((state) => ({ ...state, name: undefined }));
-    // };
-
-    const onPlusMinus = (name: string, plusOrMinus: "plus" | "minus") => {
-        const item = foodAndBeverageQuantity[name];
-        if (item) {
-            if (plusOrMinus === "plus") {
-                item.quantity += 1;
-            } else if (plusOrMinus === "minus") {
-                item.quantity -= 1;
-                if (item.quantity <= 0) {
-                    // onRemoveItem(name);
-                }
-            }
-            setFoodAndBeverageQuantity((state) => {
-                return { ...state, [name]: item };
-            });
-        }
+    const handleIncreaseQuantity = (itemId: string) => {
+        setSelectedItems((prevSelectedItems) => ({
+            ...prevSelectedItems,
+            [itemId]: {
+                ...prevSelectedItems[itemId],
+                quantity: prevSelectedItems[itemId].quantity + 1,
+            },
+        }));
     };
+
+    const handleDecreaseQuantity = (itemId: string) => {
+        setSelectedItems((prevSelectedItems) => ({
+            ...prevSelectedItems,
+            [itemId]: {
+                ...prevSelectedItems[itemId],
+                quantity: Math.max(1, prevSelectedItems[itemId].quantity - 1),
+            },
+        }));
+    };
+
+    const handleRemoveItem = (itemId: string) => {
+        setSelectedItems((prevSelectedItems) => {
+            const updatedItems = { ...prevSelectedItems };
+            delete updatedItems[itemId];
+            return updatedItems;
+        });
+    };
+
+    const { buyTicketHandler } = useBuyTicket(setProjection);
 
     return (
         <Modal show={showBuyTicketModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -102,7 +99,7 @@ export const BuyTicketModal: React.FC<Props> = ({
                                 </tr>
                                 <tr>
                                     <td>Seat Type: </td>
-                                    <td>{selectedSeat?.seat.type}</td>
+                                    <td>{selectedSeat?.seat.type.name}</td>
                                 </tr>
                                 <tr>
                                     <td>Projection Start: </td>
@@ -123,7 +120,10 @@ export const BuyTicketModal: React.FC<Props> = ({
                                     <td>{selectedSeat?.seatNumber}</td>
                                 </tr>
                             </tbody>
-                            <h1>Reservation</h1>
+                        </Table>
+
+                        <h1>Reservation</h1>
+                        <Table striped bordered hover>
                             <tbody>
                                 {reservation && (
                                     <>
@@ -138,60 +138,97 @@ export const BuyTicketModal: React.FC<Props> = ({
                                         </tr>
                                     </>
                                 )}
-
-                                {!reservation && <p>Seat is not reserved</p>}
                             </tbody>
                         </Table>
-                        <Form.Group>
-                            <Form.Label>Sides</Form.Label>
-                            <Form.Select onChange={onChange} value={selectedFoodAndBeverage}>
-                                <option value={""}>Select Sides</option>
-
-                                {foodAndBeverages.map((f) => (
-                                    <option key={f._id} value={f.name}>
-                                        {f.name}
-                                    </option>
+                        {!reservation && <p>Seat is not reserved</p>}
+                        <div>
+                            <h1>Sides</h1>
+                            <DropdownButton id="dropdown-basic-button" title="Select Item">
+                                {foodAndBeverages.map((item) => (
+                                    <Dropdown.Item key={item._id} onClick={() => handleSelect(item)}>
+                                        {item.name}
+                                    </Dropdown.Item>
                                 ))}
-                            </Form.Select>
-                            {selectedFoodAndBeverage !== "" && <Button onClick={onAdd}>Add</Button>}
-                            {Object.entries(foodAndBeverageQuantity).map(([key, value]) => (
-                                <>
-                                    {value !== undefined && (
-                                        <Card key={key}>
-                                            <Card.Body>
-                                                {key}: <Button onClick={() => onPlusMinus(key, "minus")}>-</Button> {value.quantity}
-                                                <Button onClick={() => onPlusMinus(key, "plus")}>+</Button>
-                                            </Card.Body>
-                                        </Card>
-                                    )}
-                                </>
-                            ))}
-                        </Form.Group>
+                            </DropdownButton>
+
+                            <div className="mt-3">
+                                {Object.values(selectedItems).map(({ item, quantity }) => (
+                                    <div key={item._id} className="mb-3">
+                                        <h5>{item.name}</h5>
+                                        <p>{item.description}</p>
+                                        <p>Price: ${item.price}</p>
+                                        <InputGroup>
+                                            <Button onClick={() => handleDecreaseQuantity(item._id)}>-</Button>
+                                            <Form.Control type="text" value={quantity} readOnly />
+                                            <Button onClick={() => handleIncreaseQuantity(item._id)}>+</Button>
+                                            <Button onClick={() => handleRemoveItem(item._id)}>Remove</Button>
+                                        </InputGroup>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </>
                 )}
                 {modalStage === 1 && (
                     <>
-                        <BuyTicketModalCheckoutStage foodAndBeverageQuantity={foodAndBeverageQuantity} />
+                        <BuyTicketModalCheckoutStage
+                            price={price}
+                            setSelectedSeat={setSelectedSeat}
+                            selectedItems={selectedItems}
+                            selectedSeat={selectedSeat}
+                            setPrice={setPrice}
+                        />
                     </>
                 )}
             </Modal.Body>
             <Modal.Footer>
-                <Button
-                    onClick={() => {
-                        setModalStage(0);
-                        setShowBuyTicketModal(false);
-                    }}
-                >
-                    Close
-                </Button>
-                <Button
-                    onClick={() => {
-                        setSelectedSeat(null);
-                        setModalStage(1);
-                    }}
-                >
-                    Go to checkout
-                </Button>
+                {modalStage === 0 && (
+                    <>
+                        <Button
+                            onClick={() => {
+                                setModalStage(0);
+                                setShowBuyTicketModal(false);
+                            }}
+                        >
+                            Close
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setModalStage(1);
+                            }}
+                        >
+                            Go to checkout
+                        </Button>
+                    </>
+                )}
+
+                {modalStage === 1 && (
+                    <>
+                        <Button
+                            onClick={() => {
+                                setModalStage(0);
+                            }}
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            onClick={async () => {
+                                await buyTicketHandler({
+                                    projection: projection._id,
+                                    seat: selectedSeat!.seat._id,
+                                    price,
+                                    reservaton: reservation?._id,
+                                    seatRow: selectedSeat!.seatRow,
+                                    seatNumber: selectedSeat!.seatNumber,
+                                });
+                                setSelectedSeat(null);
+                                setShowBuyTicketModal(false);
+                            }}
+                        >
+                            Buy
+                        </Button>
+                    </>
+                )}
             </Modal.Footer>
         </Modal>
     );
