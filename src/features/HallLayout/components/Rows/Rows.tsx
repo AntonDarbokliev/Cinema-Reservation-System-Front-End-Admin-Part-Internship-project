@@ -6,6 +6,7 @@ import { Reservation } from "../../../MovieDetails/interfaces/Reservation";
 import { SeatStatus } from "../../interfaces/SeatStatus";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
 import { SeatType } from "../../../HallsList/interfaces/SeatType";
+import { Ticket } from "../../interfaces/Ticket";
 
 interface Props {
     rows: Row[];
@@ -23,6 +24,7 @@ interface Props {
     setSelectedSeat?: React.Dispatch<React.SetStateAction<SelectedSeat | null>>;
     selectedSeat?: SelectedSeat | null;
     blankSeatType: SeatType;
+    tickets?: Ticket[];
 }
 
 export const Rows: React.FC<Props> = ({
@@ -36,6 +38,7 @@ export const Rows: React.FC<Props> = ({
     reservations,
     setSelectedSeat,
     selectedSeat,
+    tickets,
 }) => {
     const seatOnClickHandler = (seat: SeatInterface, rowIndex: number, seatNumber: number) => {
         if (projectionMode && reservations && setSelectedSeat) {
@@ -75,8 +78,10 @@ export const Rows: React.FC<Props> = ({
                         {row.seats.map((seat) => {
                             seatStatus = null;
 
-                            if (reservations) {
-                                if (reservations?.some((reservation) => reservation.seat === seat._id)) {
+                            if (projectionMode) {
+                                if (tickets?.some((ticket) => ticket.seat === seat._id)) {
+                                    seatStatus = SeatStatus.SEAT_TAKEN;
+                                } else if (reservations?.some((reservation) => reservation.seat === seat._id)) {
                                     seatStatus = SeatStatus.SEAT_RESERVERED;
                                 } else if (selectedSeat?.seat._id === seat._id) {
                                     seatStatus = SeatStatus.SEAT_SELECTED;
