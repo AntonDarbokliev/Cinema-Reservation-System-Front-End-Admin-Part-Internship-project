@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
-import { hideAddMovieModal } from "../../../../store/addMovieModal/addMovieModalSlice";
+import { hideAddEditMovieModal } from "../../../../store/addEditMovieModal/addEditMovieModalSlice";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -10,27 +10,32 @@ import { useState } from "react";
 import { Genre } from "../../interfaces/Genre";
 import { useForm } from "../../../common/hooks/useForm";
 import { useCreateMovie } from "../../hooks/useCreateMovie";
+import { Movie } from "../../interfaces/Movie";
+import { useEditMovie } from "../../hooks/useEditMovie";
 
 interface Props {
     show: boolean;
+    movie?: Movie;
+    setMovie: React.Dispatch<React.SetStateAction<Movie>>;
 }
 
-export const AddMovieModal: React.FC<Props> = ({ show }) => {
+export const AddEditMovieModal: React.FC<Props> = ({ show, movie, setMovie }) => {
     const dispatch = useDispatch();
-    const [actors, setActors] = useState<string[]>([""]);
-    const [genres, setGenres] = useState<Genre[]>([Genre.ACTION]);
-    const [subtitles, setSubtitles] = useState<string[]>([""]);
+    const [actors, setActors] = useState<string[]>(movie?.actors ?? [""]);
+    const [genres, setGenres] = useState<Genre[]>(movie?.genres ?? [Genre.ACTION]);
+    const [subtitles, setSubtitles] = useState<string[]>(movie?.subtitles ?? [""]);
     const [file, setFile] = useState<File | null>(null);
     const { createMovieHandler } = useCreateMovie();
+    const { editMovieHandler } = useEditMovie();
 
     const { formValues, onChangeHandler } = useForm({
-        language: "",
-        name: "",
-        length: "",
-        director: "",
-        description: "",
-        production: "",
-        rating: "",
+        language: movie?.language ?? "",
+        name: movie?.name ?? "",
+        length: movie?.length ?? "",
+        director: movie?.director ?? "",
+        description: movie?.description ?? "",
+        production: movie?.production ?? "",
+        rating: movie?.rating ?? "",
     });
 
     const handleChange = (
@@ -268,18 +273,44 @@ export const AddMovieModal: React.FC<Props> = ({ show }) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button type="button" onClick={() => dispatch(hideAddMovieModal())}>
+                <Button type="button" onClick={() => dispatch(hideAddEditMovieModal())}>
                     Close
                 </Button>
-                <Button
-                    type="button"
-                    onClick={async () => {
-                        await addMovieHandler();
-                        dispatch(hideAddMovieModal());
-                    }}
-                >
-                    Add
-                </Button>
+                {!movie && (
+                    <Button
+                        type="button"
+                        onClick={async () => {
+                            await addMovieHandler();
+                            dispatch(hideAddEditMovieModal());
+                        }}
+                    >
+                        Add
+                    </Button>
+                )}
+                {movie && (
+                    <Button
+                        type="button"
+                        onClick={async () => {
+                            if (movie) {
+                                const movie = await editMovieHandler({
+                                    ...formValues,
+                                    actors,
+                                    genres,
+                                    poster: file as File,
+                                    subtitles,
+                                    rating: formValues.rating as Rating,
+                                });
+                                setMovie((state) => ({ ...state, ...movie! }));
+                            } else {
+                                await addMovieHandler();
+                            }
+
+                            dispatch(hideAddEditMovieModal());
+                        }}
+                    >
+                        Edit
+                    </Button>
+                )}
             </Modal.Footer>
         </Modal>
     );
