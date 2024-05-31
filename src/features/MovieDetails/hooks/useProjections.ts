@@ -5,14 +5,14 @@ import { getProjections } from "../service/movieDetailsService";
 
 export const useProjections = () => {
     const [projections, setProjections] = useState<Projection[]>([]);
-    const cinemaId = useParams().id;
+    const movieId = useParams().movieId;
 
     useEffect(() => {
-        if (cinemaId) getProjections(cinemaId).then((data) => setProjections(data));
-    }, [cinemaId]);
+        if (movieId) getProjections(movieId).then((data) => setProjections(data));
+    }, [movieId]);
 
     return {
         projections,
-        setProjections
+        setProjections,
     };
 };
