@@ -1,4 +1,5 @@
 import { Cinema } from "../../CinemasList/interfaces/cinemaInterface";
+import { Ticket } from "../../HallLayout/interfaces/Ticket";
 import { Hall } from "../../HallsList/interfaces/hallInterface";
 import { Movie } from "../../MoviesList/interfaces/Movie";
 import { ProjectionStatus } from "./ProjectionStatus";
@@ -30,4 +31,6 @@ export interface Projection {
     reservations: Reservation[];
 
     status: ProjectionStatus;
+
+    tickets: Ticket[];
 }

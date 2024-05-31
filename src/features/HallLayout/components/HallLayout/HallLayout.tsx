@@ -57,24 +57,30 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                 <h1 style={{ textAlign: "center", marginBottom: "3rem" }}>Screen</h1>
                 <AddRowModal blankSeatType={seatTypes[0]} rowsSetter={setRows} rows={rows} show={addRowModal} openModalSetter={setAddRowModal} />
                 <DeleteRowModal rowsSetter={setRows} modalSetter={setDeleteRowModal} show={deleteRowModal.show} row={deleteRowModal.row} />
-                <ReserveSeatModal
-                    selectedSeat={selectedSeat!}
-                    setShowReserveModal={setShowReserveModal}
-                    showReserveModal={showReserveModal}
-                    projection={projection!}
-                    projectionSetter={setProjection!}
-                    setSelectedSeat={setSelectedSeat}
-                />
-                <BuyTicketModal
-                    reservation={projection?.reservations.find((reservation) => reservation.seat === selectedSeat?.seat._id)}
-                    selectedSeat={selectedSeat!}
-                    setShowBuyTicketModal={setShowBuyTicketModal}
-                    showBuyTicketModal={showBuyTicketModal}
-                    projection={projection!}
-                    setSelectedSeat={setSelectedSeat}
-                ></BuyTicketModal>
+                {projectionMode && (
+                    <>
+                        <ReserveSeatModal
+                            selectedSeat={selectedSeat!}
+                            setShowReserveModal={setShowReserveModal}
+                            showReserveModal={showReserveModal}
+                            projection={projection!}
+                            projectionSetter={setProjection!}
+                            setSelectedSeat={setSelectedSeat}
+                        />
+                        <BuyTicketModal
+                            setProjection={setProjection!}
+                            reservation={projection?.reservations.find((reservation) => reservation.seat === selectedSeat?.seat._id)}
+                            selectedSeat={selectedSeat!}
+                            setShowBuyTicketModal={setShowBuyTicketModal}
+                            showBuyTicketModal={showBuyTicketModal}
+                            projection={projection!}
+                            setSelectedSeat={setSelectedSeat}
+                        ></BuyTicketModal>
+                    </>
+                )}
                 <Container>
                     <Rows
+                        tickets={projection?.tickets}
                         blankSeatType={seatTypes[0]}
                         reservations={projection?.reservations}
                         deleteModalSetter={setDeleteRowModal}

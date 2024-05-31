@@ -16,7 +16,7 @@ import { useEditMovie } from "../../hooks/useEditMovie";
 interface Props {
     show: boolean;
     movie?: Movie;
-    setMovie: React.Dispatch<React.SetStateAction<Movie>>;
+    setMovie?: React.Dispatch<React.SetStateAction<Movie>>;
 }
 
 export const AddEditMovieModal: React.FC<Props> = ({ show, movie, setMovie }) => {
@@ -291,7 +291,7 @@ export const AddEditMovieModal: React.FC<Props> = ({ show, movie, setMovie }) =>
                     <Button
                         type="button"
                         onClick={async () => {
-                            if (movie) {
+                            if (movie && setMovie) {
                                 const movie = await editMovieHandler({
                                     ...formValues,
                                     actors,

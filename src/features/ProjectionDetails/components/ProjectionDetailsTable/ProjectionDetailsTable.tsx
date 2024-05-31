@@ -34,6 +34,14 @@ export const ProjectionDetailsTable: React.FC<Props> = ({ projection }) => {
                     <td>Time</td>
                     <td>{projection.startTime}</td>
                 </tr>
+                <tr>
+                    <td>Reservations Made</td>
+                    <td>{projection.reservations.length}</td>
+                </tr>
+                <tr>
+                    <td>Tickets Sold</td>
+                    <td>{projection.tickets?.length}</td>
+                </tr>
             </tbody>
         </Table>
     );

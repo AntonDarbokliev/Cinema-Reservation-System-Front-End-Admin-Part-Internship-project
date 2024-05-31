@@ -1,30 +1,15 @@
 import { useParams } from "react-router-dom";
 import { createMovie } from "../service/moviesListService";
-import { Genre } from "../interfaces/Genre";
-import { Rating } from "../interfaces/Rating";
 import { useDispatch } from "react-redux";
 import { addMovieToCinema } from "../../../store/cinema/cinemaSlice";
 import { makeFormData } from "../../common/utils/makeFormData";
-
-interface MovieData {
-    language: string;
-    name: string;
-    length: string;
-    director: string;
-    description: string;
-    production: string;
-    rating: Rating;
-    poster: File;
-    actors: string[];
-    subtitles: string[];
-    genres: Genre[];
-}
+import { MovieFieldData } from "../interfaces/MovieFieldData";
 
 export const useCreateMovie = () => {
     const cinemaId = useParams().id;
     const dispatch = useDispatch();
 
-    const createMovieHandler = async (movieData: MovieData) => {
+    const createMovieHandler = async (movieData: MovieFieldData) => {
         if (cinemaId) {
             // File uploads (poster) need to be sent in FormData
             const formData = makeFormData(movieData);

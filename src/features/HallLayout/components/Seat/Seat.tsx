@@ -21,8 +21,6 @@ interface Props {
 export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode, seatNumber, seatStatus, isSelected, blankSeatType }) => {
     const [color, setColor] = useState("#5e829f");
     useEffect(() => {
-        console.log("loading seat");
-
         if (isSelected) {
             setColor("#5e829f");
         } else if (seatStatus === SeatStatus.SEAT_TAKEN) {

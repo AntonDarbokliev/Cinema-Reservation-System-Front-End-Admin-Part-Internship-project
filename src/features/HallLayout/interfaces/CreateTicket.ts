@@ -1,13 +1,13 @@
-import { Seat } from "../../HallsList/interfaces/hallInterface";
-
 export interface CreateTicket {
     projection: string;
 
-    reservaton: string;
+    reservaton?: string;
 
-    seat: Seat;
+    seat: string;
 
     seatRow: number;
 
     seatNumber: number;
+
+    price: number | string;
 }

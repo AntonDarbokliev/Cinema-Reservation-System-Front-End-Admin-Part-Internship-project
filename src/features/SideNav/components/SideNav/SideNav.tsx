@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../../store/store";
-import { showAddMovieModal } from "../../../../store/addMovieModal/addMovieModalSlice";
+import { showAddEditMovieModal } from "../../../../store/addEditMovieModal/addEditMovieModalSlice";
 import { showAddCinemaModal } from "../../../../store/addCinemaModal/addCinemaModalSlice";
 import { showAddHallModal } from "../../../../store/addHallModal/addHallModalSlice";
 import { showAddFoodAndBeverageModal } from "../../../../store/addFoodBeverageModal/addFoodBeverageModalSlice";
@@ -85,7 +85,7 @@ export const SideNav = () => {
                 <Button onClick={handleShow} additionalClasses={`me-2 ${styles["side-nav-button"]}`}>
                     Menu
                 </Button>
-                {cinemaMoviesPathPattern.test(location.pathname) && <Button onClick={() => dispatch(showAddMovieModal())}>Add Movie</Button>}
+                {cinemaMoviesPathPattern.test(location.pathname) && <Button onClick={() => dispatch(showAddEditMovieModal())}>Add Movie</Button>}
                 {cinemaHallsPathPattern.test(location.pathname) && <Button onClick={() => dispatch(showAddHallModal())}>Add Hall</Button>}
                 {cinemaFoodAndBeveragesPathPattern.test(location.pathname) && <Button onClick={() => dispatch(showAddFoodAndBeverageModal())}>Add Item</Button>}
                 {location.pathname === '/' && <Button onClick={() => dispatch(showAddCinemaModal())}>Add Cinema</Button>}
