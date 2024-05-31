@@ -1,4 +1,4 @@
-import { ProjectionType } from "./Projection";
+import { ProjectionType } from "../../MovieDetails/interfaces/Projection";
 
 export interface CreateProjection {
     startTime: string;
