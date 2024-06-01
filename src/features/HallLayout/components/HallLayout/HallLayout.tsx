@@ -16,6 +16,7 @@ import { BuyTicketModal } from "../BuyTicketModal/BuyTicketModal";
 import { SeatType } from "../../../HallsList/interfaces/SeatType";
 import { useSeatTypes } from "../../hooks/useSeatTypes";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
+import { ReservationStatus } from "../../interfaces/ReservationStatus";
 
 interface Props {
     projectionMode?: boolean;
@@ -66,6 +67,12 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                             projection={projection!}
                             projectionSetter={setProjection!}
                             setSelectedSeat={setSelectedSeat}
+                            cancelReservationId={
+                                projection?.reservations.find(
+                                    (reservation) =>
+                                        reservation.seat === selectedSeat?.seat._id && reservation.status === ReservationStatus.ACTIVE
+                                )?._id
+                            }
                         />
                         <BuyTicketModal
                             setProjection={setProjection!}
@@ -75,7 +82,7 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                             showBuyTicketModal={showBuyTicketModal}
                             projection={projection!}
                             setSelectedSeat={setSelectedSeat}
-                        ></BuyTicketModal>
+                        />
                     </>
                 )}
                 <Container>
@@ -104,6 +111,11 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                     {projectionMode && !selectedSeat?.reserved && (
                         <>
                             <Button onClick={() => setShowReserveModal(true)}>Reserve</Button>
+                        </>
+                    )}
+                    {projectionMode && selectedSeat?.reserved && (
+                        <>
+                            <Button onClick={() => setShowReserveModal(true)}>Cancel Reservation</Button>
                         </>
                     )}
                     {projectionMode && (

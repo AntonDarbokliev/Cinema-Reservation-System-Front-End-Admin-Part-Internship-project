@@ -7,6 +7,7 @@ import { SeatStatus } from "../../interfaces/SeatStatus";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
 import { SeatType } from "../../../HallsList/interfaces/SeatType";
 import { Ticket } from "../../interfaces/Ticket";
+import { ReservationStatus } from "../../interfaces/ReservationStatus";
 
 interface Props {
     rows: Row[];
@@ -42,7 +43,7 @@ export const Rows: React.FC<Props> = ({
 }) => {
     const seatOnClickHandler = (seat: SeatInterface, rowIndex: number, seatNumber: number) => {
         if (projectionMode && reservations && setSelectedSeat) {
-            if (reservations.some((reservation) => reservation.seat === seat._id)) {
+            if (reservations.some((reservation) => reservation.seat === seat._id && reservation.status === ReservationStatus.ACTIVE)) {
                 setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber, reserved: true });
             } else {
                 setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber });
@@ -81,7 +82,11 @@ export const Rows: React.FC<Props> = ({
                             if (projectionMode) {
                                 if (tickets?.some((ticket) => ticket.seat === seat._id)) {
                                     seatStatus = SeatStatus.SEAT_TAKEN;
-                                } else if (reservations?.some((reservation) => reservation.seat === seat._id)) {
+                                } else if (
+                                    reservations?.some(
+                                        (reservation) => reservation.seat === seat._id && reservation.status === ReservationStatus.ACTIVE
+                                    )
+                                ) {
                                     seatStatus = SeatStatus.SEAT_RESERVERED;
                                 } else if (selectedSeat?.seat._id === seat._id) {
                                     seatStatus = SeatStatus.SEAT_SELECTED;
