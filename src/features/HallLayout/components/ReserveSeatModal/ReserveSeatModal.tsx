@@ -3,6 +3,10 @@ import Button from "../../../common/components/Button/Button";
 import { Projection } from "../../../MovieDetails/interfaces/Projection";
 import { useReserveSeat } from "../../hooks/useReserveSeat";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
+import { IRootState } from "../../../../store/store";
+import { useSelector } from "react-redux";
+import { Role } from "../../../common/interfaces/Role";
+import { CreateReservation } from "../../interfaces/CreateReservation";
 
 interface Props {
     showReserveModal: boolean;
@@ -23,13 +27,21 @@ export const ReserveSeatModal: React.FC<Props> = ({
 }) => {
     const { reserveSeatHandler } = useReserveSeat();
 
+    const user = useSelector((state: IRootState) => state.user);
+
     const onReserveClickHandler = async () => {
-        const reservation = await reserveSeatHandler({
+        const reservationObj: CreateReservation = {
             projection: projection._id,
             seat: selectedSeat.seat._id,
             seatRow: selectedSeat.seatRow,
             seatNumber: selectedSeat.seatNumber,
-        });
+        };
+
+        if (user.roles.every((role) => role > Role.ADMIN)) {
+            reservationObj.user = user.id;
+        }
+
+        const reservation = await reserveSeatHandler(reservationObj);
         projectionSetter((state) => {
             return { ...state, reservations: [...state.reservations, reservation] };
         });
