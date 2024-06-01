@@ -52,8 +52,12 @@ export const AddEditProjectionModal: React.FC<Props> = ({ show, showAddProjectio
 
     const editProjectionOnClick = async () => {
         if (setProjection) {
-            const { movie, hall, cinema, ...newFormValues } = formValues;
-            const projection = await editProjectionHandler(newFormValues);
+            const projection = await editProjectionHandler({
+                baseTicketPrice: formValues.baseTicketPrice,
+                projectionType: formValues.projectionType,
+                startDate: formValues.startDate,
+                startTime: formValues.startTime,
+            });
             setProjection(projection);
             showAddProjectionModal(false);
         }
