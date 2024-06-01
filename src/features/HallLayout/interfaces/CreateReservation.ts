@@ -3,4 +3,5 @@ export interface CreateReservation {
     projection: string;
     seatNumber: number;
     seatRow: number;
+    user?: string;
 }
