@@ -1,12 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Role } from "../../features/common/interfaces/Role";
 
 export interface UserState {
     firstName: string;
     lastName: string;
     email: string;
-    roles: number[];
+    roles: Role[];
     iat: number;
     exp: number;
+    id: string;
 }
 
 const initialState: UserState = {
@@ -16,6 +18,7 @@ const initialState: UserState = {
     roles: [],
     iat: 0,
     exp: 0,
+    id: "",
 };
 
 const userSlice = createSlice({
@@ -26,7 +29,7 @@ const userSlice = createSlice({
             return action.payload;
         },
         clearUser: () => {
-            return initialState
+            return initialState;
         },
     },
 });
