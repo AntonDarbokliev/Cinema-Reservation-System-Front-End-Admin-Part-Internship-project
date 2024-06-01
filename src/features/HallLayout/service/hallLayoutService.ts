@@ -14,3 +14,4 @@ export const reserveSeat = (data: CreateReservation) => request.post(`${baseUrl}
 export const getFoodAndBeverages = (cinemaId: string) => request.get(`${baseUrl}/food-and-beverages/${cinemaId}`);
 export const getSeatTypes = (cinemaId: string): Promise<SeatType[]> => request.get(`${baseUrl}/seat-types/${cinemaId}`);
 export const buyTicket = (data: CreateTicket): Promise<Ticket> => request.post(`${baseUrl}/tickets`, data);
+export const cancelReservation = (id: string) => request.post(`${baseUrl}/reservations/${id}/cancel`, { id });
