@@ -76,7 +76,9 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                         />
                         <BuyTicketModal
                             setProjection={setProjection!}
-                            reservation={projection?.reservations.find((reservation) => reservation.seat === selectedSeat?.seat._id)}
+                            reservation={projection?.reservations.find(
+                                (reservation) => reservation.seat === selectedSeat?.seat._id && reservation.status === ReservationStatus.ACTIVE
+                            )}
                             selectedSeat={selectedSeat!}
                             setShowBuyTicketModal={setShowBuyTicketModal}
                             showBuyTicketModal={showBuyTicketModal}
