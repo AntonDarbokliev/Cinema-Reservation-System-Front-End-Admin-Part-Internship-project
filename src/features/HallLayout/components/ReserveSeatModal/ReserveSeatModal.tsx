@@ -7,6 +7,7 @@ import { IRootState } from "../../../../store/store";
 import { useSelector } from "react-redux";
 import { Role } from "../../../common/interfaces/Role";
 import { CreateReservation } from "../../interfaces/CreateReservation";
+import { useCancelReservation } from "../../hooks/useCancelReservation";
 
 interface Props {
     showReserveModal: boolean;
@@ -15,6 +16,7 @@ interface Props {
     projection: Projection;
     projectionSetter: React.Dispatch<React.SetStateAction<Projection>>;
     setSelectedSeat: React.Dispatch<React.SetStateAction<SelectedSeat | null>>;
+    cancelReservationId?: string;
 }
 
 export const ReserveSeatModal: React.FC<Props> = ({
@@ -24,10 +26,21 @@ export const ReserveSeatModal: React.FC<Props> = ({
     selectedSeat,
     projectionSetter,
     setSelectedSeat,
+    cancelReservationId,
 }) => {
     const { reserveSeatHandler } = useReserveSeat();
+    const { cancelReservationHandler } = useCancelReservation();
 
     const user = useSelector((state: IRootState) => state.user);
+
+    const onCancelClickHandler = async () => {
+        await cancelReservationHandler(cancelReservationId!);
+        setShowReserveModal(false);
+        setSelectedSeat(null);
+        projectionSetter((state) => {
+            return { ...state, reservations: [...state.reservations.filter((r) => r._id !== cancelReservationId)] };
+        });
+    };
 
     const onReserveClickHandler = async () => {
         const reservationObj: CreateReservation = {
@@ -92,7 +105,8 @@ export const ReserveSeatModal: React.FC<Props> = ({
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={() => setShowReserveModal(false)}>Close</Button>
-                        <Button onClick={onReserveClickHandler}>Reserve</Button>
+                        {cancelReservationId && <Button onClick={onCancelClickHandler}>Cancel Reservation</Button>}
+                        {!cancelReservationId && <Button onClick={onReserveClickHandler}>Reserve</Button>}
                     </Modal.Footer>
                 </Modal>
             )}
