@@ -8,9 +8,10 @@ export const useHalls = () => {
     const params = useParams();
     useEffect(() => {
         if (params.id) getHalls(params.id).then((data) => setHalls(data));
-    }, []);
+    }, [params.id]);
 
     return {
         halls,
+        setHalls
     };
 };

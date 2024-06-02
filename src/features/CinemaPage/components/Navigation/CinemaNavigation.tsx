@@ -17,11 +17,16 @@ export const CinemaNavigation = () => {
             </Nav.Item>
             <Nav.Item className={styles["nav-item"]}>
                 <Nav.Link as={"div"} className={styles["nav-link"]} eventKey="link-2">
-                    <Link to="/">Projections</Link>
+                    <Link to="movies">Movies</Link>
                 </Nav.Link>
             </Nav.Item>
             <Nav.Item className={styles["nav-item"]}>
                 <Nav.Link as={"div"} className={styles["nav-link"]} eventKey="link-3">
+                    <Link to="/">Projections</Link>
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className={styles["nav-item"]}>
+                <Nav.Link as={"div"} className={styles["nav-link"]} eventKey="link-4">
                     <Link to="/">Menu</Link>
                 </Nav.Link>
             </Nav.Item>

@@ -1,0 +1,55 @@
+@use "../../../../scss/vars";
+
+.details {
+    overflow-y: scroll;
+    width: 100%;
+    padding: 2rem;
+}
+
+.desc-poster {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 2rem;
+    align-items: center;
+
+    .description {
+        width: 100vw;
+        left: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        padding: 1rem;
+    }
+}
+
+.poster {
+    width: 40vw;
+    margin-bottom: 1rem;
+    > img {
+        border-radius: vars.$main-border-radius;
+        box-shadow: vars.$main-box-shadow;
+    }
+}
+
+@media (min-width: vars.$min-width-media) {
+    .poster {
+        position: absolute;
+        width: 18vw;
+        right: 5vw;
+        top: 20vh;
+    }
+
+    .desc-poster {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+
+        .description {
+            width: 70vw;
+            margin-right: 20vw;
+            height: 100%;
+        }
+    }
+}

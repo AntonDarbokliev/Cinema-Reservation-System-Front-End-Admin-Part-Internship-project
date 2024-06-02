@@ -31,13 +31,12 @@ const request = async ({ method, url, data }: RequestProps) => {
 
     if (!url.includes("login")) {
         const token = localStorage.getItem("token");
-        if (!token) {
-            throw new Error("Token is missing");
-        }
         options.headers["Authorization"] = `Bearer ${token}`;
     }
 
-    if (data) {
+    if (data instanceof FormData) {
+        options.body = data;
+    } else {
         options.body = JSON.stringify(data);
         options.headers["Content-Type"] = "application/json";
     }
@@ -82,6 +81,6 @@ export const RequestFactory = () => {
         post: postRequest,
         delete: deleteRequest,
         put: putRequest,
-        patch: patchRequest
+        patch: patchRequest,
     };
 };

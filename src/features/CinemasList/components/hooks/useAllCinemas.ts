@@ -11,6 +11,7 @@ export const useAllCinemas = () => {
   },[])
 
   return {
-    cinemas
+    cinemas,
+    setCinemas
   }
 }
