@@ -31,9 +31,6 @@ const request = async ({ method, url, data }: RequestProps) => {
 
     if (!url.includes("login")) {
         const token = localStorage.getItem("token");
-        if (!token) {
-            throw new Error("Token is missing");
-        }
         options.headers["Authorization"] = `Bearer ${token}`;
     }
 
@@ -82,6 +79,6 @@ export const RequestFactory = () => {
         post: postRequest,
         delete: deleteRequest,
         put: putRequest,
-        patch: patchRequest
+        patch: patchRequest,
     };
 };

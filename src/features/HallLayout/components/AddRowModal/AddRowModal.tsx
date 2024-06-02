@@ -1,8 +1,8 @@
 import { Form, Modal } from "react-bootstrap";
+import Button from "../../../common/components/Button/Button";
 import { useEffect, useState } from "react";
 import { Row, Seat, SeatType } from "../../../HallsList/interfaces/hallInterface";
 import { useEditHall } from "../../hooks/useEditHall";
-import Button from "../../../common/components/Button/Button";
 
 interface Props {
     openModalSetter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -41,6 +41,7 @@ export const AddRowModal: React.FC<Props> = ({ openModalSetter, show, rowsSetter
         <Modal show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Body>
                 <h4>Add a Row</h4>
+                <Button onClick={() => setCounter((s) => (s += 1))}>+</Button>
                 <Button onClick={() => setCounter((s) => (s += 1))}>+</Button>
                 <Form.Label>Available spaces</Form.Label>
                 <Form.Control min={0} type="number" readOnly={true} value={counter} />
