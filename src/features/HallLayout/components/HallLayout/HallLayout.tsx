@@ -17,6 +17,7 @@ import { SeatType } from "../../../HallsList/interfaces/SeatType";
 import { useSeatTypes } from "../../hooks/useSeatTypes";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
 import { ReservationStatus } from "../../interfaces/ReservationStatus";
+import { useSocketConnection } from "../../../common/hooks/useSocketConnection";
 
 interface Props {
     projectionMode?: boolean;
@@ -31,6 +32,8 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
     if (projection) {
         hallToUse = projection?.hall;
     }
+
+    useSocketConnection();
 
     const { seatTypes } = useSeatTypes();
 
@@ -61,7 +64,7 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                 {projectionMode && (
                     <>
                         <ReserveSeatModal
-                            selectedSeat={selectedSeat!}
+                            selectedSeat={selectedSeat}
                             setShowReserveModal={setShowReserveModal}
                             showReserveModal={showReserveModal}
                             projection={projection!}
@@ -89,15 +92,13 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                 )}
                 <Container>
                     <Rows
-                        tickets={projection?.tickets}
+                        projection={projection}
                         blankSeatType={seatTypes[0]}
-                        reservations={projection?.reservations}
                         deleteModalSetter={setDeleteRowModal}
                         addSeatType={addSeatType}
                         editMode={editMode}
                         rows={rows}
                         setRows={setRows}
-                        projectionMode={projectionMode}
                         selectedSeat={selectedSeat}
                         setSelectedSeat={setSelectedSeat}
                     />
