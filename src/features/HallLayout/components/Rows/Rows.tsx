@@ -39,14 +39,27 @@ export const Rows: React.FC<Props> = ({
     projection,
 }) => {
     const socketSelectedSeats = useSelector((state: IRootState) => state.socket.seats);
+    const socketReservations = useSelector((state: IRootState) => state.socket.reservations);
+    const socketTickets = useSelector((state: IRootState) => state.socket.tickets);
+
+    const checkIfSeatIsReserved = (seat: SeatInterface, checkInSocket?: boolean) => {
+        if (!projection) return false;
+
+        if (checkInSocket) {
+            return socketReservations.some(
+                (reservation) =>
+                    reservation.seat === seat._id && reservation.projection === projection._id && reservation.status === ReservationStatus.ACTIVE
+            );
+        }
+
+        return projection.reservations.some((reservation) => reservation.seat === seat._id && reservation.status === ReservationStatus.ACTIVE);
+    };
 
     const seatOnClickHandler = (seat: SeatInterface, rowIndex: number, seatNumber: number) => {
         if (projection && socketSelectedSeats.some((scoketSeat) => scoketSeat._id === seat._id && scoketSeat.projectionId === projection._id)) {
             return;
-        } else if (projection && projection.reservations && setSelectedSeat) {
-            if (
-                projection.reservations.some((reservation) => reservation.seat === seat._id && reservation.status === ReservationStatus.ACTIVE)
-            ) {
+        } else if (projection && setSelectedSeat) {
+            if (checkIfSeatIsReserved(seat) || checkIfSeatIsReserved(seat, true)) {
                 setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber, reserved: true });
             } else {
                 setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber });
@@ -89,13 +102,12 @@ export const Rows: React.FC<Props> = ({
                                     )
                                 ) {
                                     seatStatus = SeatStatus.SEAT_BlOCKED;
-                                } else if (projection.tickets?.some((ticket) => ticket.seat === seat._id)) {
-                                    seatStatus = SeatStatus.SEAT_TAKEN;
                                 } else if (
-                                    projection.reservations?.some(
-                                        (reservation) => reservation.seat === seat._id && reservation.status === ReservationStatus.ACTIVE
-                                    )
+                                    projection.tickets?.some((ticket) => ticket.seat === seat._id) ||
+                                    socketTickets.some((ticket) => ticket.seat === seat._id)
                                 ) {
+                                    seatStatus = SeatStatus.SEAT_TAKEN;
+                                } else if (checkIfSeatIsReserved(seat) || checkIfSeatIsReserved(seat, true)) {
                                     seatStatus = SeatStatus.SEAT_RESERVERED;
                                 } else if (selectedSeat?.seat._id === seat._id) {
                                     seatStatus = SeatStatus.SEAT_SELECTED;
