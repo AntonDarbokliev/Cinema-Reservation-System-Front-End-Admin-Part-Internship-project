@@ -2,12 +2,13 @@ import { Button, Row as RowComponent } from "react-bootstrap";
 import { Row, Seat as SeatInterface, SeatTypeName } from "../../../HallsList/interfaces/hallInterface";
 import { Seat } from "../Seat/Seat";
 import styles from "./Rows.module.scss";
-import { Reservation } from "../../../MovieDetails/interfaces/Reservation";
 import { SeatStatus } from "../../interfaces/SeatStatus";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
 import { SeatType } from "../../../HallsList/interfaces/SeatType";
-import { Ticket } from "../../interfaces/Ticket";
 import { ReservationStatus } from "../../interfaces/ReservationStatus";
+import { IRootState } from "../../../../store/store";
+import { useSelector } from "react-redux";
+import { Projection } from "../../../MovieDetails/interfaces/Projection";
 
 interface Props {
     rows: Row[];
@@ -20,12 +21,10 @@ interface Props {
     >;
     editMode: boolean;
     addSeatType: SeatType | undefined;
-    projectionMode?: boolean;
-    reservations?: Reservation[];
     setSelectedSeat?: React.Dispatch<React.SetStateAction<SelectedSeat | null>>;
     selectedSeat?: SelectedSeat | null;
     blankSeatType: SeatType;
-    tickets?: Ticket[];
+    projection?: Projection;
 }
 
 export const Rows: React.FC<Props> = ({
@@ -35,15 +34,19 @@ export const Rows: React.FC<Props> = ({
     blankSeatType,
     setRows,
     deleteModalSetter,
-    projectionMode,
-    reservations,
     setSelectedSeat,
     selectedSeat,
-    tickets,
+    projection,
 }) => {
+    const socketSelectedSeats = useSelector((state: IRootState) => state.socket.seats);
+
     const seatOnClickHandler = (seat: SeatInterface, rowIndex: number, seatNumber: number) => {
-        if (projectionMode && reservations && setSelectedSeat) {
-            if (reservations.some((reservation) => reservation.seat === seat._id && reservation.status === ReservationStatus.ACTIVE)) {
+        if (projection && socketSelectedSeats.some((scoketSeat) => scoketSeat._id === seat._id && scoketSeat.projectionId === projection._id)) {
+            return;
+        } else if (projection && projection.reservations && setSelectedSeat) {
+            if (
+                projection.reservations.some((reservation) => reservation.seat === seat._id && reservation.status === ReservationStatus.ACTIVE)
+            ) {
                 setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber, reserved: true });
             } else {
                 setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber });
@@ -79,11 +82,17 @@ export const Rows: React.FC<Props> = ({
                         {row.seats.map((seat) => {
                             seatStatus = null;
 
-                            if (projectionMode) {
-                                if (tickets?.some((ticket) => ticket.seat === seat._id)) {
+                            if (projection) {
+                                if (
+                                    socketSelectedSeats.some(
+                                        (socketSeat) => socketSeat._id === seat._id && projection._id === socketSeat.projectionId
+                                    )
+                                ) {
+                                    seatStatus = SeatStatus.SEAT_BlOCKED;
+                                } else if (projection.tickets?.some((ticket) => ticket.seat === seat._id)) {
                                     seatStatus = SeatStatus.SEAT_TAKEN;
                                 } else if (
-                                    reservations?.some(
+                                    projection.reservations?.some(
                                         (reservation) => reservation.seat === seat._id && reservation.status === ReservationStatus.ACTIVE
                                     )
                                 ) {
