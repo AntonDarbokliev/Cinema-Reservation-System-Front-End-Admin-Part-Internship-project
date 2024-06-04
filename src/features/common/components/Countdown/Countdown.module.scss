@@ -1,0 +1,9 @@
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .countdown-time {
+    color: red;
+    font-size: 3rem;
+  }
+}
