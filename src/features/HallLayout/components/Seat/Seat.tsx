@@ -20,6 +20,7 @@ interface Props {
 
 export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode, seatNumber, seatStatus, isSelected, blankSeatType }) => {
     const [color, setColor] = useState("#5e829f");
+
     useEffect(() => {
         if (isSelected) {
             setColor("#5e829f");
@@ -29,8 +30,10 @@ export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode
             setColor("yellow");
         } else if (seatStatus === SeatStatus.SEAT_FREE) {
             setColor("green");
+        } else if (seatStatus === SeatStatus.SEAT_BlOCKED) {
+            setColor("#f5821e");
         }
-    }, [isSelected]);
+    }, [isSelected, seatStatus]);
 
     return (
         <>
