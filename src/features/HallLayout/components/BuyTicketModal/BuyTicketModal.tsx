@@ -11,6 +11,8 @@ import { Dropdown, DropdownButton, Form, InputGroup } from "react-bootstrap";
 import { BuyTicketModalCheckoutStage } from "./BuyTicketModalCheckoutStage";
 import { useBuyTicket } from "../../hooks/useBuyTicket";
 import { useManageSocketSeat } from "../../hooks/useManageSocketSeat";
+import { CountdownTimer } from "../../../common/components/Countdown/Countdown";
+import { useSelectionCountdownEnd } from "../../hooks/useSelectionCountdownEnd";
 Form;
 
 export interface SelectedItem {
@@ -84,11 +86,12 @@ export const BuyTicketModal: React.FC<Props> = ({
     };
 
     const { buyTicketHandler } = useBuyTicket(setProjection);
+    const { selectionCountdownEndHandler } = useSelectionCountdownEnd(setShowBuyTicketModal);
 
     return (
         <Modal show={showBuyTicketModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
+                <CountdownTimer initialMinutes={5} onTimerComplete={selectionCountdownEndHandler} />
             </Modal.Header>
             <Modal.Body>
                 {modalStage === 0 && (

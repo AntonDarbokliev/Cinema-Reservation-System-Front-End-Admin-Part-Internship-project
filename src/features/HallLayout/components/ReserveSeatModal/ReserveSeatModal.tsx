@@ -9,6 +9,8 @@ import { Role } from "../../../common/interfaces/Role";
 import { CreateReservation } from "../../interfaces/CreateReservation";
 import { useCancelReservation } from "../../hooks/useCancelReservation";
 import { useManageSocketSeat } from "../../hooks/useManageSocketSeat";
+import { CountdownTimer } from "../../../common/components/Countdown/Countdown";
+import { useSelectionCountdownEnd } from "../../hooks/useSelectionCountdownEnd";
 
 interface Props {
     showReserveModal: boolean;
@@ -66,6 +68,8 @@ export const ReserveSeatModal: React.FC<Props> = ({
             setSelectedSeat(null);
         }
     };
+
+    const { selectionCountdownEndHandler } = useSelectionCountdownEnd(setShowReserveModal);
     return (
         <>
             {/* Check is needed since booststrap always renders the modal but hides it. Otherwise modal couldn't even be opened without selecting
@@ -73,7 +77,7 @@ export const ReserveSeatModal: React.FC<Props> = ({
             {selectedSeat && (
                 <Modal show={showReserveModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                     <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
+                        <CountdownTimer initialMinutes={5} onTimerComplete={selectionCountdownEndHandler} />
                     </Modal.Header>
                     <Modal.Body>
                         <h1>Reserve Seat</h1>
