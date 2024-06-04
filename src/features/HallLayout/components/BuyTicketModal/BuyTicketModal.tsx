@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Dropdown, DropdownButton, Form, InputGroup } from "react-bootstrap";
 import { BuyTicketModalCheckoutStage } from "./BuyTicketModalCheckoutStage";
 import { useBuyTicket } from "../../hooks/useBuyTicket";
+import { useManageSocketSeat } from "../../hooks/useManageSocketSeat";
 Form;
 
 export interface SelectedItem {
@@ -41,6 +42,8 @@ export const BuyTicketModal: React.FC<Props> = ({
     const [modalStage, setModalStage] = useState(0);
     const [selectedItems, setSelectedItems] = useState<{ [key: string]: SelectedItem }>({});
     const [price, setPrice] = useState(0);
+
+    useManageSocketSeat(selectedSeat, showBuyTicketModal, projection._id);
 
     const handleSelect = (item: FoodAndBeverage) => {
         setSelectedItems((prevSelectedItems) => ({

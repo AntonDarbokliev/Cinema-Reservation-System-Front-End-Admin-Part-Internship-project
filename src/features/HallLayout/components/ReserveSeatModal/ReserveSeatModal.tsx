@@ -8,11 +8,12 @@ import { useSelector } from "react-redux";
 import { Role } from "../../../common/interfaces/Role";
 import { CreateReservation } from "../../interfaces/CreateReservation";
 import { useCancelReservation } from "../../hooks/useCancelReservation";
+import { useManageSocketSeat } from "../../hooks/useManageSocketSeat";
 
 interface Props {
     showReserveModal: boolean;
     setShowReserveModal: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedSeat: SelectedSeat;
+    selectedSeat: SelectedSeat | null;
     projection: Projection;
     projectionSetter: React.Dispatch<React.SetStateAction<Projection>>;
     setSelectedSeat: React.Dispatch<React.SetStateAction<SelectedSeat | null>>;
@@ -31,6 +32,8 @@ export const ReserveSeatModal: React.FC<Props> = ({
     const { reserveSeatHandler } = useReserveSeat();
     const { cancelReservationHandler } = useCancelReservation();
 
+    useManageSocketSeat(selectedSeat, showReserveModal, projection._id);
+
     const user = useSelector((state: IRootState) => state.user);
 
     const onCancelClickHandler = async () => {
@@ -43,23 +46,25 @@ export const ReserveSeatModal: React.FC<Props> = ({
     };
 
     const onReserveClickHandler = async () => {
-        const reservationObj: CreateReservation = {
-            projection: projection._id,
-            seat: selectedSeat.seat._id,
-            seatRow: selectedSeat.seatRow,
-            seatNumber: selectedSeat.seatNumber,
-        };
+        if (selectedSeat) {
+            const reservationObj: CreateReservation = {
+                projection: projection._id,
+                seat: selectedSeat.seat._id,
+                seatRow: selectedSeat.seatRow,
+                seatNumber: selectedSeat.seatNumber,
+            };
 
-        if (user.roles.every((role) => role > Role.ADMIN)) {
-            reservationObj.user = user.id;
+            if (user.roles.every((role) => role > Role.ADMIN)) {
+                reservationObj.user = user.id;
+            }
+
+            const reservation = await reserveSeatHandler(reservationObj);
+            projectionSetter((state) => {
+                return { ...state, reservations: [...state.reservations, reservation] };
+            });
+            setShowReserveModal(false);
+            setSelectedSeat(null);
         }
-
-        const reservation = await reserveSeatHandler(reservationObj);
-        projectionSetter((state) => {
-            return { ...state, reservations: [...state.reservations, reservation] };
-        });
-        setShowReserveModal(false);
-        setSelectedSeat(null);
     };
     return (
         <>
