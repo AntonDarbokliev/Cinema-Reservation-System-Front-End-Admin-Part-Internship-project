@@ -59,7 +59,9 @@ export const Rows: React.FC<Props> = ({
         if (projection && socketSelectedSeats.some((scoketSeat) => scoketSeat._id === seat._id && scoketSeat.projectionId === projection._id)) {
             return;
         } else if (projection && setSelectedSeat) {
-            if (checkIfSeatIsReserved(seat) || checkIfSeatIsReserved(seat, true)) {
+            if (projection.tickets.some((ticket) => ticket.seat === seat._id)) {
+                setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber, bought: true });
+            } else if (checkIfSeatIsReserved(seat) || checkIfSeatIsReserved(seat, true)) {
                 setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber, reserved: true });
             } else {
                 setSelectedSeat({ seat, seatRow: rowIndex + 1, seatNumber });

@@ -103,6 +103,7 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                         setSelectedSeat={setSelectedSeat}
                     />
                 </Container>
+
                 <div className={styles["util-btn-group"]}>
                     {!projectionMode && (
                         <>
@@ -111,19 +112,23 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                             <Button onClick={() => setAddRowModal(true)}>Add Row</Button>
                         </>
                     )}
-                    {projectionMode && !selectedSeat?.reserved && (
-                        <>
-                            <Button onClick={() => setShowReserveModal(true)}>Reserve</Button>
-                        </>
-                    )}
-                    {projectionMode && selectedSeat?.reserved && (
-                        <>
-                            <Button onClick={() => setShowReserveModal(true)}>Cancel Reservation</Button>
-                        </>
-                    )}
                     {projectionMode && (
                         <>
-                            <Button onClick={() => setShowBuyTicketModal(true)}>Buy ticket</Button>
+                            {!selectedSeat?.reserved && !selectedSeat?.bought && (
+                                <>
+                                    <Button onClick={() => setShowReserveModal(true)}>Reserve</Button>
+                                </>
+                            )}
+                            {selectedSeat?.reserved && !selectedSeat?.bought && (
+                                <>
+                                    <Button onClick={() => setShowReserveModal(true)}>Cancel Reservation</Button>
+                                </>
+                            )}
+                            {!selectedSeat?.bought && (
+                                <>
+                                    <Button onClick={() => setShowBuyTicketModal(true)}>Buy ticket</Button>
+                                </>
+                            )}
                         </>
                     )}
                 </div>
