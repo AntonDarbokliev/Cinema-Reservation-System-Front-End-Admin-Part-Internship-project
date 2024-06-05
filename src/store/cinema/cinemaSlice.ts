@@ -24,11 +24,14 @@ const cinemaSlice = createSlice({
         addMovieToCinema: (state: Cinema, action: PayloadAction<Movie>) => {
             state.movies.push(action.payload);
         },
+        removeMovieFromCinema: (state: Cinema, action: PayloadAction<string>) => {
+            state.movies = state.movies.filter((movie) => movie._id !== action.payload);
+        },
         addProjectionToCinema: (state: Cinema, action: PayloadAction<UnpopulatedProjection>) => {
             state.projections.push(action.payload);
         },
     },
 });
 
-export const { addCinema, addMovieToCinema, addProjectionToCinema } = cinemaSlice.actions;
+export const { addCinema, addMovieToCinema, addProjectionToCinema, removeMovieFromCinema } = cinemaSlice.actions;
 export default cinemaSlice.reducer;
