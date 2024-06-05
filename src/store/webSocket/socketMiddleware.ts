@@ -1,5 +1,5 @@
 import { Middleware } from "redux";
-import { buySeat, connectionEstablished, connectionLost, initSocket, reserveSeat, selectSeat, unselectSeat } from "./socketSlice";
+import { buySeat, connectionEstablished, connectionLost, initSocket, reserveSeat, selectSeat, unreserveSeat, unselectSeat } from "./socketSlice";
 import SocketFactory, { SocketInterface } from "./SocketFactory";
 import { addToast } from "../toast/toastSlice";
 import { v4 as uuidv4 } from "uuid";
@@ -10,6 +10,7 @@ export enum SocketEvent {
     SET_SEAT = "setSeat",
     UNSET_SEAT = "unsetSeat",
     RESERVE_SEAT = "reserveSeat",
+    UNRESERVE_SEAT = "unreserveSeat",
     BUY_SEAT = "buySeat",
     ERROR = "err",
 }
@@ -20,13 +21,10 @@ const socketMiddleware: Middleware = (store) => {
     return (next) => (action) => {
         if (initSocket.match(action)) {
             if (!socket && typeof window !== "undefined") {
-                console.log("socket before creating: ", socket);
-
                 socket = SocketFactory.create();
-                console.log("connection socket");
 
-                socket.socket.on(SocketEvent.CONNECT, () => {
-                    store.dispatch(connectionEstablished());
+                socket.socket.on(SocketEvent.CONNECT, (sharedState) => {
+                    store.dispatch(connectionEstablished(sharedState));
                 });
 
                 socket.socket.on(SocketEvent.DISCONNECT, () => {
@@ -39,6 +37,10 @@ const socketMiddleware: Middleware = (store) => {
 
                 socket.socket.on(SocketEvent.RESERVE_SEAT, (reservation) => {
                     store.dispatch(reserveSeat({ reservation, fromServer: true }));
+                });
+
+                socket.socket.on(SocketEvent.UNRESERVE_SEAT, (id) => {
+                    store.dispatch(unreserveSeat({ id, fromServer: true }));
                 });
 
                 socket.socket.on(SocketEvent.BUY_SEAT, (ticket) => {
@@ -81,6 +83,13 @@ const socketMiddleware: Middleware = (store) => {
         if (reserveSeat.match(action) && socket && !action.payload.fromServer) {
             const reservation = action.payload.reservation;
             socket.socket.emit(SocketEvent.RESERVE_SEAT, reservation);
+
+            next(action);
+        }
+
+        if (unreserveSeat.match(action) && socket && !action.payload.fromServer) {
+            const id = action.payload.id;
+            socket.socket.emit(SocketEvent.UNRESERVE_SEAT, id);
 
             next(action);
         }
