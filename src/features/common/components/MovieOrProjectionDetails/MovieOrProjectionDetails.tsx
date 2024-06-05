@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { showAddEditMovieModal } from "../../../../store/addEditMovieModal/addEditMovieModalSlice";
 import { AddEditProjectionModal } from "../../../MovieDetails/components/AddEditProjectionModal/AddEditProjectionModal";
 import { useState } from "react";
+import { DeleteMovieOrProjectionModal } from "./DeleteMovieOrProjectionModal/DeleteMovieOrProjectionModal";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     movie?: Movie;
@@ -29,6 +31,7 @@ export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection, s
     const movieModalState = useSelector((state: IRootState) => state.addEditMovieModal.show);
     const dispatch = useDispatch();
     const [projectionModalState, setProjectionModalState] = useState(false);
+    const [deleteModalState, setDeleteModalState] = useState(false);
 
     return (
         <Container>
@@ -39,20 +42,26 @@ export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection, s
                 projection={projection}
                 setProjection={setProjection}
             />
+            <DeleteMovieOrProjectionModal show={deleteModalState} setShowModal={setDeleteModalState} movie={movie} projection={projection} />
             {movie && (
                 <div className={styles["details"]}>
                     <h1>{movie.name}</h1>
-                    <Button
-                        onClick={() => {
-                            if (projection) {
-                                setProjectionModalState(true);
-                            } else if (movie) {
-                                dispatch(showAddEditMovieModal());
-                            }
-                        }}
-                    >
-                        Edit
-                    </Button>
+                    <div className={styles["edit-delete-btns"]}>
+                        <Button
+                            onClick={() => {
+                                if (projection) {
+                                    setProjectionModalState(true);
+                                } else if (movie) {
+                                    dispatch(showAddEditMovieModal());
+                                }
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faPenToSquare} />
+                        </Button>
+                        <Button onClick={() => setDeleteModalState(true)}>
+                            <FontAwesomeIcon icon={faTrashCan} />
+                        </Button>
+                    </div>
                     <div className={styles["desc-poster"]}>
                         <div className={styles["description"]}>
                             {!projection && (
