@@ -1,4 +1,4 @@
-import { CreateProjection } from "../../MovieDetails/interfaces/CreateProjection";
+import { CreateProjection } from "../interfaces/CreateProjection";
 import { createProjection } from "../service/ProjectionDetailsService";
 
 export const useCreateProjection = () => {

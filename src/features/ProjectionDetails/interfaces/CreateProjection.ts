@@ -11,7 +11,7 @@ export interface CreateProjection {
 
     movie: string;
 
-    cinema: string;
+    cinemaId: string;
 
     hall: string;
 }

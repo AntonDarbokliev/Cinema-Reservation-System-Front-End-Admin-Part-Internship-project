@@ -31,7 +31,7 @@ export const AddEditProjectionModal: React.FC<Props> = ({ show, showAddProjectio
         hall: projection?.hall._id ?? "",
         baseTicketPrice: String(projection?.baseTicketPrice) ?? "",
         movie: movieId ?? "",
-        cinema: cinemaId ?? "",
+        cinemaId: cinemaId ?? "",
     };
 
     const { formValues, onChangeHandler, updateInitialValue } = useForm(initialValue);
