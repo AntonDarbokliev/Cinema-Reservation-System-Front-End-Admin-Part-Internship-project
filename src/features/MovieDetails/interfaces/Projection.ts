@@ -1,7 +1,6 @@
 import { Cinema } from "../../CinemasList/interfaces/cinemaInterface";
 import { Ticket } from "../../HallLayout/interfaces/Ticket";
 import { Hall } from "../../HallsList/interfaces/hallInterface";
-import { Movie } from "../../MoviesList/interfaces/Movie";
 import { ProjectionStatus } from "./ProjectionStatus";
 import { Reservation } from "./Reservation";
 
@@ -24,7 +23,9 @@ export interface Projection {
 
     baseTicketPrice: number;
 
-    movie: Movie;
+    movieId: string;
+
+    movieLength: string | number;
 
     _id: string;
 

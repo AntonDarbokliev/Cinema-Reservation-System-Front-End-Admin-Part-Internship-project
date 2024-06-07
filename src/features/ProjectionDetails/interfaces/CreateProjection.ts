@@ -9,7 +9,9 @@ export interface CreateProjection {
 
     baseTicketPrice: string;
 
-    movie: string;
+    movieId: string;
+
+    movieLength: string | number;
 
     cinemaId: string;
 
