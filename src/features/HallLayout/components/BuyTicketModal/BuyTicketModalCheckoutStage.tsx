@@ -41,7 +41,7 @@ export const BuyTicketModalCheckoutStage: React.FC<Props> = ({ selectedItems, se
                     <br />
                     <div key={selectedSeat?.seat._id} className={styles["item-card"]}>
                         <h1>Total Price</h1>
-                        <h5>${price}</h5>
+                        <h5>${price.toFixed(2)}</h5>
                     </div>
                 </>
             )}

@@ -13,7 +13,7 @@ import { useBuyTicket } from "../../hooks/useBuyTicket";
 import { useManageSocketSeat } from "../../hooks/useManageSocketSeat";
 import { CountdownTimer } from "../../../common/components/Countdown/Countdown";
 import { useSelectionCountdownEnd } from "../../hooks/useSelectionCountdownEnd";
-Form;
+import { Movie } from "../../../MoviesList/interfaces/Movie";
 
 export interface SelectedItem {
     item: FoodAndBeverage;
@@ -28,6 +28,7 @@ interface Props {
     selectedSeat: SelectedSeat | null;
     setSelectedSeat: React.Dispatch<React.SetStateAction<SelectedSeat | null>>;
     setProjection: React.Dispatch<React.SetStateAction<Projection>>;
+    movie: Movie;
 }
 
 export const BuyTicketModal: React.FC<Props> = ({
@@ -38,6 +39,7 @@ export const BuyTicketModal: React.FC<Props> = ({
     setShowBuyTicketModal,
     setSelectedSeat,
     setProjection,
+    movie,
 }) => {
     const { foodAndBeverages } = useFoodAndBeverages();
 
@@ -101,7 +103,7 @@ export const BuyTicketModal: React.FC<Props> = ({
                             <tbody>
                                 <tr>
                                     <td>Movie: </td>
-                                    <td>{projection?.movie.name}</td>
+                                    <td>{movie?.name}</td>
                                 </tr>
                                 <tr>
                                     <td>Seat Type: </td>
@@ -222,7 +224,7 @@ export const BuyTicketModal: React.FC<Props> = ({
                                 await buyTicketHandler({
                                     projection: projection._id,
                                     seat: selectedSeat!.seat._id,
-                                    price,
+                                    price: price.toFixed(2),
                                     reservaton: reservation?._id,
                                     seatRow: selectedSeat!.seatRow,
                                     seatNumber: selectedSeat!.seatNumber,
