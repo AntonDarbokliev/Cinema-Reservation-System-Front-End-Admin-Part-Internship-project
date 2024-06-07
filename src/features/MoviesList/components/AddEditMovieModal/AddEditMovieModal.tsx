@@ -12,6 +12,7 @@ import { useForm } from "../../../common/hooks/useForm";
 import { useCreateMovie } from "../../hooks/useCreateMovie";
 import { Movie } from "../../interfaces/Movie";
 import { useEditMovie } from "../../hooks/useEditMovie";
+import { Image } from "react-bootstrap";
 
 interface Props {
     show: boolean;
@@ -25,6 +26,7 @@ export const AddEditMovieModal: React.FC<Props> = ({ show, movie, setMovie }) =>
     const [genres, setGenres] = useState<Genre[]>(movie?.genres ?? [Genre.ACTION]);
     const [subtitles, setSubtitles] = useState<string[]>(movie?.subtitles ?? [""]);
     const [file, setFile] = useState<File | null>(null);
+    const [moviePoster, setMoviePoster] = useState<string | null>(movie?.poster ?? null);
     const { createMovieHandler } = useCreateMovie();
     const { editMovieHandler } = useEditMovie();
 
@@ -181,11 +183,19 @@ export const AddEditMovieModal: React.FC<Props> = ({ show, movie, setMovie }) =>
                         <Form.Label column sm="2">
                             Poster
                         </Form.Label>
-                        <Col sm="10">
-                            <Form.Control
-                                type="file"
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFile(e.target.files ? e.target.files[0] : null)}
-                            />
+                        <Col sm="10" className="d-flex">
+                            {moviePoster && (
+                                <>  
+                                    <Image width={"15%"} src={moviePoster} alt="poster" />
+                                    <Button onClick={() => setMoviePoster(null)}>X</Button>
+                                </>
+                            )}
+                            {!moviePoster && (
+                                <Form.Control
+                                    type="file"
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFile(e.target.files ? e.target.files[0] : null)}
+                                />
+                            )}
                         </Col>
                     </Form.Group>
 
@@ -292,20 +302,22 @@ export const AddEditMovieModal: React.FC<Props> = ({ show, movie, setMovie }) =>
                         type="button"
                         onClick={async () => {
                             if (movie && setMovie) {
-                                const movie = await editMovieHandler({
-                                    ...formValues,
-                                    actors,
-                                    genres,
-                                    poster: file as File,
-                                    subtitles,
-                                    rating: formValues.rating as Rating,
-                                });
-                                setMovie((state) => ({ ...state, ...movie! }));
+                                if (moviePoster || file) {
+                                    const movie = await editMovieHandler({
+                                        ...formValues,
+                                        actors,
+                                        genres,
+                                        poster: moviePoster ?? (file as File),
+                                        subtitles,
+                                        rating: formValues.rating as Rating,
+                                    });
+                                    setMovie((state) => ({ ...state, ...movie! }));
+                                    dispatch(hideAddEditMovieModal());
+                                }
                             } else {
                                 await addMovieHandler();
+                                dispatch(hideAddEditMovieModal());
                             }
-
-                            dispatch(hideAddEditMovieModal());
                         }}
                     >
                         Edit

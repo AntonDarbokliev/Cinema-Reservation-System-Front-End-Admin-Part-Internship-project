@@ -9,7 +9,7 @@ export interface MovieFieldData {
     description: string;
     production: string;
     rating: Rating;
-    poster: File;
+    poster: File | string;
     actors: string[];
     subtitles: string[];
     genres: Genre[];
