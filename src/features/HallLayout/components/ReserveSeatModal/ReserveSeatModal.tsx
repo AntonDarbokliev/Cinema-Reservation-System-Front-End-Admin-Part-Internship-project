@@ -11,6 +11,7 @@ import { useCancelReservation } from "../../hooks/useCancelReservation";
 import { useManageSocketSeat } from "../../hooks/useManageSocketSeat";
 import { CountdownTimer } from "../../../common/components/Countdown/Countdown";
 import { useSelectionCountdownEnd } from "../../hooks/useSelectionCountdownEnd";
+import { Movie } from "../../../MoviesList/interfaces/Movie";
 
 interface Props {
     showReserveModal: boolean;
@@ -20,6 +21,7 @@ interface Props {
     projectionSetter: React.Dispatch<React.SetStateAction<Projection>>;
     setSelectedSeat: React.Dispatch<React.SetStateAction<SelectedSeat | null>>;
     cancelReservationId?: string;
+    movie: Movie;
 }
 
 export const ReserveSeatModal: React.FC<Props> = ({
@@ -30,6 +32,7 @@ export const ReserveSeatModal: React.FC<Props> = ({
     projectionSetter,
     setSelectedSeat,
     cancelReservationId,
+    movie,
 }) => {
     const { reserveSeatHandler } = useReserveSeat();
     const { cancelReservationHandler } = useCancelReservation();
@@ -85,7 +88,7 @@ export const ReserveSeatModal: React.FC<Props> = ({
                             <tbody>
                                 <tr>
                                     <td>Movie: </td>
-                                    <td>{projection.movie.name}</td>
+                                    <td>{movie.name}</td>
                                 </tr>
                                 <tr>
                                     <td>Seat Type: </td>

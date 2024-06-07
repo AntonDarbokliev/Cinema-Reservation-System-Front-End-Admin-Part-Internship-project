@@ -1,11 +1,13 @@
 import { Table } from "react-bootstrap";
 import { Projection } from "../../../MovieDetails/interfaces/Projection";
+import { Movie } from "../../../MoviesList/interfaces/Movie";
 
 interface Props {
     projection: Projection;
+    movie: Movie;
 }
 
-export const ProjectionDetailsTable: React.FC<Props> = ({ projection }) => {
+export const ProjectionDetailsTable: React.FC<Props> = ({ projection, movie }) => {
     return (
         <Table striped>
             <tbody>
@@ -20,7 +22,7 @@ export const ProjectionDetailsTable: React.FC<Props> = ({ projection }) => {
                 </tr>
                 <tr>
                     <td>Movie</td>
-                    <td>{projection.movie.name}</td>
+                    <td>{movie.name}</td>
                 </tr>
                 <tr>
                     <td>Projection Type</td>

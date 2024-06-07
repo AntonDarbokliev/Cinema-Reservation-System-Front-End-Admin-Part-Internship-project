@@ -17,7 +17,7 @@ import { Image } from "react-bootstrap";
 interface Props {
     show: boolean;
     movie?: Movie;
-    setMovie?: React.Dispatch<React.SetStateAction<Movie>>;
+    setMovie?: React.Dispatch<React.SetStateAction<Movie | undefined>>;
 }
 
 export const AddEditMovieModal: React.FC<Props> = ({ show, movie, setMovie }) => {
@@ -185,7 +185,7 @@ export const AddEditMovieModal: React.FC<Props> = ({ show, movie, setMovie }) =>
                         </Form.Label>
                         <Col sm="10" className="d-flex">
                             {moviePoster && (
-                                <>  
+                                <>
                                     <Image width={"15%"} src={moviePoster} alt="poster" />
                                     <Button onClick={() => setMoviePoster(null)}>X</Button>
                                 </>

@@ -21,7 +21,7 @@ import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     movie?: Movie;
-    setMovie?: React.Dispatch<React.SetStateAction<Movie>>;
+    setMovie?: React.Dispatch<React.SetStateAction<Movie | undefined>>;
     projection?: Projection;
     setProjection?: React.Dispatch<React.SetStateAction<Projection>>;
 }
@@ -37,6 +37,7 @@ export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection, s
         <Container>
             <AddEditMovieModal setMovie={setMovie} movie={movie} show={movieModalState} />
             <AddEditProjectionModal
+                setMovie={setMovie!}
                 show={projectionModalState}
                 showAddProjectionModal={setProjectionModalState}
                 projection={projection}
@@ -73,13 +74,13 @@ export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection, s
                                     <MovieDetailsTable movie={movie} />
                                 </>
                             )}
-                            {projection && <ProjectionDetailsTable projection={projection} />}
+                            {projection && <ProjectionDetailsTable movie={movie} projection={projection} />}
                         </div>
                         <div className={styles["poster"]}>
                             <Image src={movie.poster} fluid alt={movie.name} />
                         </div>
                     </div>
-                    {!projection && <MovieDetailsProjections />}
+                    {!projection && <MovieDetailsProjections movie={movie} setMovie={setMovie!} />}
                     {projection && (
                         <>
                             <Button onClick={() => navigate("hall")}>Reserve/Buy a Seat</Button>

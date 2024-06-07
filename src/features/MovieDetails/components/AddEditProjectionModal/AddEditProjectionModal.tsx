@@ -9,20 +9,24 @@ import { useCreateProjection } from "../../../ProjectionDetails/hooks/useCreateP
 import { Projection, ProjectionType } from "../../interfaces/Projection";
 import { useEditProjection } from "../../../ProjectionDetails/hooks/useEditProjection";
 import { useEffect } from "react";
+import { useMovie } from "../../hooks/useMovie";
+import { Movie } from "../../../MoviesList/interfaces/Movie";
 
 interface Props {
     show: boolean;
     showAddProjectionModal: React.Dispatch<React.SetStateAction<boolean>>;
-    setProjections?: React.Dispatch<React.SetStateAction<Projection[]>>;
     projection?: Projection;
     setProjection?: React.Dispatch<React.SetStateAction<Projection>>;
+    setMovie: React.Dispatch<React.SetStateAction<Movie | undefined>>;
 }
 
-export const AddEditProjectionModal: React.FC<Props> = ({ show, showAddProjectionModal, setProjections, projection, setProjection }) => {
+export const AddEditProjectionModal: React.FC<Props> = ({ show, showAddProjectionModal, setMovie, projection, setProjection }) => {
     const { projectionTypes } = useProjectionTypes();
     const { halls } = useHalls();
     const cinemaId = useParams().id;
     const movieId = useParams().movieId;
+
+    const { movie } = useMovie();
 
     const initialValue = {
         startDate: projection?.startDate.split("T")[0] ?? "",
@@ -30,7 +34,8 @@ export const AddEditProjectionModal: React.FC<Props> = ({ show, showAddProjectio
         projectionType: projection?.projectionType ?? ProjectionType.PROJECTION_2D,
         hall: projection?.hall._id ?? "",
         baseTicketPrice: String(projection?.baseTicketPrice) ?? "",
-        movie: movieId ?? "",
+        movieId: movieId ?? "",
+        movieLength: movie?.length ?? 0,
         cinemaId: cinemaId ?? "",
     };
 
@@ -43,11 +48,12 @@ export const AddEditProjectionModal: React.FC<Props> = ({ show, showAddProjectio
     }, [projection]);
 
     const createProjectionOnClick = async () => {
-        if (setProjections) {
-            const projection = await createProjectionHandler(formValues);
-            setProjections((state) => [...state, projection]);
-            showAddProjectionModal(false);
-        }
+        // updateInitialValue() for some reason isn't updating the movieLength
+        formValues.movieLength = Number(movie?.length);
+
+        const projection = await createProjectionHandler(formValues);
+        setMovie((state) => (state ? { ...state, projections: [...state.projections, projection] } : undefined));
+        showAddProjectionModal(false);
     };
 
     const editProjectionOnClick = async () => {

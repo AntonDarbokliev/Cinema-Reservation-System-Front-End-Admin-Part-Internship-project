@@ -18,6 +18,7 @@ import { useSeatTypes } from "../../hooks/useSeatTypes";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
 import { ReservationStatus } from "../../interfaces/ReservationStatus";
 import { useSocketConnection } from "../../../common/hooks/useSocketConnection";
+import { useMovie } from "../../../MovieDetails/hooks/useMovie";
 
 interface Props {
     projectionMode?: boolean;
@@ -29,6 +30,8 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
     let hallToUse: Hall;
     const hallObj = useHall();
     hallToUse = hallObj.hall;
+    const { movie } = useMovie(projection?.movieId);
+
     if (projection) {
         hallToUse = projection?.hall;
     }
@@ -76,6 +79,7 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                                         reservation.seat === selectedSeat?.seat._id && reservation.status === ReservationStatus.ACTIVE
                                 )?._id
                             }
+                            movie={movie!}
                         />
                         <BuyTicketModal
                             setProjection={setProjection!}
@@ -87,6 +91,7 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                             showBuyTicketModal={showBuyTicketModal}
                             projection={projection!}
                             setSelectedSeat={setSelectedSeat}
+                            movie={movie!}
                         />
                     </>
                 )}
