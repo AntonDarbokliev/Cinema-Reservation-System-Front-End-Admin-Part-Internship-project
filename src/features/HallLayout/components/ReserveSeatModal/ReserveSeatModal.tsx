@@ -53,10 +53,12 @@ export const ReserveSeatModal: React.FC<Props> = ({
     const onReserveClickHandler = async () => {
         if (selectedSeat) {
             const reservationObj: CreateReservation = {
-                projection: projection._id,
+                projectionId: projection._id,
                 seat: selectedSeat.seat._id,
                 seatRow: selectedSeat.seatRow,
                 seatNumber: selectedSeat.seatNumber,
+                movieName: movie.name,
+                moviePoster: movie.poster,
             };
 
             if (user.roles.every((role) => role > Role.ADMIN)) {
