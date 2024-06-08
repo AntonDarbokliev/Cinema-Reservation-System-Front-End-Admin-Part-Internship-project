@@ -7,22 +7,36 @@ import { AddEditFoodAndBeverageModal } from "../AddEditFoodAndBeverageModal/AddE
 import styles from "./FoodAndBeveragesList.module.scss";
 import { FoodAndBeverage } from "../../interfaces/FoodAndBeverage";
 import { useState } from "react";
+import { DeleteFoodAndBeverageModal } from "../DeleteFoodAndBeverageModal/DeleteFoodAndBeverageModal";
 
 export const FoodAndBeveragesList = () => {
     const { foodBeverages, setFoodBeverages } = useFoodAndBeverages();
-    const [foodAndBeverageToEdit, setFoodAndBeverageToEdit] = useState<FoodAndBeverage | null>(null);
-    const show = useSelector((state: IRootState) => state.addFoodAndBeverageModal.show);
+    const [foodAndBeverageToEditDelete, setFoodAndBeverageToEditDelete] = useState<FoodAndBeverage | null>(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const showEditAddModal = useSelector((state: IRootState) => state.addFoodAndBeverageModal.show);
     return (
         <Container>
             <AddEditFoodAndBeverageModal
-                setFoodAndBeverage={setFoodAndBeverageToEdit}
-                foodAndBeverage={foodAndBeverageToEdit ?? null}
+                setFoodAndBeverage={setFoodAndBeverageToEditDelete}
+                foodAndBeverage={foodAndBeverageToEditDelete ?? null}
                 stateSetter={setFoodBeverages}
-                show={show}
+                show={showEditAddModal}
             />
+            <DeleteFoodAndBeverageModal
+                foodAndBeverage={foodAndBeverageToEditDelete!}
+                setFoodAndBeverages={setFoodBeverages}
+                showDeleteModal={showDeleteModal}
+                setShowDeleteModal={setShowDeleteModal}
+                setFoodAndBeverage={setFoodAndBeverageToEditDelete}
+            ></DeleteFoodAndBeverageModal>
             <div className={styles["food-and-beverages-list"]}>
                 {foodBeverages.map((f) => (
-                    <FoodAndBeverageCard setFoodAndBeverageToEdit={setFoodAndBeverageToEdit} key={f._id} foodAndBeverage={f} />
+                    <FoodAndBeverageCard
+                        setShowDeleteModal={setShowDeleteModal}
+                        setFoodAndBeverageToEdit={setFoodAndBeverageToEditDelete}
+                        key={f._id}
+                        foodAndBeverage={f}
+                    />
                 ))}
             </div>
         </Container>

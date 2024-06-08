@@ -10,9 +10,10 @@ import { useDispatch } from "react-redux";
 interface Props {
     foodAndBeverage: FoodAndBeverage;
     setFoodAndBeverageToEdit: React.Dispatch<React.SetStateAction<FoodAndBeverage | null>>;
+    setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const FoodAndBeverageCard: React.FC<Props> = ({ foodAndBeverage, setFoodAndBeverageToEdit }) => {
+export const FoodAndBeverageCard: React.FC<Props> = ({ foodAndBeverage, setFoodAndBeverageToEdit, setShowDeleteModal }) => {
     const dispatch = useDispatch();
     return (
         <Card className={styles["food-beverage-card"]}>
@@ -25,7 +26,12 @@ export const FoodAndBeverageCard: React.FC<Props> = ({ foodAndBeverage, setFoodA
                 >
                     <FontAwesomeIcon icon={faPenToSquare} />
                 </Button>
-                <Button>
+                <Button
+                    onClick={() => {
+                        setFoodAndBeverageToEdit(foodAndBeverage);
+                        setShowDeleteModal(true);
+                    }}
+                >
                     <FontAwesomeIcon icon={faTrashCan} />
                 </Button>
             </div>
