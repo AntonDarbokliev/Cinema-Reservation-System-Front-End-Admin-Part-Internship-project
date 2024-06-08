@@ -1,12 +1,23 @@
-@use '../../../../scss/vars';
+@use "../../../../scss/vars";
 
 .food-beverage-card {
-  width: 85vw;
-  margin: 1rem;
+    width: 85vw;
+    margin: 1rem;
+
+    > .edit-delete-btns {
+        position: absolute;
+        right: 2%;
+        top: 1%;
+        display: flex;
+        flex-direction: column;
+        >button {
+          margin-bottom: 20%;
+        }
+    }
 }
 
-@media(min-width: vars.$min-width-media) {
+@media (min-width: vars.$min-width-media) {
     .food-beverage-card {
         width: 15vw;
     }
-} 
+}
