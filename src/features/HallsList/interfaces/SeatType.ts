@@ -5,4 +5,5 @@ export interface SeatType {
     name: SeatTypeName;
     price: number;
     cinema: string;
+    image?: string;
 }
