@@ -1,6 +1,7 @@
 import { Table } from "react-bootstrap";
 import { Projection } from "../../../MovieDetails/interfaces/Projection";
 import { Movie } from "../../../MoviesList/interfaces/Movie";
+import { ReservationStatus } from "../../../HallLayout/interfaces/ReservationStatus";
 
 interface Props {
     projection: Projection;
@@ -38,7 +39,7 @@ export const ProjectionDetailsTable: React.FC<Props> = ({ projection, movie }) =
                 </tr>
                 <tr>
                     <td>Reservations Made</td>
-                    <td>{projection.reservations.length}</td>
+                    <td>{projection.reservations.filter((res) => res.status !== ReservationStatus.CANCELLED).length}</td>
                 </tr>
                 <tr>
                     <td>Tickets Sold</td>
