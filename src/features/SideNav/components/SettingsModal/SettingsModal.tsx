@@ -4,6 +4,8 @@ import Button from "../../../common/components/Button/Button";
 import { useState } from "react";
 import { SeatTypesSetting } from "./SeatTypesSetting/SeatTypesSetting";
 import { AddEditSeatType } from "./AddEditSeatType/AddEditSeatType";
+import { SeatType } from "../../../HallsList/interfaces/SeatType";
+import { DeleteSeatType } from "./DeleteSeatType/DeleteSeatType";
 
 interface Props {
     show: boolean;
@@ -12,11 +14,13 @@ interface Props {
 
 export enum Setting {
     SEAT_TYPES = 0,
-    ADD_SEAT_TYPE = 1,
+    ADD_EDIT_SEAT_TYPE = 1,
+    DELETE_SEAT_TYPE = 2,
 }
 
 export const SettingsModal: React.FC<Props> = ({ show, setShow }) => {
     const [setting, setSetting] = useState<Setting | null>(null);
+    const [seatTypeToAddEdit, setSeatTypeToAddEdit] = useState<SeatType | null>(null);
 
     return (
         <Modal show={show}>
@@ -42,12 +46,24 @@ export const SettingsModal: React.FC<Props> = ({ show, setShow }) => {
                         </Card>
                     </>
                 )}
-                {setting === Setting.SEAT_TYPES && <SeatTypesSetting />}
-                {setting === Setting.ADD_SEAT_TYPE && <AddEditSeatType setSetting={setSetting} />}
+                {setting === Setting.SEAT_TYPES && <SeatTypesSetting setAddEditSeatType={setSeatTypeToAddEdit} setSetting={setSetting} />}
+                {setting === Setting.ADD_EDIT_SEAT_TYPE && (
+                    <AddEditSeatType setAddEditSeatType={setSeatTypeToAddEdit} addEditSeatType={seatTypeToAddEdit} setSetting={setSetting} />
+                )}
+                {setting === Setting.DELETE_SEAT_TYPE && <DeleteSeatType seatType={seatTypeToAddEdit!} setSetting={setSetting} />}
             </Modal.Body>
             <Modal.Footer>
-                {setting !== null && <Button onClick={() => setSetting(null)}>Back</Button>}
-                {setting === Setting.SEAT_TYPES && <Button onClick={() => setSetting(Setting.ADD_SEAT_TYPE)}>Add Seat Type</Button>}
+                {setting !== null && (
+                    <Button
+                        onClick={() => {
+                            setSeatTypeToAddEdit(null);
+                            setSetting(null);
+                        }}
+                    >
+                        Back
+                    </Button>
+                )}
+                {setting === Setting.SEAT_TYPES && <Button onClick={() => setSetting(Setting.ADD_EDIT_SEAT_TYPE)}>Add Seat Type</Button>}
                 <Button onClick={() => setShow(false)}>Close</Button>
             </Modal.Footer>
         </Modal>
