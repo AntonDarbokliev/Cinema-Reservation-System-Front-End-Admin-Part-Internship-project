@@ -12,6 +12,10 @@ import { ProjectionDetails } from "../../../ProjectionDetails/components/Project
 import { CinemasList } from "../../../CinemasList/components/CinemasList/CinemasList";
 import { FoodAndBeveragesList } from "../../../FoodAndBeverages/components/FoodAndBeveragesList/FoodAndBeveragesList";
 import { ProjectionHallLayout } from "../../../ProjectionDetails/components/ProjectionHallLayout/ProjectionHallLayout";
+import { useEffect } from "react";
+import { store } from "../../../../store/store";
+import { UserState, setUser } from "../../../../store/user/userSlice";
+import { jwtDecode } from "jwt-decode";
 
 export const router = createBrowserRouter([
     {
@@ -73,5 +77,13 @@ export const router = createBrowserRouter([
 ]);
 
 export const RouteComponent = () => {
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const decodedToken: UserState = jwtDecode(token);
+            store.dispatch(setUser(decodedToken));
+        }
+    }, []);
+
     return <RouterProvider router={router} />;
 };
