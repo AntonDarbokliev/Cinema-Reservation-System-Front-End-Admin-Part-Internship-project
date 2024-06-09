@@ -27,10 +27,8 @@ export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode
         fetch(seat.type.image!)
             .then((response) => response.text())
             .then((data) => {
-                const coloredSvg = data.replace(/fill="[^"]*"/g, `fill="${color}"`);
-                setSvgContent(coloredSvg);
-            })
-            .catch((error) => console.error("Error fetching the SVG:", error));
+                setSvgContent(data);
+            });
     }, [seat.type.image, color]);
 
     useEffect(() => {
