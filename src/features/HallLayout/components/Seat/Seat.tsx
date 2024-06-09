@@ -21,6 +21,18 @@ interface Props {
 export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode, seatNumber, seatStatus, isSelected, blankSeatType }) => {
     const [color, setColor] = useState("#5e829f");
 
+    const [svgContent, setSvgContent] = useState<string | null>(null);
+
+    useEffect(() => {
+        fetch(seat.type.image!)
+            .then((response) => response.text())
+            .then((data) => {
+                const coloredSvg = data.replace(/fill="[^"]*"/g, `fill="${color}"`);
+                setSvgContent(coloredSvg);
+            })
+            .catch((error) => console.error("Error fetching the SVG:", error));
+    }, [seat.type.image, color]);
+
     useEffect(() => {
         if (isSelected) {
             setColor("#5e829f");
@@ -39,7 +51,13 @@ export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode
         <>
             {seat.type.name != blankSeatType.name && (
                 <Col key={seat._id} className={styles["col"]} onClick={() => onClickHandler(seat, rowIndex, seatNumber)}>
-                    <FontAwesomeIcon color={color} className={styles["chair-icon"]} icon={faChair} />
+                    {!seat.type.image && <FontAwesomeIcon color={color} className={styles["chair-icon"]} icon={faChair} />}
+                    {svgContent && (
+                        <div
+                            dangerouslySetInnerHTML={{ __html: svgContent }}
+                            style={{ height: "8.5rem", width: "4.5rem", flex: "1 1 8.5rem", fill: color }}
+                        ></div>
+                    )}
                     {!editMode && (
                         <>
                             <p className={styles["seat-text"]}>
