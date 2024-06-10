@@ -18,6 +18,8 @@ export interface Cinema {
     projections: UnpopulatedProjection[];
 
     movies: Movie[];
+
+    minutesAwaitingStatusMargin: number;
 }
 
 export interface CreateCinema {

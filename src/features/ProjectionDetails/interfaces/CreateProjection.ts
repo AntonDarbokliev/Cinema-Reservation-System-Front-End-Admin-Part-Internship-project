@@ -9,6 +9,8 @@ export interface CreateProjection {
 
     baseTicketPrice: string;
 
+    minutesAwaitingStatusMargin: number;
+
     movieId: string;
 
     movieLength: string | number;
