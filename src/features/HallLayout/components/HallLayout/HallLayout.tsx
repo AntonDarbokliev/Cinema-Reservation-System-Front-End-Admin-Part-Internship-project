@@ -1,12 +1,8 @@
 import { Container } from "react-bootstrap";
 import { useHall } from "../../hooks/useHall";
 import { useState } from "react";
-import Button from "../../../common/components/Button/Button";
 import { Row, Hall } from "../../../HallsList/interfaces/hallInterface";
 import { AddRowModal } from "../AddRowModal/AddRowModal";
-import { useEditHall } from "../../hooks/useEditHall";
-import styles from "./HallLayout.module.scss";
-import { SeatTypeSelect } from "../SeatTypeSelect/SeatTypeSelect";
 import { useHallRowsCopy } from "../../hooks/useHallRowsCopy";
 import { Rows } from "../Rows/Rows";
 import { DeleteRowModal } from "../DeleteRowModal/DeleteRowModal";
@@ -19,6 +15,7 @@ import { SelectedSeat } from "../../interfaces/SelectedSeat";
 import { ReservationStatus } from "../../interfaces/ReservationStatus";
 import { useSocketConnection } from "../../../common/hooks/useSocketConnection";
 import { useMovie } from "../../../MovieDetails/hooks/useMovie";
+import { ActionButtons } from "../ActionButtons/ActionButtons";
 
 interface Props {
     projectionMode?: boolean;
@@ -48,15 +45,6 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
     const [deleteRowModal, setDeleteRowModal] = useState<{ show: boolean; row: Row }>({ show: false, row: { _id: "", seats: [] } });
     const { rows, setRows } = useHallRowsCopy(hallToUse);
     const [selectedSeat, setSelectedSeat] = useState<SelectedSeat | null>(null);
-
-    const { editHallHandler } = useEditHall();
-
-    const saveOrEditClickHandler = async () => {
-        if (editMode) {
-            await editHallHandler(rows);
-        }
-        setEditMode(!editMode);
-    };
 
     if (seatTypes && seatTypes.length > 0) {
         return (
@@ -109,34 +97,18 @@ export const HallLayout: React.FC<Props> = ({ projectionMode, projection, setPro
                     />
                 </Container>
 
-                <div className={styles["util-btn-group"]}>
-                    {!projectionMode && (
-                        <>
-                            {editMode && <SeatTypeSelect seatTypes={seatTypes} seatTypeSetter={setAddSeatType}></SeatTypeSelect>}
-                            <Button onClick={saveOrEditClickHandler}>{editMode ? "Save" : "Edit Mode"}</Button>
-                            <Button onClick={() => setAddRowModal(true)}>Add Row</Button>
-                        </>
-                    )}
-                    {projectionMode && (
-                        <>
-                            {!selectedSeat?.reserved && !selectedSeat?.bought && (
-                                <>
-                                    <Button onClick={() => setShowReserveModal(true)}>Reserve</Button>
-                                </>
-                            )}
-                            {selectedSeat?.reserved && !selectedSeat?.bought && (
-                                <>
-                                    <Button onClick={() => setShowReserveModal(true)}>Cancel Reservation</Button>
-                                </>
-                            )}
-                            {!selectedSeat?.bought && (
-                                <>
-                                    <Button onClick={() => setShowBuyTicketModal(true)}>Buy ticket</Button>
-                                </>
-                            )}
-                        </>
-                    )}
-                </div>
+                <ActionButtons
+                    projectionMode={projectionMode ?? false}
+                    editMode={editMode}
+                    rows={rows}
+                    seatTypes={seatTypes}
+                    setEditMode={setEditMode}
+                    setAddSeatType={setAddSeatType}
+                    selectedSeat={selectedSeat}
+                    setShowBuyTicketModal={setShowBuyTicketModal}
+                    setShowReserveModal={setShowReserveModal}
+                    setAddRowModal={setAddRowModal}
+                />
             </>
         );
     }
