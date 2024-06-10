@@ -1,4 +1,4 @@
-import { deleteSeatType } from "../../service/sideNavService";
+import { deleteSeatType } from "../service/sideNavService";
 
 export const useDeleteSeatType = () => {
     const deleteSeatTypeHandler = async (id: string) => {
