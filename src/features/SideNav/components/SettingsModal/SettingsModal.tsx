@@ -6,6 +6,7 @@ import { SeatTypesSetting } from "./SeatTypesSetting/SeatTypesSetting";
 import { AddEditSeatType } from "./AddEditSeatType/AddEditSeatType";
 import { SeatType } from "../../../HallsList/interfaces/SeatType";
 import { DeleteSeatType } from "./DeleteSeatType/DeleteSeatType";
+import { ChangeProjectionMargin } from "./ChangeProjectionMargin/ChangeProjectionMargin";
 
 interface Props {
     show: boolean;
@@ -16,6 +17,7 @@ export enum Setting {
     SEAT_TYPES = 0,
     ADD_EDIT_SEAT_TYPE = 1,
     DELETE_SEAT_TYPE = 2,
+    CHANGE_PROJECTION_MARGIN = 3,
 }
 
 export const SettingsModal: React.FC<Props> = ({ show, setShow }) => {
@@ -41,7 +43,7 @@ export const SettingsModal: React.FC<Props> = ({ show, setShow }) => {
                             <Card.Body>
                                 <Card.Title>Projection</Card.Title>
                                 <Card.Text>Adjust projection settings.</Card.Text>
-                                <Button>Go</Button>
+                                <Button onClick={() => setSetting(Setting.CHANGE_PROJECTION_MARGIN)}>Go</Button>
                             </Card.Body>
                         </Card>
                     </>
@@ -51,6 +53,7 @@ export const SettingsModal: React.FC<Props> = ({ show, setShow }) => {
                     <AddEditSeatType setAddEditSeatType={setSeatTypeToAddEdit} addEditSeatType={seatTypeToAddEdit} setSetting={setSetting} />
                 )}
                 {setting === Setting.DELETE_SEAT_TYPE && <DeleteSeatType seatType={seatTypeToAddEdit!} setSetting={setSetting} />}
+                {setting === Setting.CHANGE_PROJECTION_MARGIN && <ChangeProjectionMargin setSetting={setSetting} />}
             </Modal.Body>
             <Modal.Footer>
                 {setting !== null && (
