@@ -1,19 +1,37 @@
-@use '../../../../scss/vars';
-
-
+@use "../../../../scss/vars";
 
 .nav-link {
-    color: #fff; 
+    color: #fff;
     background-color: #2123;
     color: black;
+    > a {
+        text-decoration: none;
+        color: black;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
-.nav-link:hover,
-.nav-link:focus {
-    background-color: #444;
-    color: vars.$main-color;
+.nav-item-cinema {
+    margin-right: 10px;
+    background: vars.$main-color;
+    border-top-left-radius: vars.$main-border-radius;
+    border-top-right-radius: vars.$main-border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > p {
+        margin: 0;
+    }
 }
 
 .nav-item {
     margin-right: 10px;
+}
+.nav-link:hover,
+.nav-link:focus {
+    background-color: #fff;
+    color: vars.$main-color;
 }
