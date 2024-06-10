@@ -2,7 +2,7 @@ import { Modal } from "react-bootstrap";
 import Button from "../../../../common/components/Button/Button";
 import { SeatType } from "../../../../HallsList/interfaces/SeatType";
 import { Setting } from "../SettingsModal";
-import { useDeleteSeatType } from "../../../hooks/useDeleteSeatType/useDeleteSeatType";
+import { useDeleteSeatType } from "../../../hooks/useDeleteSeatType";
 
 interface Props {
     seatType: SeatType;
