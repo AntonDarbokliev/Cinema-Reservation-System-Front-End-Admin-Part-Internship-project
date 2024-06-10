@@ -11,6 +11,8 @@ import { useEditProjection } from "../../../ProjectionDetails/hooks/useEditProje
 import { useEffect } from "react";
 import { useMovie } from "../../hooks/useMovie";
 import { Movie } from "../../../MoviesList/interfaces/Movie";
+import { useCinema } from "../../../CinemaPage/hooks/useCinema";
+import { CreateProjection } from "../../../ProjectionDetails/interfaces/CreateProjection";
 
 interface Props {
     show: boolean;
@@ -25,10 +27,11 @@ export const AddEditProjectionModal: React.FC<Props> = ({ show, showAddProjectio
     const { halls } = useHalls();
     const cinemaId = useParams().id;
     const movieId = useParams().movieId;
+    const { cinema } = useCinema();
 
     const { movie } = useMovie();
 
-    const initialValue = {
+    const initialValue: CreateProjection = {
         startDate: projection?.startDate.split("T")[0] ?? "",
         startTime: projection?.startTime ?? "",
         projectionType: projection?.projectionType ?? ProjectionType.PROJECTION_2D,
@@ -37,6 +40,7 @@ export const AddEditProjectionModal: React.FC<Props> = ({ show, showAddProjectio
         movieId: movieId ?? "",
         movieLength: movie?.length ?? 0,
         cinemaId: cinemaId ?? "",
+        minutesAwaitingStatusMargin: cinema?.minutesAwaitingStatusMargin ?? 0,
     };
 
     const { formValues, onChangeHandler, updateInitialValue } = useForm(initialValue);
@@ -48,8 +52,9 @@ export const AddEditProjectionModal: React.FC<Props> = ({ show, showAddProjectio
     }, [projection]);
 
     const createProjectionOnClick = async () => {
-        // updateInitialValue() for some reason isn't updating the movieLength
+        // updateInitialValue() for some reason isn't updating the movieLength and minutesAwaitingStatusMargin
         formValues.movieLength = Number(movie?.length);
+        formValues.minutesAwaitingStatusMargin = Number(cinema?.minutesAwaitingStatusMargin);
 
         const projection = await createProjectionHandler(formValues);
         setMovie((state) => (state ? { ...state, projections: [...state.projections, projection] } : undefined));
