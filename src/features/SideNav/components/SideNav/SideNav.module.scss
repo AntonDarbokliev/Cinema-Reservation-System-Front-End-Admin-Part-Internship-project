@@ -1,9 +1,18 @@
 @use '../../../../scss/vars';
 
-.side-nav-button {
+.side-buttons-div {
+  display: flex;
+  flex-direction: column;
   position: fixed;
-  top: 1%;
-  right: 1%
+  top: 6vh;
+  right: 1vw;
+  z-index: 100;
+  >button {
+    display: flex;
+    justify-content: center;
+    width: 4rem ;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .nav {

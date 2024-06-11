@@ -4,6 +4,10 @@ export const useForm = <T>(initialValue: T, onSubmitHandler?: (values: T) => voi
     const [formValues, setFormValues] = useState(initialValue);
     const [validated, setValidated] = useState(false);
 
+    const updateInitialValue = (newValue: T) => {
+        setFormValues(newValue);
+    };
+
     const onChangeHandler = (e: FormEvent | ChangeEvent) => {
         const element = e.target as HTMLInputElement;
         setFormValues((state) => ({ ...state, [element.name]: element.value }));
@@ -31,6 +35,7 @@ export const useForm = <T>(initialValue: T, onSubmitHandler?: (values: T) => voi
         onSubmit,
         onChangeHandler,
         resetForm,
-        validated
+        validated,
+        updateInitialValue,
     };
 };

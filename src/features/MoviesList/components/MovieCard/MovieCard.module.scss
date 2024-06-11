@@ -1,0 +1,15 @@
+@use "../../../../scss/vars";
+
+.movie-card {
+    display: flex;
+    flex-direction: column;
+    width: 38vw;
+    margin: 0 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: vars.$min-width-media) {
+    .movie-card {
+        width: 16vw;
+    }
+}

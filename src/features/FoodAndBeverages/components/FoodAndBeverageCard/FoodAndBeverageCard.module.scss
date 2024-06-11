@@ -1,0 +1,12 @@
+@use '../../../../scss/vars';
+
+.food-beverage-card {
+  width: 85vw;
+  margin: 1rem;
+}
+
+@media(min-width: vars.$min-width-media) {
+    .food-beverage-card {
+        width: 15vw;
+    }
+} 
