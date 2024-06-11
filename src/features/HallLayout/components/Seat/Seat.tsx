@@ -52,6 +52,7 @@ export const Seat: React.FC<Props> = ({ seat, onClickHandler, rowIndex, editMode
                     {!seat.type.image && <FontAwesomeIcon color={color} className={styles["chair-icon"]} icon={faChair} />}
                     {svgContent && (
                         <div
+                            className={styles["svg-container"]}
                             dangerouslySetInnerHTML={{ __html: svgContent }}
                             style={{ height: "8.5rem", width: "4.5rem", flex: "1 1 8.5rem", fill: color }}
                         ></div>

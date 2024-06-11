@@ -17,6 +17,12 @@
     font-size: 4rem;
 }
 
+.svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
 @media (max-width: 768px) {
     .col {
         height: 5.5rem;
