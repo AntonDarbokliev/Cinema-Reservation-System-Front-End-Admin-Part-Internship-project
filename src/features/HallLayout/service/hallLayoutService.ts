@@ -13,6 +13,6 @@ export const getHall = (id: string): Promise<Hall> => request.get(`${baseUrl}/ha
 export const editHall = (id: string, layout: { seatsLayout: CreateRow[] }): Promise<Hall> => request.patch(`${baseUrl}/halls/${id}`, layout);
 export const reserveSeat = (data: CreateReservation): Promise<Reservation> => request.post(`${baseUrl}/reservations`, data);
 export const getFoodAndBeverages = (cinemaId: string) => request.get(`${baseUrl}/food-and-beverages/${cinemaId}`);
-export const getSeatTypes = (cinemaId: string): Promise<SeatType[]> => request.get(`${baseUrl}/seat-types/${cinemaId}`);
+export const getSeatTypes = (cinemaId: string): Promise<SeatType[]> => request.get(`${baseUrl}/seat-types/cinema/${cinemaId}`);
 export const buyTicket = (data: CreateTicket): Promise<Ticket> => request.post(`${baseUrl}/tickets`, data);
 export const cancelReservation = (id: string) => request.post(`${baseUrl}/reservations/${id}/cancel`, { id });
