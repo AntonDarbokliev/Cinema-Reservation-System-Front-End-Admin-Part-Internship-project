@@ -95,7 +95,9 @@ export const BuyTicketModal: React.FC<Props> = ({
         const foodAndBeverages: FoodAndBeverage[] = [];
 
         Object.values(selectedItems).forEach((value) => {
-            foodAndBeverages.push(value.item);
+            for (let i = 0; i < value.quantity; i++) {
+                foodAndBeverages.push(value.item);
+            }
         });
 
         const ticketObj: CreateTicket = {
