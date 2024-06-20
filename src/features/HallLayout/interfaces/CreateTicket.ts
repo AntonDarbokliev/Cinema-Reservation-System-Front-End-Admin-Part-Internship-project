@@ -1,3 +1,5 @@
+import { FoodAndBeverage } from "../../FoodAndBeverages/interfaces/FoodAndBeverage";
+
 export interface CreateTicket {
     projection: string;
 
@@ -10,4 +12,6 @@ export interface CreateTicket {
     seatNumber: number;
 
     price: number | string;
+
+    foodAndBeverages?: FoodAndBeverage[];
 }

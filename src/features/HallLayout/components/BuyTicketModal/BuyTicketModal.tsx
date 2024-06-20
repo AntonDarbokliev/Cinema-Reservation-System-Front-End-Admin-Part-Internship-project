@@ -14,6 +14,7 @@ import { useManageSocketSeat } from "../../hooks/useManageSocketSeat";
 import { CountdownTimer } from "../../../common/components/Countdown/Countdown";
 import { useSelectionCountdownEnd } from "../../hooks/useSelectionCountdownEnd";
 import { Movie } from "../../../MoviesList/interfaces/Movie";
+import { CreateTicket } from "../../interfaces/CreateTicket";
 
 export interface SelectedItem {
     item: FoodAndBeverage;
@@ -89,6 +90,31 @@ export const BuyTicketModal: React.FC<Props> = ({
 
     const { buyTicketHandler } = useBuyTicket(setProjection);
     const { selectionCountdownEndHandler } = useSelectionCountdownEnd(setShowBuyTicketModal);
+
+    const onBuyTicket = async () => {
+        const foodAndBeverages: FoodAndBeverage[] = [];
+
+        Object.values(selectedItems).forEach((value) => {
+            foodAndBeverages.push(value.item);
+        });
+
+        const ticketObj: CreateTicket = {
+            projection: projection._id,
+            seat: selectedSeat!.seat._id,
+            price: price.toFixed(2),
+            reservaton: reservation?._id,
+            seatRow: selectedSeat!.seatRow,
+            seatNumber: selectedSeat!.seatNumber,
+        };
+
+        if (foodAndBeverages.length > 0) {
+            ticketObj.foodAndBeverages = foodAndBeverages;
+        }
+
+        await buyTicketHandler(ticketObj);
+        setSelectedSeat(null);
+        setShowBuyTicketModal(false);
+    };
 
     return (
         <Modal show={showBuyTicketModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -219,22 +245,7 @@ export const BuyTicketModal: React.FC<Props> = ({
                         >
                             Back
                         </Button>
-                        <Button
-                            onClick={async () => {
-                                await buyTicketHandler({
-                                    projection: projection._id,
-                                    seat: selectedSeat!.seat._id,
-                                    price: price.toFixed(2),
-                                    reservaton: reservation?._id,
-                                    seatRow: selectedSeat!.seatRow,
-                                    seatNumber: selectedSeat!.seatNumber,
-                                });
-                                setSelectedSeat(null);
-                                setShowBuyTicketModal(false);
-                            }}
-                        >
-                            Buy
-                        </Button>
+                        <Button onClick={onBuyTicket}>Buy</Button>
                     </>
                 )}
             </Modal.Footer>
