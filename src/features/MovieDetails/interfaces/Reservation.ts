@@ -3,7 +3,7 @@ export interface Reservation {
     seatRow: number;
     seatNumber: number;
     made: string;
-    projection: string;
+    projectionId: string;
     status: string;
     _id: string;
 }

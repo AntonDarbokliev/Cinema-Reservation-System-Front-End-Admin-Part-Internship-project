@@ -48,7 +48,9 @@ export const Rows: React.FC<Props> = ({
         if (checkInSocket) {
             return socketReservations.some(
                 (reservation) =>
-                    reservation.seat === seat._id && reservation.projection === projection._id && reservation.status === ReservationStatus.ACTIVE
+                    reservation.seat === seat._id &&
+                    reservation.projectionId === projection._id &&
+                    reservation.status === ReservationStatus.ACTIVE
             );
         }
 
