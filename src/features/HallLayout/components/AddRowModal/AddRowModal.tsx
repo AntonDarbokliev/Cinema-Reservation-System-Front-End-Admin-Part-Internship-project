@@ -1,17 +1,18 @@
 import { Form, Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { Row, Seat, SeatType } from "../../../HallsList/interfaces/hallInterface";
+import { Row, Seat } from "../../../HallsList/interfaces/hallInterface";
 import { useEditHall } from "../../hooks/useEditHall";
 import Button from "../../../common/components/Button/Button";
-
+import { SeatType } from "../../../HallsList/interfaces/SeatType";
 interface Props {
     openModalSetter: React.Dispatch<React.SetStateAction<boolean>>;
     show: boolean;
     rowsSetter: React.Dispatch<React.SetStateAction<Row[]>>;
     rows: Row[];
+    blankSeatType: SeatType;
 }
 
-export const AddRowModal: React.FC<Props> = ({ openModalSetter, show, rowsSetter, rows }) => {
+export const AddRowModal: React.FC<Props> = ({ openModalSetter, show, rowsSetter, rows, blankSeatType }) => {
     const [counter, setCounter] = useState(0);
     const { editHallHandler } = useEditHall();
     useEffect(() => {
@@ -21,7 +22,7 @@ export const AddRowModal: React.FC<Props> = ({ openModalSetter, show, rowsSetter
     }, [counter]);
 
     const onAdd = async () => {
-        const newArr: Seat[] = new Array(counter).fill({ type: SeatType.SEAT_BLANK } as Seat);
+        const newArr: Seat[] = new Array(counter).fill({ type: blankSeatType } as Seat);
 
         const editedHall = await editHallHandler([...rows, { seats: newArr }]);
         if (editedHall) {

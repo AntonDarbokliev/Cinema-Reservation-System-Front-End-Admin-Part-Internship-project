@@ -5,6 +5,7 @@
     align-items: center;
     position: relative;
     height: 8.5rem;
+    flex: 1 1 8.5rem;
     .seat-text {
         margin: 0;
         position: absolute;
@@ -14,4 +15,30 @@
 
 .chair-icon {
     font-size: 4rem;
+}
+
+.svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .col {
+        height: 5.5rem;
+        flex: 1 1 5.5rem;
+    }
+    .chair-icon {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .col {
+        height: 4.5rem;
+        flex: 1 1 4.5rem;
+    }
+    .chair-icon {
+        font-size: 2rem;
+    }
 }

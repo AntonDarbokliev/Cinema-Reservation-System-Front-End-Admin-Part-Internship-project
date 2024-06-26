@@ -7,9 +7,9 @@ import styles from './ToastList.module.scss';
 export const ToastList = () => {
     const toasts = useSelector((state: IRootState) => state.toast.toasts);
     return (
-        <ToastContainer className={`position-absolute ${styles['toast-container']}`}>
+        <ToastContainer className={`position-fixed ${styles['toast-container']}`}>
             {toasts.map((notfication) => (
-                <ToastNotification text={notfication.text} type={notfication.type} />
+                <ToastNotification key={notfication.id} text={notfication.text} type={notfication.type} />
             ))}
         </ToastContainer>
     );

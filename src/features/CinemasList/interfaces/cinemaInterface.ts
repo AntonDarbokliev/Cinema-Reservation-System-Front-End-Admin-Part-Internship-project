@@ -1,4 +1,6 @@
 import { Hall } from "../../HallsList/interfaces/hallInterface";
+import { UnpopulatedProjection } from "../../MovieDetails/interfaces/unpopulatedProjection";
+import { Movie } from "../../MoviesList/interfaces/Movie";
 
 export interface Cinema {
     _id: string;
@@ -13,5 +15,15 @@ export interface Cinema {
 
     menu: object[];
 
-    projections: object[];
+    projections: UnpopulatedProjection[];
+
+    movies: Movie[];
+
+    minutesAwaitingStatusMargin: number;
+}
+
+export interface CreateCinema {
+    address: string;
+
+    name: string;
 }

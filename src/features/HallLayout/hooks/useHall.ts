@@ -5,7 +5,7 @@ import { getHall } from "../service/hallLayoutService";
 
 export const useHall = () => {
     const params = useParams();
-    const [hall, setHall] = useState<Hall>({ _id: "", numberOfSeats: 0, seatsLayout: [] });
+    const [hall, setHall] = useState<Hall>({ _id: "", numberOfSeats: 0, seatsLayout: [], name: "" });
 
     useEffect(() => {
         if (params.hallId) getHall(params.hallId).then((data) => setHall(data));

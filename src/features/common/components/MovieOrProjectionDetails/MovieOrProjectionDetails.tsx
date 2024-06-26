@@ -1,0 +1,93 @@
+import Container from "../Container/Container";
+import { Image } from "react-bootstrap";
+import styles from "./MovieOrProjectionDetails.module.scss";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Projection } from "../../../MovieDetails/interfaces/Projection";
+import { Movie } from "../../../MoviesList/interfaces/Movie";
+import { MovieDetailsTable } from "../../../MovieDetails/components/MovieDetailsTable/MovieDetailsTable";
+import { MovieDetailsProjections } from "../../../MovieDetails/components/MovieDetailsProjections/MovieDetailsProjections";
+import { ProjectionDetailsTable } from "../../../ProjectionDetails/components/ProjectionDetailsTable/ProjectionDetailsTable";
+import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom";
+import { AddEditMovieModal } from "../../../MoviesList/components/AddEditMovieModal/AddEditMovieModal";
+import { IRootState } from "../../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { showAddEditMovieModal } from "../../../../store/addEditMovieModal/addEditMovieModalSlice";
+import { AddEditProjectionModal } from "../../../MovieDetails/components/AddEditProjectionModal/AddEditProjectionModal";
+import { useState } from "react";
+import { DeleteMovieOrProjectionModal } from "./DeleteMovieOrProjectionModal/DeleteMovieOrProjectionModal";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+
+interface Props {
+    movie?: Movie;
+    setMovie?: React.Dispatch<React.SetStateAction<Movie | undefined>>;
+    projection?: Projection;
+    setProjection?: React.Dispatch<React.SetStateAction<Projection>>;
+}
+
+export const MovieOrProjectionDetails: React.FC<Props> = ({ movie, projection, setMovie, setProjection }) => {
+    const navigate = useNavigate();
+    const movieModalState = useSelector((state: IRootState) => state.addEditMovieModal.show);
+    const dispatch = useDispatch();
+    const [projectionModalState, setProjectionModalState] = useState(false);
+    const [deleteModalState, setDeleteModalState] = useState(false);
+
+    return (
+        <Container>
+            <AddEditMovieModal setMovie={setMovie} movie={movie} show={movieModalState} />
+            <AddEditProjectionModal
+                setMovie={setMovie!}
+                show={projectionModalState}
+                showAddProjectionModal={setProjectionModalState}
+                projection={projection}
+                setProjection={setProjection}
+            />
+            <DeleteMovieOrProjectionModal show={deleteModalState} setShowModal={setDeleteModalState} movie={movie} projection={projection} />
+            {movie && (
+                <div className={styles["details"]}>
+                    <h1>{movie.name}</h1>
+                    <div className={styles["edit-delete-btns"]}>
+                        <Button
+                            onClick={() => {
+                                if (projection) {
+                                    setProjectionModalState(true);
+                                } else if (movie) {
+                                    dispatch(showAddEditMovieModal());
+                                }
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faPenToSquare} />
+                        </Button>
+                        <Button onClick={() => setDeleteModalState(true)}>
+                            <FontAwesomeIcon icon={faTrashCan} />
+                        </Button>
+                    </div>
+                    <div className={styles["desc-poster"]}>
+                        <div className={styles["description"]}>
+                            {!projection && (
+                                <>
+                                    <p>{movie.description}</p>
+                                    <h2>
+                                        <FontAwesomeIcon icon={faClock} /> {movie.length} min
+                                    </h2>
+                                    <MovieDetailsTable movie={movie} />
+                                </>
+                            )}
+                            {projection && <ProjectionDetailsTable movie={movie} projection={projection} />}
+                        </div>
+                        <div className={styles["poster"]}>
+                            <Image src={movie.poster} fluid alt={movie.name} />
+                        </div>
+                    </div>
+                    {!projection && <MovieDetailsProjections movie={movie} setMovie={setMovie!} />}
+                    {projection && (
+                        <>
+                            <Button onClick={() => navigate("hall")}>Reserve/Buy a Seat</Button>
+                        </>
+                    )}
+                </div>
+            )}
+        </Container>
+    );
+};

@@ -1,0 +1,13 @@
+.util-btn-group {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    justify-content: center;
+    z-index: 2;
+    > button {
+        margin-bottom: 1rem;
+        width: 8rem;
+    }
+}
