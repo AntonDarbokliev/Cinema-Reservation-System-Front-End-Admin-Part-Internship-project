@@ -4,7 +4,7 @@ import { Projection } from "../../../MovieDetails/interfaces/Projection";
 import { useReserveSeat } from "../../hooks/useReserveSeat";
 import { SelectedSeat } from "../../interfaces/SelectedSeat";
 import { IRootState } from "../../../../store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Role } from "../../../common/interfaces/Role";
 import { CreateReservation } from "../../interfaces/CreateReservation";
 import { useCancelReservation } from "../../hooks/useCancelReservation";
@@ -12,6 +12,7 @@ import { useManageSocketSeat } from "../../hooks/useManageSocketSeat";
 import { CountdownTimer } from "../../../common/components/Countdown/Countdown";
 import { useSelectionCountdownEnd } from "../../hooks/useSelectionCountdownEnd";
 import { Movie } from "../../../MoviesList/interfaces/Movie";
+import { unselectSeat } from "../../../../store/webSocket/socketSlice";
 
 interface Props {
     showReserveModal: boolean;
@@ -36,6 +37,7 @@ export const ReserveSeatModal: React.FC<Props> = ({
 }) => {
     const { reserveSeatHandler } = useReserveSeat();
     const { cancelReservationHandler } = useCancelReservation();
+    const dispatch = useDispatch();
 
     useManageSocketSeat(selectedSeat, showReserveModal, projection._id);
 
@@ -71,6 +73,7 @@ export const ReserveSeatModal: React.FC<Props> = ({
             });
             setShowReserveModal(false);
             setSelectedSeat(null);
+            dispatch(unselectSeat({ seat: { ...selectedSeat?.seat, projectionId: projection._id } }));
         }
     };
 
@@ -118,7 +121,14 @@ export const ReserveSeatModal: React.FC<Props> = ({
                         </Table>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={() => setShowReserveModal(false)}>Close</Button>
+                        <Button
+                            onClick={() => {
+                                dispatch(unselectSeat({ seat: { ...selectedSeat?.seat, projectionId: projection._id } }));
+                                setShowReserveModal(false);
+                            }}
+                        >
+                            Close
+                        </Button>
                         {cancelReservationId && <Button onClick={onCancelClickHandler}>Cancel Reservation</Button>}
                         {!cancelReservationId && <Button onClick={onReserveClickHandler}>Reserve</Button>}
                     </Modal.Footer>

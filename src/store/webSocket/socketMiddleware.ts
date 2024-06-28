@@ -75,6 +75,8 @@ const socketMiddleware: Middleware = (store) => {
 
         if (unselectSeat.match(action) && socket && !action.payload.fromServer) {
             const seat = action.payload.seat;
+            console.log('emitting unset seat');
+            
             socket.socket.emit(SocketEvent.UNSET_SEAT, seat);
 
             next(action);

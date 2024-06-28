@@ -15,6 +15,8 @@ import { CountdownTimer } from "../../../common/components/Countdown/Countdown";
 import { useSelectionCountdownEnd } from "../../hooks/useSelectionCountdownEnd";
 import { Movie } from "../../../MoviesList/interfaces/Movie";
 import { CreateTicket } from "../../interfaces/CreateTicket";
+import { useDispatch } from "react-redux";
+import { unselectSeat } from "../../../../store/webSocket/socketSlice";
 
 export interface SelectedItem {
     item: FoodAndBeverage;
@@ -43,6 +45,7 @@ export const BuyTicketModal: React.FC<Props> = ({
     movie,
 }) => {
     const { foodAndBeverages } = useFoodAndBeverages();
+    const dispatch = useDispatch();
 
     const [modalStage, setModalStage] = useState(0);
     const [selectedItems, setSelectedItems] = useState<{ [key: string]: SelectedItem }>({});
@@ -115,6 +118,7 @@ export const BuyTicketModal: React.FC<Props> = ({
 
         await buyTicketHandler(ticketObj);
         setSelectedSeat(null);
+        dispatch(unselectSeat({ seat: { ...selectedSeat!.seat, projectionId: projection._id } }));
         setShowBuyTicketModal(false);
     };
 
@@ -242,6 +246,7 @@ export const BuyTicketModal: React.FC<Props> = ({
                     <>
                         <Button
                             onClick={() => {
+                                dispatch(unselectSeat({ seat: { ...selectedSeat!.seat, projectionId: projection._id } }));
                                 setModalStage(0);
                             }}
                         >
