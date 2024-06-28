@@ -227,6 +227,7 @@ export const BuyTicketModal: React.FC<Props> = ({
                         <Button
                             onClick={() => {
                                 setModalStage(0);
+                                dispatch(unselectSeat({ seat: { ...selectedSeat!.seat, projectionId: projection._id } }));
                                 setShowBuyTicketModal(false);
                             }}
                         >
@@ -246,7 +247,6 @@ export const BuyTicketModal: React.FC<Props> = ({
                     <>
                         <Button
                             onClick={() => {
-                                dispatch(unselectSeat({ seat: { ...selectedSeat!.seat, projectionId: projection._id } }));
                                 setModalStage(0);
                             }}
                         >
